@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Assistência técnica · Vigamais</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body data-pagina="assistencia">
+<div class="app">
+<nav id="menu" class="lado" aria-label="Menu principal"></nav>
+<main class="conteudo">
+  <header class="topo">
+    <div>
+      <div class="migalha">Gestão · pós-entrega</div>
+      <h1>Assistência técnica</h1>
+      <p class="sub">Chamados das unidades já entregues · Residencial Ipê Amarelo, entregue em agosto de 2025</p>
+    </div>
+    <div class="acoes">
+      <span class="selo ambar pilula">Dados de exemplo</span>
+      <button class="btn primario" type="button">Abrir chamado</button>
+    </div>
+  </header>
+
+  <section class="grade-kpi" aria-label="Resumo">
+    <div class="card kpi"><span class="rotulo">Chamados abertos</span><span class="valor">3</span><span class="alerta">1 passou do prazo de atendimento</span></div>
+    <div class="card kpi"><span class="rotulo">Resolvidos no mês</span><span class="valor">9</span><span class="sub">tempo médio de 6 dias</span></div>
+    <div class="card kpi"><span class="rotulo">Custo de garantia no mês</span><span class="valor">R$ 9.400</span><span class="sub">entra na DRE e sai da margem realizada</span></div>
+    <div class="card kpi"><span class="rotulo">Satisfação depois do reparo</span><span class="valor">8,6 <small>NPS 56</small></span><span class="sub">9 respostas pelo WhatsApp</span></div>
+  </section>
+
+  <div class="colunas">
+    <section class="card col-2 pilha">
+      <h2>Chamados</h2>
+      <div class="rolagem">
+      <table>
+        <thead><tr><th>Nº</th><th>Unidade</th><th>Problema</th><th>Aberto</th><th>Garantia</th><th>Responsável</th><th class="num">Custo</th><th>Situação</th></tr></thead>
+        <tbody>
+          <tr><td><b>412</b></td><td>Apto 303</td><td><b>Infiltração no teto do banheiro</b><br><span class="pequeno">aberto pelo WhatsApp, com 3 fotos</span></td><td>12/11</td><td><span class="selo verde">Dentro</span></td><td>Eng. Paulo</td><td class="num">R$ 1.850,00</td><td><span class="selo laranja">Atrasado</span></td></tr>
+          <tr><td><b>415</b></td><td>Apto 1101</td><td><b>Porta do quarto empenada</b><br><span class="pequeno">aberto pelo WhatsApp</span></td><td>22/11</td><td><span class="selo verde">Dentro</span></td><td>Eng. Paulo</td><td class="num">a orçar</td><td><span class="selo azul">Em andamento</span></td></tr>
+          <tr><td><b>417</b></td><td>Apto 207</td><td><b>Piso riscado na mudança</b><br><span class="pequeno">aberto pela tela</span></td><td>25/11</td><td><span class="selo">Fora · uso</span></td><td>Financeiro</td><td class="num">sem custo</td><td><span class="selo ambar">Aberto</span></td></tr>
+          <tr><td><b>409</b></td><td>Apto 504</td><td><b>Tomada da cozinha sem energia</b><br><span class="pequeno">aberto pelo WhatsApp</span></td><td>14/11</td><td><span class="selo verde">Dentro</span></td><td>Eng. Paulo</td><td class="num">R$ 240,00</td><td><span class="selo escuro">Resolvido · nota 10</span></td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="pequeno">O chamado abre a qualquer momento. Fora do prazo de garantia, o sistema avisa e marca “fora da garantia”, sem bloquear. Resolver pede a solução descrita; resolvido não volta.</p>
+    </section>
+
+    <section class="card col-1 pilha">
+      <h2>Chamado 412 · Apto 303</h2>
+      <div class="bolhas">
+        <div class="bolha"><span class="quem">Cliente · 12/11 · pelo WhatsApp</span>Apareceu uma mancha no teto do banheiro, parece vazamento do vizinho de cima. Mandei as fotos.</div>
+        <div class="bolha bot"><span class="quem">Assistente Vigamais</span>Recebi as 3 fotos e abri o chamado 412. Sua unidade está na garantia. O engenheiro responsável vai agendar a vistoria com você.</div>
+        <div class="bolha eu"><span class="quem">Eng. Paulo · 13/11</span>Bom dia! Posso passar na quinta, 14h, para a vistoria?</div>
+      </div>
+      <dl class="divisor">
+        <dt>Garantia</dt><dd>dentro do prazo</dd>
+        <dt>Causa</dt><dd>impermeabilização do 403</dd>
+        <dt>Fornecedor acionado</dt><dd>empreiteira da obra</dd>
+        <dt>Custo lançado</dt><dd>R$ 1.850,00</dd>
+        <dt>Prazo combinado</dt><dd>22/11 · venceu</dd>
+      </dl>
+      <div class="acoes">
+        <button class="btn primario" type="button">Marcar como resolvido</button>
+        <button class="btn" type="button">Lançar custo</button>
+      </div>
+    </section>
+  </div>
+
+  <div class="grade-2">
+    <section class="card pilha">
+      <h2>Prazos de garantia</h2>
+      <div class="entre"><span>Estrutura e fundação</span><b>5 anos</b></div>
+      <div class="entre"><span>Impermeabilização</span><b>5 anos</b></div>
+      <div class="entre"><span>Instalações hidráulicas e elétricas</span><b>3 anos</b></div>
+      <div class="entre"><span>Revestimentos, portas e esquadrias</span><b>1 ano</b></div>
+      <p class="pequeno divisor">Valores de exemplo: os prazos são configurados nas regras da incorporadora, conforme o manual do proprietário de cada empreendimento. A garantia de cada chamado fica gravada na abertura.</p>
+    </section>
+    <section class="card pilha">
+      <h2>Depois do reparo</h2>
+      <p>7 dias depois de resolver, o cliente recebe a pesquisa pelo WhatsApp e responde com uma nota de 0 a 10.</p>
+      <p>Nota de 0 a 6 avisa na hora a diretoria e o responsável pelo chamado.</p>
+      <p>O custo da garantia vira conta a pagar ligada à unidade e ao chamado. <a href="financeiro.html">Ver no financeiro</a></p>
+      <p class="pequeno divisor">Problema repetido no mesmo sistema (três infiltrações no mesmo prédio, por exemplo) aparece para a engenharia das obras em andamento.</p>
+    </section>
+  </div>
+</main>
+</div>
+<script src="menu.js"></script>
+</body>
+</html>

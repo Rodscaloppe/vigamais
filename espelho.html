@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Espelho de vendas · Vigamais</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body data-pagina="espelho">
+<div class="app">
+<nav id="menu" class="lado" aria-label="Menu principal"></nav>
+<main class="conteudo">
+  <header class="topo">
+    <div>
+      <div class="migalha">Espelho de vendas</div>
+      <h1>Residencial Jardim das Acácias</h1>
+      <p class="sub">96 unidades · 71 vendidas · 4 reservadas · 21 disponíveis</p>
+    </div>
+    <span class="selo ambar pilula">Dados de exemplo</span>
+  </header>
+
+  <div class="colunas">
+    <section class="card col-2 pilha">
+      <div class="entre" style="flex-wrap:wrap;align-items:center">
+        <h2>Unidades por pavimento</h2>
+        <div class="legenda">
+          <span><i style="background:#fff;border:2px solid var(--azul)"></i>Disponível</span>
+          <span><i style="background:var(--ambar)"></i>Reservada</span>
+          <span><i style="background:#2B3947"></i>Vendida</span>
+          <span><b class="ponto"></b>Parada há mais de 90 dias</span>
+        </div>
+      </div>
+      <div class="rolagem"><div class="espelho" id="espelho"></div></div>
+      <p class="pequeno">A unidade só vira vendida fechando uma proposta aprovada. Duas propostas na mesma unidade: só uma fecha.</p>
+    </section>
+
+    <section class="card col-1 pilha">
+      <div class="entre" style="align-items:center"><h2>Apto 704</h2><span class="selo ambar pilula">Reservada · proposta</span></div>
+      <p class="sub">3 quartos · 92 m² · 7º pavimento · 2 vagas</p>
+
+      <div class="caixa pilha" style="gap:8px">
+        <div class="entre"><span>Preço de tabela</span><b>R$ 648.000,00</b></div>
+        <div class="entre"><span>Proposta do cliente</span><b>R$ 605.880,00</b></div>
+        <div class="entre"><span>Desconto</span><b class="alerta">6,5% · limite do corretor 5%</b></div>
+        <div class="entre" style="border-top:1px solid var(--linha);padding-top:8px"><span>Custo rateado da unidade</span><b>R$ 471.200,00</b></div>
+        <span class="pequeno">terreno, obra realizada e a realizar, comercial</span>
+      </div>
+
+      <div class="duas">
+        <div class="mini"><div class="pequeno"><b>Margem na tabela</b></div><div class="valor">27,3%</div></div>
+        <div class="mini risco"><div class="pequeno alerta"><b>Margem na proposta</b></div><div class="valor">22,2%</div></div>
+      </div>
+      <div class="aviso">Abaixo da margem mínima de 23%. Só a diretoria aprova.</div>
+
+      <div class="pilha" style="gap:8px">
+        <span class="selo" style="align-self:flex-start">Linha do tempo</span>
+        <div class="entre"><span>Lead pelo WhatsApp, anúncio da Meta<br><span class="pequeno">“3 quartos com vista para o parque” · <a href="atendimento.html">ver a conversa</a></span></span><span class="pequeno">18/11</span></div>
+        <div class="entre"><span>Visita ao decorado com a corretora Marina</span><span class="pequeno">21/11</span></div>
+        <div class="entre"><span>Proposta: 20% de entrada, saldo financiado</span><span class="pequeno">25/11</span></div>
+      </div>
+
+      <div class="acoes">
+        <button class="btn primario" type="button">Aprovar</button>
+        <button class="btn" type="button">Contraproposta</button>
+        <button class="btn" type="button">Recusar</button>
+      </div>
+      <p class="pequeno">Ao fechar: contrato, parcelas a receber, comissão da corretora e checklist até o registro e as chaves nascem na mesma operação. A venda é informada à Meta quando o sinal entrar.</p>
+    </section>
+  </div>
+</main>
+</div>
+<script src="menu.js"></script>
+<script>
+// Monta o espelho: V = vendida, D = disponível, R = reservada. Do 12º ao 1º pavimento.
+(function () {
+  var mapa = ['DDVDVDDV', 'VDVVDVDV', 'VVDVVRVD', 'VVVDVVVV', 'VDVVVVRV', 'VVVRVVVD', 'VVVVVDVV', 'DVVVVVVV', 'VVVVDVVV', 'VVVVVVVD', 'VRVVVVDV', 'DVVDVVDV'];
+  var parados = ['1201', '1202', '1207', '101', '104', '107'];
+  var nomes = { V: 'vendida', D: 'disponível', R: 'reservada' };
+  var raiz = document.getElementById('espelho');
+  mapa.forEach(function (linha, i) {
+    var andar = 12 - i;
+    var div = document.createElement('div');
+    div.className = 'andar';
+    var rotulo = document.createElement('span');
+    rotulo.textContent = andar + 'º pav.';
+    div.appendChild(rotulo);
+    linha.split('').forEach(function (s, j) {
+      var num = String(andar) + '0' + (j + 1);
+      var parado = s === 'D' && parados.indexOf(num) >= 0;
+      var un = document.createElement('div');
+      un.className = 'un ' + s.toLowerCase() + (num === '704' ? ' sel' : '');
+      un.textContent = num;
+      un.title = 'Apto ' + num + ' · ' + nomes[s] + (parado ? ' · parada há mais de 90 dias' : '');
+      if (parado) {
+        var p = document.createElement('b');
+        p.className = 'ponto';
+        un.appendChild(p);
+      }
+      div.appendChild(un);
+    });
+    raiz.appendChild(div);
+  });
+})();
+</script>
+</body>
+</html>

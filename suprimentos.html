@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Suprimentos: cotação com IA · Vigamais</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body data-pagina="suprimentos">
+<div class="app">
+<nav id="menu" class="lado" aria-label="Menu principal"></nav>
+<main class="conteudo">
+  <header class="topo">
+    <div>
+      <div class="migalha">Suprimentos · Cotação 248 · Jardim das Acácias</div>
+      <h1>Aço e cimento para a estrutura do 8º pavimento</h1>
+    </div>
+    <span class="selo ambar pilula">Dados de exemplo</span>
+  </header>
+
+  <section class="card" aria-label="Andamento da cotação">
+    <div class="passos">
+      <div class="passo"><b>1 · Lista calculada</b><span>pela calculadora, a partir da planta</span></div>
+      <div class="passo"><b>2 · Robô contatou 5</b><span>4 por WhatsApp, 1 por ligação</span></div>
+      <div class="passo"><b>3 · 3 responderam</b><span>texto, áudio e orçamento em PDF</span></div>
+      <div class="passo aqui"><b>4 · Comparativo</b><span>você está aqui</span></div>
+      <div class="passo depois"><b>5 · Pedido de compra</b><span>vira conta a pagar e custo da etapa</span></div>
+    </div>
+  </section>
+
+  <div class="colunas">
+    <section class="card col-2 pilha">
+      <h2>Comparativo por item</h2>
+      <div class="rolagem">
+      <table>
+        <thead><tr><th>Item</th><th class="num">Quantidade</th><th class="num">Orçado</th><th class="num">Depósito Aroeira</th><th class="num">Materiais Ipê</th><th class="num">Ferragens Jatobá</th></tr></thead>
+        <tbody>
+          <tr><td><b>Aço CA-50 10 mm</b></td><td class="num">4.200 kg</td><td class="num">R$ 7,90</td><td class="num"><span class="melhor">R$ 7,28</span></td><td class="num">R$ 7,45</td><td class="num">R$ 7,62</td></tr>
+          <tr><td><b>Cimento CP II-F 32, saco de 50 kg</b></td><td class="num">380 sacos</td><td class="num">R$ 36,00</td><td class="num">R$ 34,90</td><td class="num"><span class="melhor">R$ 33,80</span></td><td class="num">R$ 35,50</td></tr>
+          <tr><td><b>Areia média</b></td><td class="num">46 m³</td><td class="num">R$ 148,00</td><td class="num">R$ 152,00</td><td class="num"><span class="melhor">R$ 139,00</span></td><td class="num">não trabalha</td></tr>
+          <tr><td><b>Brita 1</b></td><td class="num">38 m³</td><td class="num">R$ 132,00</td><td class="num"><span class="melhor">R$ 126,00</span></td><td class="num">R$ 129,00</td><td class="num">R$ 131,00</td></tr>
+          <tr><td><b>Arame recozido nº 18</b></td><td class="num">120 kg</td><td class="num">R$ 14,50</td><td class="num">R$ 13,90</td><td class="num">R$ 14,20</td><td class="num"><span class="melhor">R$ 13,40</span></td></tr>
+          <tr class="total"><td>Total da lista</td><td></td><td class="num">R$ 60.424,00</td><td class="num">R$ 57.286,00</td><td class="num">R$ 57.134,00</td><td class="num">lista incompleta</td></tr>
+          <tr><td class="pequeno">Entrega · pagamento</td><td></td><td></td><td class="num pequeno">2 dias · 28 dias</td><td class="num pequeno">3 dias · à vista</td><td class="num pequeno">1 dia · 30 e 60 dias</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="caixa entre" style="flex-wrap:wrap;align-items:center">
+        <div>
+          <div class="pequeno">Melhor preço de cada item, em 3 pedidos</div>
+          <div class="mini" style="border:0;padding:0"><span class="valor">R$ 56.210,00</span></div>
+          <b style="color:var(--azul-escuro)">R$ 4.214,00 abaixo do orçado (7,0%)</b>
+        </div>
+        <div class="acoes">
+          <button class="btn" type="button">Fechar tudo com um só</button>
+          <button class="btn primario" type="button">Aprovar o melhor por item</button>
+        </div>
+      </div>
+      <p class="pequeno">Ao aprovar: os pedidos saem pelo WhatsApp, cada um vira conta a pagar e o custo entra em <a href="obra.html">Estrutura · 8º pav.</a> quando a nota chegar. Preço digitado pela IA fica marcado até alguém conferir.</p>
+    </section>
+
+    <section class="card col-1 pilha">
+      <h2>Conversa do robô · Ferragens Jatobá</h2>
+      <div class="bolhas">
+        <div class="bolha bot"><span class="quem">Robô de cotação · 08:14</span>Bom dia! Aqui é o assistente de compras da Vigamais. Pode me passar preço e prazo para 4.200 kg de aço CA-50 10 mm, 380 sacos de CP II e 120 kg de arame nº 18?</div>
+        <div class="bolha"><span class="quem">Lojista · áudio de 0:42</span>“O CA-50 de dez tá sete e sessenta e dois o quilo, o cimento trinta e cinco e cinquenta. Entrego amanhã.”</div>
+        <div class="bolha" style="border-style:dashed"><b>Extraído do áudio:</b> aço R$ 7,62/kg · cimento R$ 35,50 · entrega em 1 dia</div>
+        <div class="bolha bot"><span class="quem">Robô de cotação · 08:21</span>Obrigado! Fechando as 4,2 toneladas, consegue melhorar o preço do aço?</div>
+        <div class="bolha"><span class="quem">Lojista · 08:30</span>Vou ver com o gerente e te falo.</div>
+      </div>
+      <div class="divisor pilha">
+        <span class="selo">Ligação de voz · Materiais Ipê · 1 min 48 s</span>
+        <p>Não respondeu no WhatsApp em 20 min. O agente de voz ligou e confirmou os 5 preços; a transcrição fica anexada à cotação.</p>
+      </div>
+      <div><button class="btn" type="button">Assumir a conversa</button></div>
+    </section>
+  </div>
+</main>
+</div>
+<script src="menu.js"></script>
+</body>
+</html>

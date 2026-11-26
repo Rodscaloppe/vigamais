@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Assistente de compras (IA) · Vigamais</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body data-pagina="assistente">
+<div class="app">
+<nav id="menu" class="lado" aria-label="Menu principal"></nav>
+<main class="conteudo">
+  <header class="topo">
+    <div>
+      <div class="migalha">Obra · Jardim das Acácias · cotação 253</div>
+      <h1>Assistente de compras (IA)</h1>
+      <p class="sub">Argamassa AC-II, 350 sacos, e vergalhão CA-50 8 mm, 900 kg · da falta detectada ao pedido confirmado em 55 minutos</p>
+    </div>
+    <div class="acoes">
+      <span class="selo ambar pilula">Dados de exemplo</span>
+      <span class="selo verde pilula vivo">Pedidos confirmados pelas lojas</span>
+    </div>
+  </header>
+
+  <section class="card" aria-label="Etapas do assistente">
+    <div class="passos">
+      <div class="passo"><b>1 · Falta detectada</b><span>07:00 · estoque estimado × cronograma</span></div>
+      <div class="passo"><b>2 · Pergunta no WhatsApp</b><span>07:00 · “Quer que eu cote?”</span></div>
+      <div class="passo"><b>3 · Solicitação confirmada</b><span>07:09 · Eng. Paulo ajustou para 350 sacos</span></div>
+      <div class="passo"><b>4 · Cotação com 4 lojas</b><span>07:10 a 07:33 · WhatsApp e 1 ligação</span></div>
+      <div class="passo"><b>5 · Comparativo aprovado</b><span>07:46 · “Pode pedir”</span></div>
+      <div class="passo aqui"><b>6 · Pedidos enviados</b><span>07:47 · confirmados às 07:55</span></div>
+    </div>
+  </section>
+
+  <section class="grade-kpi" aria-label="Resultado">
+    <div class="card kpi"><span class="rotulo">Lojas que responderam</span><span class="valor">4 <small>de 4</small></span><span class="sub">3 pelo WhatsApp, 1 por ligação de voz</span></div>
+    <div class="card kpi"><span class="rotulo">Orçado na etapa</span><span class="valor">R$ 14.115,00</span><span class="sub">350 × R$ 19,50 e 900 × R$ 8,10</span></div>
+    <div class="card kpi"><span class="rotulo">Total dos pedidos</span><span class="valor">R$ 13.060,00</span><span class="sub">2 pedidos, 2 lojas</span></div>
+    <div class="card kpi escuro"><span class="rotulo">Abaixo do orçado</span><span class="valor">R$ 1.055,00</span><span class="nota">7,5% · R$ 105,00 vieram da negociação</span></div>
+  </section>
+
+  <section class="card pilha" id="perguntar">
+    <h2>Pergunte ao assistente</h2>
+    <p class="pequeno">Antes de chamar as lojas, ele consulta a <a href="planilha.html">planilha de cotações</a>. Experimente com “areia”, “cimento”, “bloco” ou um material que nunca foi cotado.</p>
+    <form id="form-perg" class="perg">
+      <div class="campo"><label for="pg-material">Preciso de</label><input id="pg-material" list="pg-lista" autocomplete="off" required placeholder="Ex.: areia média"></div>
+      <div class="campo"><label for="pg-qtd">Quantidade</label><input id="pg-qtd" inputmode="decimal" required placeholder="Ex.: 30"></div>
+      <button class="btn primario" type="submit">Perguntar</button>
+    </form>
+    <datalist id="pg-lista"></datalist>
+    <div class="resposta-ia" id="pg-resposta" role="status" aria-live="polite"></div>
+  </section>
+
+  <section class="pilha">
+    <h2 style="font-size:20px;line-height:26px;font-weight:800">Lojas consultadas</h2>
+    <div class="lojas">
+      <article class="loja vencedora">
+        <div class="entre"><h3>Materiais Ipê</h3><span class="selo escuro">Pedido 314</span></div>
+        <span class="pequeno">WhatsApp · texto · respondeu em 8 min</span>
+        <div class="entre"><span>Argamassa AC-II</span><span class="melhor">R$ 17,90</span></div>
+        <div class="entre"><span>Vergalhão 8 mm</span><b>R$ 7,80</b></div>
+        <div class="entre pequeno"><span>Entrega · pagamento</span><span>quarta · 21 dias</span></div>
+        <span class="pequeno">Baixou a argamassa de R$ 18,20 para R$ 17,90 quando a IA citou os 350 sacos.</span>
+      </article>
+      <article class="loja vencedora">
+        <div class="entre"><h3>Depósito Aroeira</h3><span class="selo escuro">Pedido 315</span></div>
+        <span class="pequeno">WhatsApp · orçamento em PDF · 14 min</span>
+        <div class="entre"><span>Argamassa AC-II</span><b>R$ 18,40</b></div>
+        <div class="entre"><span>Vergalhão 8 mm</span><span class="melhor">R$ 7,55</span></div>
+        <div class="entre pequeno"><span>Entrega · pagamento</span><span>quinta · 28 dias</span></div>
+        <span class="pequeno">Preços lidos do PDF pela IA e conferidos com o total do documento.</span>
+      </article>
+      <article class="loja">
+        <div class="entre"><h3>Ferragens Jatobá</h3><span class="selo">Não levou</span></div>
+        <span class="pequeno">WhatsApp · áudio de 0:31 · 17 min</span>
+        <div class="entre"><span>Argamassa AC-II</span><b>R$ 18,90</b></div>
+        <div class="entre"><span>Vergalhão 8 mm</span><b>R$ 7,70</b></div>
+        <div class="entre pequeno"><span>Entrega · pagamento</span><span>terça · 30 dias</span></div>
+        <span class="pequeno">A IA agradeceu e avisou que desta vez o pedido foi para outra loja.</span>
+      </article>
+      <article class="loja">
+        <div class="entre"><h3>Constrular Cedro</h3><span class="selo">Não levou</span></div>
+        <span class="pequeno">Sem resposta em 20 min · ligação de voz de 1 min 32 s</span>
+        <div class="entre"><span>Argamassa AC-II</span><b>R$ 18,20</b></div>
+        <div class="entre"><span>Vergalhão 8 mm</span><b>R$ 7,95</b></div>
+        <div class="entre pequeno"><span>Entrega · pagamento</span><span>quarta · à vista</span></div>
+        <span class="pequeno">Preço falado na ligação fica “a conferir”; a transcrição está anexada.</span>
+      </article>
+    </div>
+  </section>
+
+  <div class="colunas">
+    <section class="card col-2 pilha">
+      <h2>O que a IA fez, passo a passo</h2>
+      <ol class="linha-tempo">
+        <li><time>Seg. 07:00</time><div><b>Varredura diária.</b> Cruzou o estoque estimado com o cronograma dos próximos 10 dias. Achou 2 materiais que acabam antes da próxima entrega e 1 já em cotação.</div></li>
+        <li><time>07:00</time><div><b>Perguntou antes de agir.</b> Mandou a notificação ao Eng. Paulo: “Quer que eu faça uma nova solicitação e cote com as lojas?”</div></li>
+        <li><time>07:09</time><div><b>Solicitação confirmada.</b> Paulo pediu os dois e subiu a argamassa de 310 para 350 sacos. Como passa do previsto na etapa em menos de 10%, segue sem a diretoria.</div></li>
+        <li><time>07:10</time><div><b>Escolheu as lojas.</b> As 4 mais bem colocadas no ranking de fornecedores para argamassa e aço, e mandou a mesma mensagem a todas.</div></li>
+        <li><time>07:18</time><div><b>Leu as respostas.</b> Texto da Ipê (07:18), PDF da Aroeira (07:24) e áudio da Jatobá (07:27), cada um virando preço, prazo e pagamento.</div></li>
+        <li><time>07:30</time><div><b>Ligou para quem não respondeu.</b> A Cedro passou os preços por telefone ao agente de voz.</div></li>
+        <li><time>07:33</time><div><b>Negociou.</b> Citou o volume e conseguiu R$ 0,30 a menos por saco na Ipê.</div></li>
+        <li><time>07:41</time><div><b>Montou o melhor cenário</b> por item e mandou o comparativo ao Paulo com uma pergunta só: “Faço os pedidos?”</div></li>
+        <li><time>07:46</time><div><b>Aprovação.</b> “Pode pedir.” Total abaixo de R$ 50.000,00: o engenheiro aprova sozinho.</div></li>
+        <li><time>07:47</time><div><b>Pedidos 314 e 315 enviados</b> às lojas. Nasceram 2 contas a pagar e o custo ficou comprometido em Alvenaria · 9º pav. e Estrutura · 8º pav.</div></li>
+        <li><time>07:55</time><div><b>Lojas confirmaram.</b> Entrega quarta e quinta. A IA vai avisar na saída do caminhão e ler a nota quando chegar.</div></li>
+      </ol>
+    </section>
+
+    <div class="col-1 pilha-g">
+      <section class="card pilha">
+        <h2>Pedido 314 · como a loja recebeu</h2>
+        <div class="pedido">PEDIDO 314 · Vigamais
+Obra: Residencial Jardim das Acácias
+Item: Argamassa AC-II, saco de 20 kg
+Quantidade: 350 sacos
+Preço: R$ 17,90 o saco
+Total: R$ 6.265,00
+Entrega: quarta-feira, até 9h
+Pagamento: boleto para 21 dias
+Receber na obra: Eng. Paulo
+Responda CONFIRMO para aceitar.</div>
+        <span class="pequeno">Pedido 315, Depósito Aroeira: 900 kg de CA-50 8 mm a R$ 7,55, R$ 6.795,00, entrega quinta, 28 dias.</span>
+      </section>
+      <section class="card pilha">
+        <h2>O que a IA pode e não pode</h2>
+        <div class="entre"><span>Detectar a falta e perguntar</span><b>sozinha</b></div>
+        <div class="entre"><span>Cotar, ligar e negociar preço</span><b>sozinha</b></div>
+        <div class="entre"><span>Enviar o pedido à loja</span><b>só com aprovação</b></div>
+        <div class="entre"><span>Compra acima de R$ 50.000,00</span><b>diretoria</b></div>
+        <div class="entre"><span>Quantidade 10% acima do orçado</span><b>diretoria</b></div>
+        <div class="entre"><span>Pagar a loja</span><b>nunca · é do financeiro</b></div>
+        <p class="pequeno divisor">Sem resposta do engenheiro em 2 horas, a IA lembra uma vez e avisa o setor de compras. Ela não cota nem pede por conta própria.</p>
+      </section>
+    </div>
+  </div>
+
+  <section class="pilha" id="whatsapp">
+    <div>
+      <h2 style="font-size:22px;line-height:28px;font-weight:800">A IA falando com as lojas</h2>
+      <p class="sub">A cotação e o pedido saem pelo WhatsApp da incorporadora. Quem não responde recebe uma ligação.</p>
+    </div>
+    <div class="fones">
+      <article class="fone" aria-label="Conversa da IA com a loja Materiais Ipê">
+        <header><b>Materiais Ipê</b><span>Assistente de compras · cotação e pedido</span></header>
+        <div class="zap">
+          <div class="dia">Segunda-feira</div>
+          <div class="z eu">Bom dia! Aqui é o assistente de compras da Vigamais, obra Jardim das Acácias. Preciso de preço para:<br>• 350 sacos de argamassa AC-II 20 kg<br>• 900 kg de vergalhão CA-50 8 mm<br>Pode me passar o valor de cada um, o dia de entrega e o prazo de pagamento?<time>07:10</time></div>
+          <div class="z">Bom dia. AC-II 18,20 o saco. CA-50 8 mm 7,80 o quilo. Entrego quarta. 21 dias no boleto.<time>07:18</time></div>
+          <div class="z eu">Obrigado! São 350 sacos numa entrega só. Consegue melhorar a argamassa?<time>07:33</time></div>
+          <div class="z">Faço 17,90 fechando os 350.<time>07:36</time></div>
+          <div class="z eu">Anotado: R$ 17,90 o saco, quarta, 21 dias. Volto já com a resposta da obra.<time>07:36</time></div>
+          <div class="z eu"><b>PEDIDO 314 · Vigamais</b><br>350 sacos de argamassa AC-II 20 kg<br>R$ 17,90 o saco · total R$ 6.265,00<br>Entrega quarta até 9h · boleto 21 dias<br>Receber na obra: Eng. Paulo<br>Responda CONFIRMO para aceitar.<time>07:47</time></div>
+          <div class="z">CONFIRMO<time>07:52</time></div>
+          <div class="z eu">Pedido confirmado. O vergalhão ficou com outra loja desta vez. Obrigado!<time>07:52</time></div>
+        </div>
+      </article>
+
+      <article class="fone" aria-label="Conversa da IA com a loja Depósito Aroeira">
+        <header><b>Depósito Aroeira</b><span>Assistente de compras · cotação e pedido</span></header>
+        <div class="zap">
+          <div class="dia">Segunda-feira</div>
+          <div class="z eu">Bom dia! Aqui é o assistente de compras da Vigamais, obra Jardim das Acácias. Preciso de preço para:<br>• 350 sacos de argamassa AC-II 20 kg<br>• 900 kg de vergalhão CA-50 8 mm<br>Pode me passar o valor de cada um, o dia de entrega e o prazo de pagamento?<time>07:10</time></div>
+          <div class="z"><span class="anexo">PDF · orcamento-4471.pdf</span>Segue o orçamento.<time>07:24</time></div>
+          <div class="z eu">Recebi. Li no orçamento: argamassa R$ 18,40 o saco, vergalhão R$ 7,55 o kg, entrega quinta, 28 dias. Está certo?<time>07:25</time></div>
+          <div class="z">Isso mesmo.<time>07:26</time></div>
+          <div class="z eu"><b>PEDIDO 315 · Vigamais</b><br>900 kg de vergalhão CA-50 8 mm<br>R$ 7,55 o kg · total R$ 6.795,00<br>Entrega quinta · boleto 28 dias<br>Receber na obra: Eng. Paulo<br>Responda CONFIRMO para aceitar.<time>07:47</time></div>
+          <div class="z">CONFIRMO. Sai quinta cedo.<time>07:55</time></div>
+        </div>
+      </article>
+
+      <article class="fone" aria-label="Transcrição da ligação de voz com a loja Constrular Cedro">
+        <header><b>Constrular Cedro</b><span>Ligação de voz · 1 min 32 s · transcrição</span></header>
+        <div class="zap">
+          <div class="dia">Segunda-feira · 07:30</div>
+          <div class="z eu">Bom dia, aqui é o assistente virtual de compras da Vigamais. Mandei uma mensagem no WhatsApp pedindo preço de argamassa AC-II e vergalhão de 8. Consegue me passar agora?</div>
+          <div class="z">Consigo. A AC-II tá dezoito e vinte o saco.</div>
+          <div class="z eu">Dezoito reais e vinte centavos o saco de 20 quilos, certo? E o vergalhão CA-50 de 8 milímetros?</div>
+          <div class="z">Sete e noventa e cinco o quilo. Entrego quarta, mas é à vista.</div>
+          <div class="z eu">Anotado: argamassa R$ 18,20, vergalhão R$ 7,95, entrega quarta, à vista. Obrigado, retorno pelo WhatsApp.</div>
+          <div class="dia">A IA se identifica como assistente virtual no início da ligação</div>
+        </div>
+      </article>
+    </div>
+  </section>
+</main>
+</div>
+<script src="menu.js"></script>
+<script src="planilha-dados.js"></script>
+<script>
+// "Pergunte ao assistente": decide entre reaproveitar um preço da planilha e abrir cotação nova.
+(function () {
+  var P = window.Planilha;
+  var cotacoes = P.carregar();
+  var grupos = P.grupos(cotacoes);
+  var lista = document.getElementById('pg-lista'), vistos = {};
+  grupos.forEach(function (g) { if (vistos[g.material]) return; vistos[g.material] = 1; var o = document.createElement('option'); o.value = g.material; lista.appendChild(o); });
+
+  function p(texto, forte) { var e = document.createElement('p'); if (forte) { var b = document.createElement('b'); b.textContent = texto; e.appendChild(b); } else e.textContent = texto; return e; }
+  function lojasPorNota(nomes) {
+    return nomes.slice().sort(function (a, b) { return ((P.LOJAS[b] || {}).resposta || 0) - ((P.LOJAS[a] || {}).resposta || 0); });
+  }
+
+  document.getElementById('form-perg').addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    var caixa = document.getElementById('pg-resposta'); caixa.textContent = '';
+    var termo = document.getElementById('pg-material').value.trim();
+    var qtd = P.lerPreco(document.getElementById('pg-qtd').value);
+    if (!termo) return;
+    if (qtd === null) { caixa.appendChild(p('Me diga a quantidade em número, por exemplo 30.')); return; }
+    var r = P.consultar(cotacoes, termo);
+
+    if (r.situacao === 'valido') {
+      var m = r.melhor, total = m.ultimo.preco * qtd;
+      caixa.appendChild(p('Não preciso cotar de novo: já tenho preço válido de ' + m.material + '.', true));
+      caixa.appendChild(p('O menor é ' + P.reais(m.ultimo.preco) + ' por ' + m.un + ', da loja ' + m.loja + ', orçado em ' + P.dataBR(m.ultimo.data) + ' e válido até ' + P.dataBR(m.valeAte) + '. Para ' + P.numero(qtd, qtd % 1 ? 2 : 0) + ' ' + m.un + ' fica ' + P.reais(total) + '.'));
+      if (r.validos.length > 1) {
+        var seg = r.validos[1];
+        caixa.appendChild(p('Segunda opção: ' + seg.loja + ', ' + P.reais(seg.ultimo.preco) + ' (' + P.reais((seg.ultimo.preco - m.ultimo.preco) * qtd) + ' a mais no total).'));
+      }
+      if (m.valores.length > 1) caixa.appendChild(p('Essa loja já baixou o preço uma vez: o 1º valor foi ' + P.reais(m.primeiro.preco) + ' em ' + P.dataBR(m.primeiro.data) + '.'));
+      caixa.appendChild(p(total > 50000 ? 'Passa de R$ 50.000,00: mando para a diretoria aprovar. Faço o pedido com esse preço?' : 'Faço o pedido com esse preço, ou prefere que eu cote de novo mesmo assim?'));
+    } else if (r.situacao === 'vencido') {
+      var u = r.ultimo;
+      var nomes = lojasPorNota(r.grupos.map(function (g) { return g.loja; }));
+      caixa.appendChild(p('Tenho preço de ' + u.material + ', mas venceu.', true));
+      caixa.appendChild(p('O último foi ' + P.reais(u.ultimo.preco) + ' por ' + u.un + ', da loja ' + u.loja + ', em ' + P.dataBR(u.ultimo.data) + '. Pelo valor antigo, ' + P.numero(qtd, qtd % 1 ? 2 : 0) + ' ' + u.un + ' dariam uns ' + P.reais(u.ultimo.preco * qtd) + '.'));
+      caixa.appendChild(p('Vou cotar de novo com ' + nomes.join(', ') + ' e mais 2 lojas do ranking. O valor novo entra na planilha como 2º valor. Posso cotar?'));
+    } else {
+      caixa.appendChild(p('Nunca cotei “' + termo + '”.', true));
+      caixa.appendChild(p('Vou procurar no catálogo e nas lojas próximas da obra, escolher as 4 de melhor nota que vendem esse tipo de material e pedir preço, prazo e pagamento. Antes, confirma: a unidade e a especificação estão certas? Posso cotar?'));
+    }
+  });
+})();
+</script>
+</body>
+</html>

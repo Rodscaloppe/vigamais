@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Painel da incorporadora · Vigamais</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body data-pagina="painel">
+<div class="app">
+<nav id="menu" class="lado" aria-label="Menu principal"></nav>
+<main class="conteudo">
+  <header class="topo">
+    <div>
+      <h1>Painel da incorporadora</h1>
+      <p class="sub">Novembro de 2026 · 3 empreendimentos em andamento · 212 unidades</p>
+    </div>
+    <div class="acoes">
+      <span class="selo ambar pilula">Dados de exemplo</span>
+      <span class="selo pilula">Perfil: Diretoria</span>
+    </div>
+  </header>
+
+  <section class="grade-kpi" aria-label="Indicadores">
+    <div class="card kpi"><span class="rotulo">VGV vendido no mês</span><span class="valor">R$ 4,82 mi</span><span class="sub">11 unidades com contrato assinado</span></div>
+    <div class="card kpi"><span class="rotulo">Unidades em estoque</span><span class="valor">86 <small>de 212</small></span><span class="alerta">14 paradas há mais de 90 dias</span></div>
+    <div class="card kpi"><span class="rotulo">Custo de obra: realizado × orçado</span><span class="valor">+0,9%</span><span class="sub">puxado pela estrutura do Jardim das Acácias</span></div>
+    <div class="card kpi escuro"><span class="rotulo">Economia nas cotações do mês</span><span class="valor">R$ 184 mil</span><span class="nota">37 cotações fechadas pelo robô</span></div>
+  </section>
+
+  <div class="colunas">
+    <section class="card col-2 pilha">
+      <div class="entre"><h2>Empreendimentos</h2><a href="obra.html">Ver custos por etapa</a></div>
+      <div class="rolagem">
+      <table>
+        <thead><tr><th>Empreendimento</th><th>Etapa atual</th><th>Avanço físico</th><th class="num">Custo × orçado</th><th class="num">Vendidas</th><th class="num">Margem prevista</th></tr></thead>
+        <tbody>
+          <tr><td><b>Residencial Jardim das Acácias</b><br><span class="pequeno">96 apartamentos · 12 pavimentos</span></td><td>Estrutura · 7º pav.</td><td><div class="barra"><span class="trilho"><i style="width:58%"></i></span><b>58%</b></div></td><td class="num"><b>+2,1%</b></td><td class="num">71 de 96</td><td class="num"><b>24,8%</b></td></tr>
+          <tr><td><b>Edifício Mirante do Parque</b><br><span class="pequeno">64 apartamentos · 16 pavimentos</span></td><td>Fundação</td><td><div class="barra"><span class="trilho"><i style="width:12%"></i></span><b>12%</b></div></td><td class="num"><b>−4,3%</b></td><td class="num">38 de 64</td><td class="num"><b>27,1%</b></td></tr>
+          <tr><td><b>Loteamento Vila Serena</b><br><span class="pequeno">52 lotes</span></td><td>Pavimentação</td><td><div class="barra"><span class="trilho"><i style="width:81%"></i></span><b>81%</b></div></td><td class="num"><b>+0,6%</b></td><td class="num">17 de 52</td><td class="num"><b>31,5%</b></td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="pequeno">Margem prevista = preço de tabela − custo rateado por unidade (terreno, obra realizada e a realizar, comercial).</p>
+    </section>
+
+    <section class="card col-1 pilha">
+      <h2>Precisa de você hoje</h2>
+      <div class="pilha">
+        <div><span class="selo laranja">Proposta acima do limite</span></div>
+        <p><b>Apto 704 · Jardim das Acácias</b>: desconto de 6,5%, margem cai para 22,2% (mínimo 23%).</p>
+        <a href="espelho.html">Abrir a proposta</a>
+      </div>
+      <div class="pilha divisor">
+        <div><span class="selo azul">Cotação pronta</span></div>
+        <p><b>Aço e cimento · 8º pavimento</b>: 3 fornecedores responderam, 7,0% abaixo do orçado.</p>
+        <a href="suprimentos.html">Ver o comparativo</a>
+      </div>
+      <div class="pilha divisor">
+        <div><span class="selo">Atendimento</span></div>
+        <p><b>2 leads de anúncio da Meta</b> esperam a primeira resposta no WhatsApp.</p>
+        <a href="atendimento.html">Abrir o atendimento</a>
+      </div>
+    </section>
+  </div>
+
+  <div class="grade-2">
+    <section class="card pilha">
+      <div class="entre"><h2>Funil de vendas do mês</h2><a href="funil.html">Abrir o funil</a></div>
+      <div class="funil-linha"><span>Novo</span><span class="trilho"><i style="width:100%"></i></span><b>142</b></div>
+      <div class="funil-linha"><span>Em contato</span><span class="trilho"><i style="width:68%"></i></span><b>96</b></div>
+      <div class="funil-linha"><span>Visita ao decorado</span><span class="trilho"><i style="width:29%"></i></span><b>41</b></div>
+      <div class="funil-linha"><span>Proposta</span><span class="trilho"><i style="width:13%"></i></span><b>18</b></div>
+      <div class="funil-linha"><span>Contrato</span><span class="trilho"><i style="width:8%"></i></span><b>11</b></div>
+      <p class="pequeno">109 dos 142 leads vieram de anúncios da Meta. <a href="campanhas.html">Ver por campanha</a></p>
+    </section>
+    <section class="card pilha">
+      <h2>Robô de cotação agora</h2>
+      <div class="duas" style="grid-template-columns: repeat(3, minmax(0, 1fr))">
+        <div class="caixa"><div class="mini" style="border:0;padding:0"><div class="valor">5</div></div><span class="pequeno">cotações abertas</span></div>
+        <div class="caixa"><div class="mini" style="border:0;padding:0"><div class="valor">12</div></div><span class="pequeno">fornecedores a responder</span></div>
+        <div class="caixa"><div class="mini" style="border:0;padding:0"><div class="valor">8</div></div><span class="pequeno">ligações de voz hoje</span></div>
+      </div>
+      <div class="entre"><span>Concreto usinado fck 30 · laje do 8º</span><b>2 de 4 responderam</b></div>
+      <div class="entre"><span>Blocos cerâmicos 14×19×29 · 9º pav.</span><b>negociando frete</b></div>
+      <div class="entre"><span>Tubos e conexões · prumadas</span><b>lendo orçamento em PDF</b></div>
+    </section>
+  </div>
+</main>
+</div>
+<script src="menu.js"></script>
+</body>
+</html>

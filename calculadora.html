@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Calculadora de materiais · Vigamais</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body data-pagina="calculadora">
+<div class="app">
+<nav id="menu" class="lado" aria-label="Menu principal"></nav>
+<main class="conteudo">
+  <header class="topo">
+    <div>
+      <div class="migalha">Obra · do serviço à lista de compra</div>
+      <h1>Calculadora de materiais</h1>
+      <p class="sub">Informe o serviço. A lista sai com as perdas e já mostra o que a planilha tem de preço válido.</p>
+    </div>
+    <span class="selo ambar pilula">Coeficientes de referência</span>
+  </header>
+
+  <section class="card pilha">
+    <div class="abas" aria-label="Tipo de serviço">
+      <button class="btn ativo" type="button" data-aba="alvenaria">Alvenaria</button>
+      <button class="btn" type="button" data-aba="concreto">Concreto virado na obra</button>
+      <button class="btn" type="button" data-aba="piso">Piso e revestimento</button>
+      <button class="btn" type="button" data-aba="tinta">Pintura</button>
+    </div>
+
+    <form id="f-alvenaria" class="form-grade" data-form="alvenaria">
+      <div class="campo"><label for="a-area">Área de parede (m²)</label><input id="a-area" inputmode="decimal" value="1260"></div>
+      <div class="campo"><label for="a-bloco">Bloco (largura × altura × comprimento, cm)</label>
+        <select id="a-bloco"><option value="14x19x29">14 × 19 × 29</option><option value="9x19x19">9 × 19 × 19</option><option value="9x19x29">9 × 19 × 29</option><option value="14x19x39">14 × 19 × 39</option></select></div>
+      <button class="btn primario" type="submit">Calcular</button>
+    </form>
+
+    <form id="f-concreto" class="form-grade oculto" data-form="concreto">
+      <div class="campo"><label for="c-volume">Volume (m³)</label><input id="c-volume" inputmode="decimal" value="6"></div>
+      <div class="campo"><label for="c-fck">Resistência (fck, MPa)</label>
+        <select id="c-fck"><option value="15">15</option><option value="20">20</option><option value="25" selected>25</option><option value="30">30</option></select></div>
+      <button class="btn primario" type="submit">Calcular</button>
+    </form>
+
+    <form id="f-piso" class="form-grade oculto" data-form="piso">
+      <div class="campo"><label for="p-area">Área do piso (m²)</label><input id="p-area" inputmode="decimal" value="92"></div>
+      <div class="campo"><label for="p-l">Largura da peça (cm)</label><input id="p-l" inputmode="decimal" value="60"></div>
+      <div class="campo"><label for="p-c">Comprimento da peça (cm)</label><input id="p-c" inputmode="decimal" value="60"></div>
+      <div class="campo"><label for="p-perda">Perda (%)</label><input id="p-perda" inputmode="decimal" value="10"></div>
+      <button class="btn primario" type="submit">Calcular</button>
+    </form>
+
+    <form id="f-tinta" class="form-grade oculto" data-form="tinta">
+      <div class="campo"><label for="t-area">Área de parede (m²)</label><input id="t-area" inputmode="decimal" value="240"></div>
+      <div class="campo"><label for="t-aberturas">Portas e janelas (m²)</label><input id="t-aberturas" inputmode="decimal" value="22"></div>
+      <div class="campo"><label for="t-demaos">Demãos</label><input id="t-demaos" inputmode="numeric" value="2"></div>
+      <button class="btn primario" type="submit">Calcular</button>
+    </form>
+    <div class="dica" id="erro" role="status" aria-live="polite"></div>
+  </section>
+
+  <div class="colunas">
+    <section class="card col-2 pilha">
+      <h2 id="titulo-lista">Lista de materiais</h2>
+      <div class="rolagem">
+      <table>
+        <thead><tr><th>Material</th><th class="num">Quantidade</th><th>Preço na planilha</th><th class="num">Subtotal</th><th>O que fazer</th></tr></thead>
+        <tbody id="lista"></tbody>
+      </table>
+      </div>
+      <p class="pequeno" id="resumo"></p>
+    </section>
+
+    <section class="col-1 pilha-g">
+      <div class="resultado pilha">
+        <span class="pequeno"><b>Custo estimado com o que já tem preço</b></span>
+        <span class="valor" id="total">R$ 0,00</span>
+        <span class="pequeno" id="faltam"></span>
+        <a class="btn primario" href="assistente.html#perguntar">Pedir ao assistente para cotar o que falta</a>
+      </div>
+      <div class="card pilha">
+        <h2>De onde vêm as contas</h2>
+        <p class="pequeno">São os mesmos coeficientes da calculadora do CotaBot: junta de 1,5 cm e 10% de perda na alvenaria, 17 litros de argamassa por m² de parede, 5% de perda no concreto, 5 kg de argamassa colante por m² de piso, 10 m² por litro de tinta.</p>
+        <div class="aviso">É estimativa de consumo, não projeto. O engenheiro responsável confere antes de comprar.</div>
+        <p class="pequeno">Ideia para o sistema: o resultado vira a quantidade prevista da etapa, e é contra ela que o assistente compara cada pedido.</p>
+      </div>
+    </section>
+  </div>
+</main>
+</div>
+<script src="menu.js"></script>
+<script src="planilha-dados.js"></script>
+<script>
+(function () {
+  var P = window.Planilha;
+  var cotacoes = P.carregar();
+
+  function num(id) {
+    var t = String(document.getElementById(id).value).trim().replace(',', '.');
+    var n = parseFloat(t);
+    return isFinite(n) ? n : NaN;
+  }
+
+  // ---------- contas (portadas de CotaBot/src/utils/calculatorEngine.ts) ----------
+  function alvenaria(area, bloco) {
+    var p = bloco.split('x').map(Number);
+    var A = p[1] / 100, C = p[2] / 100, junta = 0.015;
+    var blocos = Math.ceil((area / ((C + junta) * (A + junta))) * 1.10);
+    var vol = (area * 17 / 1000) * 1.10;
+    return [
+      { nome: 'Bloco cerâmico ' + bloco.replace(/x/g, '×'), qtd: blocos, un: 'un.', busca: 'bloco', nota: 'com 10% de perda' },
+      { nome: 'Cimento, saco de 50 kg', qtd: Math.max(1, Math.ceil(vol * 300 / 50)), un: 'sacos', busca: 'cimento' },
+      { nome: 'Cal hidratada, saco de 20 kg', qtd: Math.max(1, Math.ceil(vol * 150 / 20)), un: 'sacos', busca: 'cal hidratada' },
+      { nome: 'Areia média', qtd: Math.round(vol * 1.2 * 100) / 100, un: 'm³', busca: 'areia' }
+    ];
+  }
+  function concreto(volume, fck) {
+    var cim = 380, areia = 0.75, brita = 0.85, agua = 200;
+    if (fck <= 15) { cim = 300; areia = 0.85; agua = 180; }
+    else if (fck <= 20) { cim = 330; areia = 0.80; agua = 190; }
+    var v = volume * 1.05;
+    return [
+      { nome: 'Cimento, saco de 50 kg', qtd: Math.ceil(v * cim / 50), un: 'sacos', busca: 'cimento' },
+      { nome: 'Areia média', qtd: Math.round(v * areia * 100) / 100, un: 'm³', busca: 'areia' },
+      { nome: 'Brita 1', qtd: Math.round(v * brita * 100) / 100, un: 'm³', busca: 'brita' },
+      { nome: 'Água', qtd: Math.ceil(v * agua), un: 'litros', busca: null, nota: 'não se cota' }
+    ];
+  }
+  function piso(area, l, c, perda) {
+    var comPerda = area * (1 + perda / 100);
+    var pecas = Math.ceil(comPerda / ((l / 100) * (c / 100)));
+    return [
+      { nome: 'Piso ' + l + ' × ' + c + ' cm', qtd: Math.round(comPerda * 100) / 100, un: 'm²', busca: 'porcelanato', nota: pecas + ' peças, com ' + perda + '% de perda' },
+      { nome: 'Argamassa colante AC-III, saco de 20 kg', qtd: Math.max(1, Math.ceil(comPerda * 5 / 20)), un: 'sacos', busca: 'ac-iii' },
+      { nome: 'Rejunte flexível', qtd: Math.max(1, Math.ceil(comPerda * 0.35)), un: 'kg', busca: 'rejunte' },
+      { nome: 'Espaçadores niveladores', qtd: Math.max(50, Math.ceil(area * 6)), un: 'un.', busca: 'espaçador' }
+    ];
+  }
+  function tinta(area, aberturas, demaos) {
+    var liquida = Math.max(1, area - aberturas);
+    var litros = liquida * demaos * 1.10 / 10;
+    var latas = Math.floor(litros / 18), galoes = Math.ceil((litros % 18) / 3.6);
+    if (galoes >= 4) { latas += 1; galoes = 0; }
+    var itens = [];
+    if (latas > 0) itens.push({ nome: 'Tinta acrílica, lata de 18 L', qtd: latas, un: 'latas', busca: 'tinta' });
+    if (galoes > 0 || latas === 0) itens.push({ nome: 'Tinta acrílica, galão de 3,6 L', qtd: Math.max(1, galoes), un: 'galões', busca: 'tinta' });
+    itens.push({ nome: 'Massa corrida, balde de 18 kg', qtd: Math.max(1, Math.ceil(liquida / 35)), un: 'baldes', busca: 'massa corrida' });
+    itens.push({ nome: 'Fita crepe, rolo de 50 m', qtd: Math.max(1, Math.ceil(liquida / 30)), un: 'rolos', busca: 'fita crepe' });
+    return itens;
+  }
+
+  // ---------- tela ----------
+  function el(tag, classe, texto) { var e = document.createElement(tag); if (classe) e.className = classe; if (texto !== undefined) e.textContent = texto; return e; }
+
+  function mostrar(titulo, itens) {
+    document.getElementById('titulo-lista').textContent = titulo;
+    var corpo = document.getElementById('lista'); corpo.textContent = '';
+    var total = 0, comPreco = 0, cotar = 0;
+    itens.forEach(function (it) {
+      var tr = el('tr');
+      var tdN = el('td'); tdN.appendChild(el('b', '', it.nome));
+      if (it.nota) { tdN.appendChild(document.createElement('br')); tdN.appendChild(el('span', 'pequeno', it.nota)); }
+      tr.appendChild(tdN);
+      tr.appendChild(el('td', 'num', P.numero(it.qtd, it.qtd % 1 ? 2 : 0) + ' ' + it.un));
+
+      var r = it.busca ? P.consultar(cotacoes, it.busca) : null;
+      var tdP = el('td'), tdS = el('td', 'num'), tdF = el('td');
+      if (!it.busca) {
+        tdP.appendChild(el('span', 'pequeno', 'não se aplica')); tdS.textContent = ''; tdF.appendChild(el('span', 'selo', 'Nada a fazer'));
+      } else if (r && r.situacao === 'valido') {
+        var m = r.melhor, sub = m.ultimo.preco * it.qtd;
+        total += sub; comPreco++;
+        tdP.appendChild(el('b', '', P.reais(m.ultimo.preco) + ' por ' + m.un));
+        tdP.appendChild(document.createElement('br'));
+        tdP.appendChild(el('span', 'pequeno', m.loja + ' · ' + P.dataBR(m.ultimo.data)));
+        tdS.appendChild(el('b', '', P.reais(sub)));
+        tdF.appendChild(el('span', 'selo verde', 'Reaproveitar'));
+      } else if (r && r.situacao === 'vencido') {
+        cotar++;
+        tdP.appendChild(el('span', 'pequeno', 'vencido: ' + P.reais(r.ultimo.ultimo.preco) + ' em ' + P.dataBR(r.ultimo.ultimo.data)));
+        tdF.appendChild(el('span', 'selo laranja', 'Cotar de novo'));
+      } else {
+        cotar++;
+        tdP.appendChild(el('span', 'pequeno', 'nunca cotado'));
+        tdF.appendChild(el('span', 'selo azul', 'Cotar'));
+      }
+      tr.appendChild(tdP); tr.appendChild(tdS); tr.appendChild(tdF);
+      corpo.appendChild(tr);
+    });
+    document.getElementById('total').textContent = P.reais(total);
+    document.getElementById('faltam').textContent = comPreco + (comPreco === 1 ? ' item com preço válido' : ' itens com preço válido') + ' · ' + cotar + (cotar === 1 ? ' item para cotar' : ' itens para cotar');
+    document.getElementById('resumo').textContent = 'O preço vem do menor valor válido da planilha de cotações. O que não tem preço fica de fora do total.';
+  }
+
+  function calcular(tipo) {
+    var erro = document.getElementById('erro'); erro.textContent = '';
+    var itens, titulo;
+    if (tipo === 'alvenaria') {
+      var a = num('a-area'); if (!(a > 0)) { erro.textContent = 'Informe a área de parede em m².'; return; }
+      itens = alvenaria(a, document.getElementById('a-bloco').value); titulo = 'Alvenaria · ' + P.numero(a, 0) + ' m² de parede';
+    } else if (tipo === 'concreto') {
+      var v = num('c-volume'); if (!(v > 0)) { erro.textContent = 'Informe o volume em m³.'; return; }
+      var fck = Number(document.getElementById('c-fck').value);
+      itens = concreto(v, fck); titulo = 'Concreto · ' + P.numero(v, 1) + ' m³ · fck ' + fck;
+    } else if (tipo === 'piso') {
+      var ar = num('p-area'), l = num('p-l'), c = num('p-c'), pe = num('p-perda');
+      if (!(ar > 0) || !(l > 0) || !(c > 0) || !(pe >= 0)) { erro.textContent = 'Confira a área, o tamanho da peça e a perda.'; return; }
+      itens = piso(ar, l, c, pe); titulo = 'Piso · ' + P.numero(ar, 0) + ' m²';
+    } else {
+      var at = num('t-area'), ab = num('t-aberturas'), d = num('t-demaos');
+      if (!(at > 0) || !(ab >= 0) || !(d >= 1)) { erro.textContent = 'Confira a área, as aberturas e as demãos.'; return; }
+      itens = tinta(at, ab, Math.round(d)); titulo = 'Pintura · ' + P.numero(Math.max(1, at - ab), 0) + ' m² líquidos · ' + Math.round(d) + ' demãos';
+    }
+    mostrar(titulo, itens);
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll('[data-aba]'), function (b) {
+    b.addEventListener('click', function () {
+      var tipo = b.getAttribute('data-aba');
+      Array.prototype.forEach.call(document.querySelectorAll('[data-aba]'), function (o) { o.classList.toggle('ativo', o === b); });
+      Array.prototype.forEach.call(document.querySelectorAll('[data-form]'), function (f) { f.classList.toggle('oculto', f.getAttribute('data-form') !== tipo); });
+      calcular(tipo);
+    });
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('[data-form]'), function (f) {
+    f.addEventListener('submit', function (ev) { ev.preventDefault(); calcular(f.getAttribute('data-form')); });
+  });
+  calcular('alvenaria');
+})();
+</script>
+</body>
+</html>

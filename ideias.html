@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ideias e próximos passos · Vigamais</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body data-pagina="ideias">
+<div class="app">
+<nav id="menu" class="lado" aria-label="Menu principal"></nav>
+<main class="conteudo">
+  <header class="topo">
+    <div>
+      <div class="migalha">Inteligência · o que dá para construir juntando CotaBot e Garagem</div>
+      <h1>Ideias e próximos passos</h1>
+      <p class="sub">26 ideias, cada uma com um exemplo concreto, de onde vem e o tamanho. As que já têm tela de exemplo levam o link.</p>
+    </div>
+    <span class="selo ambar pilula">Proposta para discutir</span>
+  </header>
+
+  <section class="card pilha">
+    <h2>O que os dois projetos ensinam</h2>
+    <div class="grade-2">
+      <div class="pilha">
+        <p><b>Do CotaBot.</b> O valor está em tirar o comprador do telefone: a IA fala com a loja por texto, áudio, PDF e voz, e devolve preço estruturado. Já tem calculadoras, ranking de fornecedores e leitura de catálogo.</p>
+        <p class="pequeno">O que falta nele: cada cotação é solta. Não pertence a uma obra, não vira pedido, conta a pagar nem custo, e o preço não é reaproveitado.</p>
+      </div>
+      <div class="pilha">
+        <p><b>Do Garagem.</b> O valor está em um banco só, em que cada operação gera a conta e o lançamento contábil, com regras que o sistema garante: margem mínima, aprovação, auditoria, janela de 24 h do WhatsApp, travas da IA.</p>
+        <p class="pequeno">O que muda para a incorporadora: o “carro” vira a unidade, o custo do carro vira o custo rateado da obra, e a venda dura anos (parcelas, registro, chaves, garantia).</p>
+      </div>
+    </div>
+    <div class="aviso">A ligação que nenhum dos dois tem sozinho: a compra que a IA fecha muda o custo da etapa, o custo muda a margem de cada unidade, e a margem trava o desconto do corretor.</div>
+  </section>
+
+  <section class="pilha">
+    <h2 class="titulo-secao">Compras e obra</h2>
+    <div class="grade-3">
+      <article class="card ideia"><h3>1. Memória de preços</h3><p>Todo preço fica guardado com a data; antes de cotar, a IA olha se já tem um válido.</p><div class="exemplo">“Areia: já tenho R$ 139,00 da Materiais Ipê, de 2 dias atrás. Uso esse?”</div><div class="tags"><span class="selo">CotaBot</span><span class="selo verde">tela pronta</span><span class="selo azul">P</span></div><a href="planilha.html">Planilha de cotações</a></article>
+      <article class="card ideia"><h3>2. Assistente que avisa a falta</h3><p>Cruza estoque estimado e cronograma todo dia e pergunta antes de cotar.</p><div class="exemplo">“Argamassa acaba em 3 dias. Quer que eu cote?”</div><div class="tags"><span class="selo">novo</span><span class="selo verde">tela pronta</span><span class="selo azul">G</span></div><a href="obra.html#faltas">Obras e custos</a></article>
+      <article class="card ideia"><h3>3. Cotação e pedido pela IA</h3><p>Fala com 4 lojas, liga para quem não responde, negocia e manda o pedido depois do ok.</p><div class="exemplo">Da falta ao pedido confirmado em 55 minutos, R$ 1.055,00 abaixo do orçado.</div><div class="tags"><span class="selo">CotaBot</span><span class="selo verde">tela pronta</span><span class="selo azul">G</span></div><a href="assistente.html">Assistente de compras</a></article>
+      <article class="card ideia"><h3>4. Cesta com frete</h3><p>Testa todas as divisões de loja por item, contando frete e pedido mínimo.</p><div class="exemplo">O arame é R$ 60,00 mais barato na terceira loja, mas o frete dela é R$ 250,00: fica com a primeira.</div><div class="tags"><span class="selo">CotaBot</span><span class="selo verde">tela pronta</span><span class="selo azul">M</span></div><a href="cesta.html">Cesta de compras</a></article>
+      <article class="card ideia"><h3>5. Curva ABC na negociação</h3><p>A IA insiste nos poucos itens que concentram o valor e fecha rápido o resto.</p><div class="exemplo">Aço e cimento são 77% da compra: é neles que ela pede uma loja a mais.</div><div class="tags"><span class="selo">CotaBot</span><span class="selo verde">tela pronta</span><span class="selo azul">P</span></div><a href="cesta.html">Curva ABC</a></article>
+      <article class="card ideia"><h3>6. Ranking de fornecedores</h3><p>Nota de 0 a 100 por preço, resposta e volume, calculada da planilha.</p><div class="exemplo">“Mais barata, mas 2 das últimas 5 entregas chegaram fora do dia.”</div><div class="tags"><span class="selo">CotaBot</span><span class="selo verde">tela pronta</span><span class="selo azul">M</span></div><a href="fornecedores.html">Ranking</a></article>
+      <article class="card ideia"><h3>7. Calculadora ligada ao orçamento</h3><p>O resultado da calculadora vira a quantidade prevista da etapa.</p><div class="exemplo">1.260 m² de alvenaria: 22.168 blocos. Pedido acima disso em mais de 10% sobe para a diretoria.</div><div class="tags"><span class="selo">CotaBot</span><span class="selo verde">tela pronta</span><span class="selo azul">M</span></div><a href="calculadora.html">Calculadora</a></article>
+      <article class="card ideia"><h3>8. Diário de obra pelo WhatsApp</h3><p>Quatro perguntas ao mestre no fim do dia; áudio e fotos viram diário e avanço físico.</p><div class="exemplo">“Terminamos a armação da laje do oitavo” vira 100% no serviço, esperando o ok do engenheiro.</div><div class="tags"><span class="selo">novo</span><span class="selo verde">tela pronta</span><span class="selo azul">M</span></div><a href="diario.html">Diário de obra</a></article>
+      <article class="card ideia"><h3>9. Nota fiscal por foto</h3><p>A foto da nota é lida e conferida com o pedido; só então o custo vira realizado.</p><div class="exemplo">“Nota 8841: 42 m³, R$ 20.916,00. Confere com o pedido 312.”</div><div class="tags"><span class="selo">CotaBot</span><span class="selo verde">exemplo em Obras</span><span class="selo azul">M</span></div><a href="obra.html#whatsapp">Conversa de exemplo</a></article>
+      <article class="card ideia"><h3>10. Medição de empreiteiras</h3><p>O avanço do diário, por serviço, vira o rascunho da medição do mês.</p><div class="exemplo">“Alvenaria do 5º: 100% × R$ 38,00 o m² = R$ 23.940,00 a medir.”</div><div class="tags"><span class="selo">novo</span><span class="selo">ideia</span><span class="selo azul">G</span></div></article>
+      <article class="card ideia"><h3>11. Compra programada</h3><p>Contrato de fornecimento para o que se repete: a IA só chama a entrega.</p><div class="exemplo">Concreto das 4 lajes que faltam fechado a R$ 498,00; a cada laje, “programa quinta, 7h”.</div><div class="tags"><span class="selo">novo</span><span class="selo">ideia</span><span class="selo azul">M</span></div></article>
+      <article class="card ideia"><h3>12. Preço entre obras</h3><p>A mesma planilha serve todas as obras e mostra quando uma paga mais que a outra.</p><div class="exemplo">“O Mirante pagou R$ 36,10 no cimento ontem; o Acácias tem R$ 33,80 válido.”</div><div class="tags"><span class="selo">novo</span><span class="selo">ideia</span><span class="selo azul">P</span></div></article>
+    </div>
+  </section>
+
+  <section class="pilha">
+    <h2 class="titulo-secao">Vendas e marketing</h2>
+    <div class="grade-3">
+      <article class="card ideia"><h3>13. Lead da Meta com origem gravada</h3><p>O anúncio vem na primeira mensagem e fica no lead; vale o primeiro toque.</p><div class="exemplo">“3 quartos com vista para o parque” · Lançamento Acácias · Instagram Stories.</div><div class="tags"><span class="selo">Garagem</span><span class="selo verde">tela pronta</span><span class="selo azul">M</span></div><a href="atendimento.html">Atendimento</a></article>
+      <article class="card ideia"><h3>14. Campanha medida pela margem</h3><p>Custo por contrato e retorno sobre a margem, não custo por clique.</p><div class="exemplo">O anúncio do lote trouxe 12 leads e nenhum contrato: cortar.</div><div class="tags"><span class="selo">Garagem</span><span class="selo verde">tela pronta</span><span class="selo azul">G</span></div><a href="campanhas.html">Campanhas</a></article>
+      <article class="card ideia"><h3>15. Proposta travada pela margem</h3><p>O corretor vê a margem; abaixo do mínimo, só a diretoria aprova.</p><div class="exemplo">Apto 704 com 6,5% de desconto: margem cai a 22,2%, mínimo 23%.</div><div class="tags"><span class="selo">Garagem</span><span class="selo verde">tela pronta</span><span class="selo azul">M</span></div><a href="espelho.html">Espelho de vendas</a></article>
+      <article class="card ideia"><h3>16. Tabela de preço que acompanha o custo</h3><p>Quando o custo da obra sobe, a IA sugere o reajuste das unidades livres.</p><div class="exemplo">“Estrutura 7,3% acima: subir 1,5% nas 25 unidades livres recompõe a margem.”</div><div class="tags"><span class="selo">novo</span><span class="selo">ideia</span><span class="selo azul">M</span></div></article>
+      <article class="card ideia"><h3>17. Unidade parada vira ação</h3><p>Unidade livre há mais de 90 dias gera sugestão: anúncio próprio, condição ou revisão de preço.</p><div class="exemplo">“1201 e 1202 parados há 120 dias: nenhum anúncio fala de cobertura.”</div><div class="tags"><span class="selo">Garagem</span><span class="selo">ideia</span><span class="selo azul">M</span></div></article>
+      <article class="card ideia"><h3>18. Anúncio fora do ar quando vende</h3><p>Unidade reservada ou vendida avisa para pausar o anúncio que fala dela.</p><div class="exemplo">“Apto 1204 foi reservado; o anúncio ‘vista para o parque’ ainda cita ele.”</div><div class="tags"><span class="selo">Garagem</span><span class="selo">ideia</span><span class="selo azul">P</span></div><a href="autonomia.html">Nível de autonomia</a></article>
+      <article class="card ideia"><h3>19. Agentes de qualificação e retomada</h3><p>Perguntam o que o corretor precisa, resumem, e retomam o lead parado com motivo real.</p><div class="exemplo">“O 906 voltou a ficar livre hoje. Quer a condição?”</div><div class="tags"><span class="selo">Garagem</span><span class="selo verde">tela pronta</span><span class="selo azul">G</span></div><a href="agentes.html">Agentes de IA</a></article>
+      <article class="card ideia"><h3>20. Tour 360° do decorado no WhatsApp</h3><p>Link do tour virtual enviado pelo agente antes da visita.</p><div class="exemplo">Quem abriu o tour e ficou mais de 2 minutos entra como lead quente.</div><div class="tags"><span class="selo">novo</span><span class="selo">ideia</span><span class="selo azul">M</span></div></article>
+    </div>
+  </section>
+
+  <section class="pilha">
+    <h2 class="titulo-secao">Cliente, financeiro e gestão</h2>
+    <div class="grade-3">
+      <article class="card ideia"><h3>21. Andamento da obra para o comprador</h3><p>Resumo mensal com o avanço e 3 fotos do diário, pelo WhatsApp.</p><div class="exemplo">“A laje do seu andar, o 8º, é concretada em dezembro.”</div><div class="tags"><span class="selo">novo</span><span class="selo verde">exemplo em Agentes</span><span class="selo azul">M</span></div><a href="agentes.html">Conversa de exemplo</a></article>
+      <article class="card ideia"><h3>22. Parcelas e boletos pelo WhatsApp</h3><p>Lembrete com boleto antes do vencimento; pedido de nova data vai para o financeiro.</p><div class="exemplo">“Parcela 1 de 36 vence em 10/12: R$ 1.588,89.”</div><div class="tags"><span class="selo">Garagem</span><span class="selo verde">exemplo em Agentes</span><span class="selo azul">M</span></div><a href="financeiro.html">Financeiro</a></article>
+      <article class="card ideia"><h3>23. Checklist até o registro e as chaves</h3><p>Cada venda nasce com os itens, prazos e responsáveis.</p><div class="exemplo">“Laudo do banco do apto 1104 venceu há 2 dias.”</div><div class="tags"><span class="selo">Garagem</span><span class="selo verde">tela pronta</span><span class="selo azul">M</span></div><a href="contratos.html">Contratos e chaves</a></article>
+      <article class="card ideia"><h3>24. Assistência que ensina a obra</h3><p>Chamado repetido no mesmo sistema avisa a engenharia das obras em andamento.</p><div class="exemplo">“3 infiltrações em banheiro no Ipê Amarelo: rever a impermeabilização no Acácias.”</div><div class="tags"><span class="selo">novo</span><span class="selo verde">tela pronta</span><span class="selo azul">P</span></div><a href="assistencia.html">Assistência técnica</a></article>
+      <article class="card ideia"><h3>25. Resumo do dia para a diretoria</h3><p>Às 8h, no WhatsApp: custo, cotações, leads e o que espera aprovação.</p><div class="exemplo">“1 cotação espera o seu ok. 2 leads da Meta sem resposta.”</div><div class="tags"><span class="selo">Garagem</span><span class="selo verde">exemplo em Obras</span><span class="selo azul">P</span></div><a href="obra.html#whatsapp">Conversa de exemplo</a></article>
+      <article class="card ideia"><h3>26. Fluxo de caixa da obra até a entrega</h3><p>Junta o que falta gastar na obra com o que falta receber das unidades vendidas.</p><div class="exemplo">“Mirante do Parque fica negativo em março se não vender 6 unidades até lá.”</div><div class="tags"><span class="selo">novo</span><span class="selo">ideia</span><span class="selo azul">G</span></div></article>
+    </div>
+    <p class="pequeno">Tamanho: P é coisa de dias, M de semanas, G de mais de um mês. É estimativa minha, sem ter medido o esforço no código.</p>
+  </section>
+
+  <section class="card pilha">
+    <h2>Ordem que eu sugiro</h2>
+    <div class="rolagem">
+    <table>
+      <thead><tr><th>Fase</th><th>O que entra</th><th>Por que nesta ordem</th><th>Como saber que deu certo</th></tr></thead>
+      <tbody>
+        <tr><td><b>1 · Base</b></td><td>Obra, etapa e orçamento; cotação ligada à etapa; memória de preços (ideias 1 e 7)</td><td>Sem a etapa, nenhum preço vira custo. É o que falta ao CotaBot hoje.</td><td>Toda cotação nova tem obra e etapa; nenhum material é cotado duas vezes na quinzena.</td></tr>
+        <tr><td><b>2 · Compra fechada</b></td><td>Pedido, conta a pagar, nota por foto, custo realizado (ideias 3 e 9)</td><td>É o caminho do dinheiro: reaproveita o financeiro do Garagem.</td><td>Orçado × realizado da etapa bate com as notas, sem digitação.</td></tr>
+        <tr><td><b>3 · Vendas</b></td><td>Espelho, lead da Meta, proposta com margem, contrato (ideias 13, 15 e 23)</td><td>Reaproveita quase inteiro o CRM do Garagem, trocando carro por unidade.</td><td>Nenhuma proposta abaixo da margem mínima sai sem a diretoria.</td></tr>
+        <tr><td><b>4 · IA que avisa</b></td><td>Diário, estoque estimado, aviso de falta, resumo do dia (ideias 2, 8 e 25)</td><td>Só faz sentido com as fases 1 e 2 alimentando os dados.</td><td>Menos compras de urgência; nenhum dia de obra parado por falta de material.</td></tr>
+        <tr><td><b>5 · IA que otimiza</b></td><td>Cesta com frete, ranking, campanhas pela margem, agentes (ideias 4, 6, 14 e 19)</td><td>Precisa de histórico para ter o que comparar.</td><td>Economia sobre o orçado e custo por contrato melhoram mês a mês.</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </section>
+
+  <div class="grade-2">
+    <section class="card pilha">
+      <h2>Decisões que só a diretoria toma</h2>
+      <p>O limite que o engenheiro aprova sozinho e quem aprova acima dele.</p>
+      <p>A margem mínima e o desconto máximo do corretor.</p>
+      <p>Quais ações da IA sobem de “Sugerir” para “Sozinha”, e quando.</p>
+      <p>A validade de um preço na planilha (o exemplo usa 15 dias).</p>
+      <p>O número de WhatsApp oficial e quem pode falar por ele.</p>
+    </section>
+    <section class="card pilha">
+      <h2>Riscos para conferir antes</h2>
+      <p><b>WhatsApp.</b> O CotaBot usa hoje a automação do WhatsApp Web, que pode ter o número bloqueado. Para a incorporadora, o caminho é a API oficial da Meta, como no Garagem.</p>
+      <p><b>Ligação por voz.</b> A IA precisa se identificar como assistente virtual, e a gravação pede aviso à loja.</p>
+      <p><b>Estoque estimado.</b> É estimativa: sem a contagem do almoxarife ela se afasta do real. Por isso a IA pergunta antes de cotar.</p>
+      <p><b>Contabilidade de incorporação.</b> Separação por empreendimento e reconhecimento da receita dependem do contador.</p>
+      <p><b>Dados pessoais.</b> Nada de nome, telefone ou conversa de cliente vai para a IA ou para a Meta.</p>
+    </section>
+  </div>
+</main>
+</div>
+<script src="menu.js"></script>
+</body>
+</html>

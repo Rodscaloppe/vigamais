@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Diário de obra · Vigamais</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body data-pagina="diario">
+<div class="app">
+<nav id="menu" class="lado" aria-label="Menu principal"></nav>
+<main class="conteudo">
+  <header class="topo">
+    <div>
+      <div class="migalha">Obra · Jardim das Acácias</div>
+      <h1>Diário de obra</h1>
+      <p class="sub">O mestre responde 4 perguntas pelo WhatsApp no fim do dia. O diário se monta sozinho e alimenta o avanço físico e o estoque.</p>
+    </div>
+    <span class="selo ambar pilula">Dados de exemplo</span>
+  </header>
+
+  <section class="grade-kpi" aria-label="Resumo da semana">
+    <div class="card kpi"><span class="rotulo">Dias com diário na semana</span><span class="valor">5 <small>de 5</small></span><span class="sub">todos respondidos antes das 18h</span></div>
+    <div class="card kpi"><span class="rotulo">Efetivo médio</span><span class="valor">46</span><span class="sub">31 próprios, 15 de empreiteiras</span></div>
+    <div class="card kpi"><span class="rotulo">Dias parados por chuva</span><span class="valor">1</span><span class="alerta">a concretagem de quarta passou para quinta</span></div>
+    <div class="card kpi"><span class="rotulo">Avanço da semana</span><span class="valor">+1,4%</span><span class="sub">de 56,6% para 58,0%</span></div>
+  </section>
+
+  <div class="colunas">
+    <div class="col-1">
+      <article class="fone" aria-label="Conversa do mestre de obras com o agente do diário">
+        <header><b>Diário de obra</b><span>Mestre Antônio · Jardim das Acácias</span></header>
+        <div class="zap">
+          <div class="dia">Terça-feira</div>
+          <div class="z">Boa tarde, Antônio. Fechando o dia: <b>o que foi feito hoje?</b><time>16:45</time></div>
+          <div class="z eu"><span class="anexo">Áudio · 0:38</span>“Terminamos a armação da laje do oitavo, falta só conferir os negativos. Alvenaria do quinto tá na metade. Chegou o aço.”<time>16:52</time></div>
+          <div class="z">Anotei: armação da laje do 8º concluída, alvenaria do 5º em 50%, entrega de aço. <b>Quantas pessoas hoje?</b><time>16:52</time></div>
+          <div class="z eu">48. 32 nossos e 16 da empreiteira<time>16:53</time></div>
+          <div class="z"><b>Teve chuva ou alguma parada?</b><time>16:53</time></div>
+          <div class="z eu">Chuva das 14 às 15, parou a alvenaria externa<time>16:54</time></div>
+          <div class="z"><b>Me manda 3 fotos</b>: a laje armada, a alvenaria do 5º e o aço que chegou.<time>16:54</time></div>
+          <div class="z eu"><span class="anexo">3 fotos</span><time>17:01</time></div>
+          <div class="z">Diário de terça fechado. Falta de material para amanhã?<time>17:01</time></div>
+          <div class="z eu">Argamassa tá acabando, tem uns 110 sacos<time>17:02</time></div>
+          <div class="z">Registrei a contagem: 110 sacos de AC-II. Já avisei o Eng. Paulo e perguntei se cota.<time>17:02</time></div>
+        </div>
+      </article>
+    </div>
+
+    <div class="col-2 pilha-g">
+      <section class="card pilha">
+        <div class="entre" style="align-items:center"><h2>Diário de terça-feira</h2><span class="selo azul">Espera o ok do Eng. Paulo</span></div>
+        <dl>
+          <dt>Clima</dt><dd>sol, chuva das 14h às 15h</dd>
+          <dt>Efetivo</dt><dd>48 · 32 próprios, 16 de empreiteira</dd>
+          <dt>Parada</dt><dd>alvenaria externa, 1 hora</dd>
+          <dt>Entregas</dt><dd>aço CA-50, 3,8 t · pedido 305</dd>
+          <dt>Fotos</dt><dd>3 anexadas</dd>
+        </dl>
+        <div class="rolagem">
+        <table>
+          <thead><tr><th>Serviço</th><th>Etapa</th><th class="num">Ontem</th><th class="num">Hoje</th><th>Proposta da IA</th></tr></thead>
+          <tbody>
+            <tr><td><b>Armação da laje</b></td><td>Estrutura · 8º pav.</td><td class="num">85%</td><td class="num">100%</td><td>liberar a concretagem de quinta</td></tr>
+            <tr><td><b>Alvenaria</b></td><td>Alvenaria · 5º pav.</td><td class="num">35%</td><td class="num">50%</td><td>consumo de 310 blocos por dia, dentro do previsto</td></tr>
+          </tbody>
+        </table>
+        </div>
+        <div class="acoes"><button class="btn primario" type="button">Confirmar o avanço</button><button class="btn" type="button">Corrigir</button></div>
+        <p class="pequeno">O agente só propõe o avanço físico. Quem confirma é o engenheiro, e só então o número entra no orçado × realizado.</p>
+      </section>
+
+      <section class="card pilha">
+        <h2>O que o diário alimenta</h2>
+        <div class="entre"><span><b>Avanço físico da etapa</b><br><span class="pequeno">vai para <a href="obra.html">Obras e custos</a></span></span><span class="selo verde">automático depois do ok</span></div>
+        <div class="entre"><span><b>Estoque estimado</b><br><span class="pequeno">consumo do dia e contagem do mestre, usados pelo <a href="obra.html#faltas">assistente da obra</a></span></span><span class="selo verde">automático</span></div>
+        <div class="entre"><span><b>Medição das empreiteiras</b><br><span class="pequeno">o avanço por serviço vira o rascunho da medição do mês</span></span><span class="selo">ideia</span></div>
+        <div class="entre"><span><b>Fotos para os compradores</b><br><span class="pequeno">as aprovadas entram no resumo mensal da obra</span></span><span class="selo">ideia</span></div>
+        <div class="entre"><span><b>Prova de prazo</b><br><span class="pequeno">dias de chuva e paradas ficam registrados com data</span></span><span class="selo verde">automático</span></div>
+      </section>
+    </div>
+  </div>
+</main>
+</div>
+<script src="menu.js"></script>
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cesta de compras e curva ABC · Vigamais</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body data-pagina="cesta">
+<div class="app">
+<nav id="menu" class="lado" aria-label="Menu principal"></nav>
+<main class="conteudo">
+  <header class="topo">
+    <div>
+      <div class="migalha">Obra · cotação 248 · aço, cimento e agregados</div>
+      <h1>Cesta de compras e curva ABC</h1>
+      <p class="sub">O menor preço de cada item nem sempre é a compra mais barata: cada loja a mais é um frete a mais.</p>
+    </div>
+    <span class="selo ambar pilula">Dados de exemplo</span>
+  </header>
+
+  <section class="card pilha">
+    <h2>Frete de cada loja</h2>
+    <p class="pequeno">Mude os valores e veja a melhor divisão mudar. A conta testa todas as combinações possíveis de loja por item.</p>
+    <form id="fretes" class="form-grade" onsubmit="return false">
+      <div class="campo"><label for="fr-0">Depósito Aroeira (R$)</label><input id="fr-0" inputmode="decimal" value="0"></div>
+      <div class="campo"><label for="fr-1">Materiais Ipê (R$)</label><input id="fr-1" inputmode="decimal" value="380"></div>
+      <div class="campo"><label for="fr-2">Ferragens Jatobá (R$)</label><input id="fr-2" inputmode="decimal" value="250"></div>
+    </form>
+  </section>
+
+  <section class="grade-3" aria-label="Três formas de comprar">
+    <div class="resultado suave pilha"><span class="pequeno"><b>Tudo numa loja só</b></span><span class="valor" id="r-uma">R$ 0,00</span><span class="pequeno" id="r-uma-nota"></span></div>
+    <div class="resultado suave pilha"><span class="pequeno"><b>Menor preço de cada item</b></span><span class="valor" id="r-item">R$ 0,00</span><span class="pequeno" id="r-item-nota"></span></div>
+    <div class="resultado pilha"><span class="pequeno"><b>Melhor divisão, contando o frete</b></span><span class="valor" id="r-otimo">R$ 0,00</span><span class="pequeno" id="r-otimo-nota"></span></div>
+  </section>
+
+  <div class="colunas">
+    <section class="card col-2 pilha">
+      <h2>Quem fica com cada item na melhor divisão</h2>
+      <div class="rolagem">
+      <table>
+        <thead><tr><th>Item</th><th class="num">Quantidade</th><th class="num">Depósito Aroeira</th><th class="num">Materiais Ipê</th><th class="num">Ferragens Jatobá</th><th>Fica com</th><th class="num">Subtotal</th></tr></thead>
+        <tbody id="itens"></tbody>
+      </table>
+      </div>
+      <p class="pequeno" id="explica"></p>
+    </section>
+
+    <section class="card col-1 pilha">
+      <h2>Curva ABC desta compra</h2>
+      <div class="abc" id="abc" role="img" aria-label="Participação de cada item no valor da compra"></div>
+      <div id="abc-lista" class="pilha" style="gap:6px"></div>
+      <p class="pequeno divisor">Os itens da faixa A somam até 80% do valor, os da B vão até 95% e o resto é C. É neles que o robô insiste na negociação e pede uma loja a mais; nos da faixa C, fecha rápido com quem já vai entregar.</p>
+    </section>
+  </div>
+
+  <section class="card pilha">
+    <h2>Como isso entra no sistema</h2>
+    <p><b>No comparativo.</b> O botão “Aprovar o melhor por item” passa a ser “Aprovar a melhor divisão”, com o frete e o pedido mínimo de cada loja na conta.</p>
+    <p><b>Na negociação.</b> Quando falta pouco para uma loja levar o item, a IA diz o número: “o arame está R$ 60,00 mais barato na concorrente; cobrindo, fica tudo com você”.</p>
+    <p><b>Na obra.</b> Menos lojas é menos caminhão no canteiro e menos nota para conferir. Dá para limitar em “no máximo 2 entregas por pedido”.</p>
+  </section>
+</main>
+</div>
+<script src="menu.js"></script>
+<script src="planilha-dados.js"></script>
+<script>
+(function () {
+  var P = window.Planilha;
+  var LOJAS = ['Depósito Aroeira', 'Materiais Ipê', 'Ferragens Jatobá'];
+  // preço por unidade em cada loja; null = a loja não trabalha com o item
+  var ITENS = [
+    { nome: 'Aço CA-50 10 mm', qtd: 4200, un: 'kg', precos: [7.28, 7.45, 7.62] },
+    { nome: 'Cimento CP II-F 32, saco de 50 kg', qtd: 380, un: 'sacos', precos: [34.90, 33.80, 35.50] },
+    { nome: 'Areia média', qtd: 46, un: 'm³', precos: [152.00, 139.00, null] },
+    { nome: 'Brita 1', qtd: 38, un: 'm³', precos: [126.00, 129.00, 131.00] },
+    { nome: 'Arame recozido nº 18', qtd: 120, un: 'kg', precos: [13.90, 14.20, 13.40] }
+  ];
+
+  function el(tag, classe, texto) { var e = document.createElement(tag); if (classe) e.className = classe; if (texto !== undefined) e.textContent = texto; return e; }
+  function fretes() {
+    return [0, 1, 2].map(function (i) { var n = P.lerPreco(document.getElementById('fr-' + i).value); return n === null ? 0 : n; });
+  }
+  function custo(escolha, fr) {
+    var soma = 0, usadas = {};
+    for (var i = 0; i < ITENS.length; i++) {
+      var p = ITENS[i].precos[escolha[i]];
+      if (p === null) return null;
+      soma += p * ITENS[i].qtd; usadas[escolha[i]] = 1;
+    }
+    var frete = Object.keys(usadas).reduce(function (s, k) { return s + fr[k]; }, 0);
+    return { itens: soma, frete: frete, total: soma + frete, lojas: Object.keys(usadas).length };
+  }
+
+  function calcular() {
+    var fr = fretes();
+    // 1) tudo numa loja
+    var uma = null;
+    LOJAS.forEach(function (_, l) {
+      var c = custo(ITENS.map(function () { return l; }), fr);
+      if (c && (!uma || c.total < uma.c.total)) uma = { l: l, c: c };
+    });
+    // 2) menor preço de cada item, sem olhar o frete
+    var porItem = ITENS.map(function (it) {
+      var m = -1;
+      it.precos.forEach(function (p, l) { if (p !== null && (m < 0 || p < it.precos[m])) m = l; });
+      return m;
+    });
+    var cItem = custo(porItem, fr);
+    // 3) todas as combinações (3 lojas ^ 5 itens = 243)
+    var melhor = null, n = ITENS.length, total = Math.pow(LOJAS.length, n);
+    for (var k = 0; k < total; k++) {
+      var esc = [], x = k;
+      for (var i = 0; i < n; i++) { esc.push(x % LOJAS.length); x = Math.floor(x / LOJAS.length); }
+      var c = custo(esc, fr);
+      if (c && (!melhor || c.total < melhor.c.total - 0.004 || (Math.abs(c.total - melhor.c.total) < 0.005 && c.lojas < melhor.c.lojas))) melhor = { esc: esc, c: c };
+    }
+
+    document.getElementById('r-uma').textContent = P.reais(uma.c.total);
+    document.getElementById('r-uma-nota').textContent = LOJAS[uma.l] + ' · 1 entrega · frete ' + P.reais(uma.c.frete);
+    document.getElementById('r-item').textContent = P.reais(cItem.total);
+    document.getElementById('r-item-nota').textContent = cItem.lojas + ' lojas · frete ' + P.reais(cItem.frete) + ' · ' + P.reais(cItem.total - melhor.c.total) + ' acima da melhor divisão';
+    document.getElementById('r-otimo').textContent = P.reais(melhor.c.total);
+    document.getElementById('r-otimo-nota').textContent = melhor.c.lojas + (melhor.c.lojas === 1 ? ' loja' : ' lojas') + ' · frete ' + P.reais(melhor.c.frete) + ' · ' + P.reais(uma.c.total - melhor.c.total) + ' abaixo de comprar tudo numa loja';
+
+    var corpo = document.getElementById('itens'); corpo.textContent = '';
+    var trocas = [];
+    ITENS.forEach(function (it, i) {
+      var tr = el('tr');
+      tr.appendChild(el('td', '', it.nome)).style.fontWeight = '600';
+      tr.appendChild(el('td', 'num', P.numero(it.qtd) + ' ' + it.un));
+      it.precos.forEach(function (p, l) {
+        var td = el('td', 'num');
+        if (p === null) td.appendChild(el('span', 'pequeno', 'não trabalha'));
+        else if (l === melhor.esc[i]) td.appendChild(el('span', 'melhor', P.reais(p)));
+        else td.textContent = P.reais(p);
+        tr.appendChild(td);
+      });
+      tr.appendChild(el('td', '', LOJAS[melhor.esc[i]]));
+      tr.appendChild(el('td', 'num', P.reais(it.precos[melhor.esc[i]] * it.qtd)));
+      corpo.appendChild(tr);
+      if (melhor.esc[i] !== porItem[i]) {
+        var dif = (it.precos[melhor.esc[i]] - it.precos[porItem[i]]) * it.qtd;
+        trocas.push(it.nome + ' fica na loja ' + LOJAS[melhor.esc[i]] + ' mesmo custando ' + P.reais(dif) + ' a mais que na loja ' + LOJAS[porItem[i]]);
+      }
+    });
+    var trF = el('tr', 'total');
+    var tdF = el('td', '', 'Itens ' + P.reais(melhor.c.itens) + ' + frete ' + P.reais(melhor.c.frete)); tdF.colSpan = 6; trF.appendChild(tdF);
+    trF.appendChild(el('td', 'num', P.reais(melhor.c.total)));
+    corpo.appendChild(trF);
+    document.getElementById('explica').textContent = trocas.length
+      ? 'Por que não é o menor preço de cada item: ' + trocas.join('; ') + ', porque assim se paga um frete a menos.'
+      : 'Com estes fretes, a melhor divisão é a mesma do menor preço de cada item.';
+
+    // curva ABC pelo valor de cada item na melhor divisão
+    var valores = ITENS.map(function (it, i) { return { nome: it.nome, v: it.precos[melhor.esc[i]] * it.qtd }; }).sort(function (a, b) { return b.v - a.v; });
+    var soma = valores.reduce(function (s, x) { return s + x.v; }, 0), acum = 0;
+    var cores = { A: '#17212B', B: '#1D4E89', C: '#6B7785' };
+    var barra = document.getElementById('abc'), lista = document.getElementById('abc-lista'); barra.textContent = ''; lista.textContent = '';
+    valores.forEach(function (x) {
+      acum += x.v / soma * 100;
+      var faixa = acum <= 80 ? 'A' : (acum <= 95 ? 'B' : 'C');
+      var s = el('span', '', x.v / soma > 0.09 ? faixa + ' · ' + Math.round(x.v / soma * 100) + '%' : '');
+      s.style.width = (x.v / soma * 100) + '%'; s.style.background = cores[faixa];
+      barra.appendChild(s);
+      var linha = el('div', 'entre');
+      var esq = el('span'); esq.appendChild(el('span', 'selo ' + (faixa === 'A' ? 'escuro' : faixa === 'B' ? 'azul' : ''), faixa)); esq.appendChild(document.createTextNode(' ' + x.nome));
+      linha.appendChild(esq);
+      linha.appendChild(el('b', '', P.reais(x.v) + ' · ' + P.numero(x.v / soma * 100, 1) + '%'));
+      lista.appendChild(linha);
+    });
+  }
+
+  [0, 1, 2].forEach(function (i) { document.getElementById('fr-' + i).addEventListener('input', calcular); });
+  calcular();
+})();
+</script>
+</body>
+</html>

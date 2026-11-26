@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ranking de fornecedores · Vigamais</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body data-pagina="fornecedores">
+<div class="app">
+<nav id="menu" class="lado" aria-label="Menu principal"></nav>
+<main class="conteudo">
+  <header class="topo">
+    <div>
+      <div class="migalha">Obra · calculado a partir da planilha de cotações</div>
+      <h1>Ranking de fornecedores</h1>
+      <p class="sub">Quem a IA chama primeiro. A nota muda sozinha a cada preço novo que entra na planilha.</p>
+    </div>
+    <div class="acoes">
+      <span class="selo ambar pilula">Dados de exemplo</span>
+      <a class="btn" href="planilha.html">Abrir a planilha</a>
+    </div>
+  </header>
+
+  <section class="grade-kpi" aria-label="Resumo">
+    <div class="card kpi escuro"><span class="rotulo">Melhor nota</span><span class="valor" id="k-top">0</span><span class="nota" id="k-top-nome"></span></div>
+    <div class="card kpi"><span class="rotulo">Lojas avaliadas</span><span class="valor" id="k-lojas">0</span><span class="sub" id="k-precos"></span></div>
+    <div class="card kpi"><span class="rotulo">Responde mais rápido</span><span class="valor" id="k-rapida">0</span><span class="sub" id="k-rapida-nome"></span></div>
+    <div class="card kpi"><span class="rotulo">Entrega mais no prazo</span><span class="valor" id="k-pontual">0</span><span class="sub" id="k-pontual-nome"></span></div>
+  </section>
+
+  <section class="card pilha">
+    <div class="entre" style="flex-wrap:wrap;align-items:center">
+      <h2>Ranking</h2>
+      <div class="legenda">
+        <span><i style="background:var(--tinta)"></i>Preço · até 50</span>
+        <span><i style="background:var(--azul)"></i>Resposta · até 30</span>
+        <span><i style="background:#8A95A1"></i>Volume · até 20</span>
+      </div>
+    </div>
+    <div class="rolagem">
+    <table>
+      <thead><tr><th>Posição</th><th>Loja</th><th>Nota</th><th class="num">Cotações</th><th class="num">Ganhou o menor preço</th><th class="num">Preço × média</th><th class="num">Responde</th><th class="num">Tempo</th><th class="num">Entrega no prazo</th><th>Selo</th></tr></thead>
+      <tbody id="ranking"></tbody>
+    </table>
+    </div>
+    <p class="pequeno">Nota de 0 a 100, com a fórmula do ranking do CotaBot: preço (quantas vezes teve o menor preço e quanto fica abaixo da média), resposta (quantas vezes responde) e volume (quantas cotações já fez). “Preço × média” negativo é bom: a loja fica abaixo da média dos concorrentes.</p>
+  </section>
+
+  <div class="grade-2">
+    <section class="card pilha">
+      <h2>O que a IA faz com a nota</h2>
+      <p>Chama primeiro as lojas de melhor nota que vendem o material e para em 4, para não incomodar quem quase nunca leva.</p>
+      <p>Para a loja que demora, já agenda a ligação de voz logo depois da mensagem, em vez de esperar 20 minutos.</p>
+      <p>Para quem ganha sempre no preço mas atrasa a entrega, avisa no comparativo: “mais barata, mas 2 das últimas 5 entregas chegaram fora do dia”.</p>
+    </section>
+    <section class="card pilha">
+      <h2>Ideias para melhorar a nota</h2>
+      <p><b>Pontualidade na conta.</b> Hoje a entrega no prazo só aparece na tabela. A proposta é ela valer pontos, medida pela data da nota conferida contra a data combinada no pedido.</p>
+      <p><b>Qualidade do que chegou.</b> O almoxarife responde pelo WhatsApp “chegou certo?” e a devolução ou a falta tira pontos.</p>
+      <p><b>Preço que não se sustenta.</b> Loja que cota baixo e sobe na hora do pedido perde pontos: a planilha já guarda o 1º e o 2º valor para provar.</p>
+      <p><b>Selo para a loja.</b> Mandar à loja a posição dela no mês (“você foi a 2ª em preço de aço”) é um incentivo que não custa nada.</p>
+    </section>
+  </div>
+</main>
+</div>
+<script src="menu.js"></script>
+<script src="planilha-dados.js"></script>
+<script>
+(function () {
+  var P = window.Planilha;
+  var grupos = P.grupos(P.carregar());
+  function el(tag, classe, texto) { var e = document.createElement(tag); if (classe) e.className = classe; if (texto !== undefined) e.textContent = texto; return e; }
+
+  // média do último preço de cada material, para comparar cada loja com os concorrentes
+  var porMaterial = {};
+  grupos.forEach(function (g) { var m = g.material.toLowerCase(); (porMaterial[m] = porMaterial[m] || []).push(g); });
+
+  var lojas = {};
+  grupos.forEach(function (g) {
+    var L = lojas[g.loja] = lojas[g.loja] || { nome: g.loja, cotacoes: 0, materiais: 0, vitorias: 0, disputas: 0, somaDif: 0 };
+    L.cotacoes += g.valores.length; L.materiais++;
+    var rivais = porMaterial[g.material.toLowerCase()];
+    if (rivais.length > 1) {
+      L.disputas++;
+      var media = rivais.reduce(function (s, r) { return s + r.ultimo.preco; }, 0) / rivais.length;
+      var menor = Math.min.apply(null, rivais.map(function (r) { return r.ultimo.preco; }));
+      if (g.ultimo.preco === menor) L.vitorias++;
+      L.somaDif += (media - g.ultimo.preco) / media * 100; // positivo = abaixo da média
+    }
+  });
+
+  var lista = Object.keys(lojas).map(function (n) {
+    var L = lojas[n], meta = P.LOJAS[n] || { resposta: 70, minutos: 30, pontualidade: 85 };
+    L.taxaVitoria = L.disputas ? L.vitorias / L.disputas * 100 : 0;
+    L.economia = L.disputas ? L.somaDif / L.disputas : 0;
+    L.resposta = meta.resposta; L.minutos = meta.minutos; L.pontualidade = meta.pontualidade;
+    L.pPreco = Math.min(50, Math.max(0, L.taxaVitoria * 0.35 + Math.max(0, L.economia + 10) * 1.5));
+    L.pResp = L.resposta / 100 * 30;
+    L.pVol = Math.min(20, L.cotacoes / 4 * 20);
+    L.nota = Math.min(100, Math.max(10, Math.round(L.pPreco + L.pResp + L.pVol)));
+    L.selo = L.nota >= 85 ? ['Parceiro ouro', 'escuro'] : L.nota >= 70 ? ['Competitivo', 'verde'] : L.nota >= 50 ? ['Regular', 'azul'] : ['Em observação', 'laranja'];
+    return L;
+  }).sort(function (a, b) { return b.nota - a.nota || b.taxaVitoria - a.taxaVitoria; });
+
+  var corpo = document.getElementById('ranking');
+  lista.forEach(function (L, i) {
+    var tr = el('tr');
+    tr.appendChild(el('td', '', (i + 1) + 'º')).style.fontWeight = '800';
+    var tdN = el('td'); tdN.appendChild(el('b', '', L.nome)); tdN.appendChild(document.createElement('br')); tdN.appendChild(el('span', 'pequeno', L.materiais + (L.materiais === 1 ? ' material' : ' materiais'))); tr.appendChild(tdN);
+    var tdNota = el('td'), barra = el('div', 'nota-barra'), trilho = el('span', 'trilho');
+    [['p', L.pPreco], ['r', L.pResp], ['v', L.pVol]].forEach(function (x) { var i2 = el('i', x[0]); i2.style.width = x[1] + '%'; trilho.appendChild(i2); });
+    barra.appendChild(trilho); barra.appendChild(el('b', '', String(L.nota))); tdNota.appendChild(barra); tr.appendChild(tdNota);
+    tr.appendChild(el('td', 'num', String(L.cotacoes)));
+    tr.appendChild(el('td', 'num', L.disputas ? L.vitorias + ' de ' + L.disputas : 'sem concorrente'));
+    tr.appendChild(el('td', 'num', L.disputas ? (L.economia > 0 ? '−' : L.economia < 0 ? '+' : '') + P.numero(Math.abs(L.economia), 1) + '%' : 'sem concorrente'));
+    tr.appendChild(el('td', 'num', L.resposta + '%'));
+    tr.appendChild(el('td', 'num', L.minutos + ' min'));
+    tr.appendChild(el('td', 'num', L.pontualidade + '%'));
+    var tdS = el('td'); tdS.appendChild(el('span', 'selo ' + L.selo[1], L.selo[0])); tr.appendChild(tdS);
+    corpo.appendChild(tr);
+  });
+
+  var rapida = lista.slice().sort(function (a, b) { return a.minutos - b.minutos; })[0];
+  var pontual = lista.slice().sort(function (a, b) { return b.pontualidade - a.pontualidade; })[0];
+  document.getElementById('k-top').textContent = lista[0].nota;
+  document.getElementById('k-top-nome').textContent = lista[0].nome;
+  document.getElementById('k-lojas').textContent = lista.length;
+  document.getElementById('k-precos').textContent = grupos.reduce(function (s, g) { return s + g.valores.length; }, 0) + ' preços na planilha';
+  document.getElementById('k-rapida').textContent = rapida.minutos + ' min';
+  document.getElementById('k-rapida-nome').textContent = rapida.nome;
+  document.getElementById('k-pontual').textContent = pontual.pontualidade + '%';
+  document.getElementById('k-pontual-nome').textContent = pontual.nome;
+})();
+</script>
+</body>
+</html>

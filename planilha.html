@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Planilha de cotações · Vigamais</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body data-pagina="planilha">
+<div class="app">
+<nav id="menu" class="lado" aria-label="Menu principal"></nav>
+<main class="conteudo">
+  <header class="topo">
+    <div>
+      <div class="migalha">Obra · memória de preços de todas as obras</div>
+      <h1>Planilha de cotações</h1>
+      <p class="sub">Todo preço que chega fica guardado aqui. Antes de cotar de novo, a IA e a equipe olham a planilha.</p>
+    </div>
+    <div class="acoes">
+      <span class="selo ambar pilula">Dados de exemplo</span>
+      <button class="btn" type="button" id="exportar">Exportar CSV</button>
+    </div>
+  </header>
+
+  <section class="grade-kpi" aria-label="Resumo da planilha">
+    <div class="card kpi"><span class="rotulo">Preços guardados</span><span class="valor" id="k-registros">0</span><span class="sub">cada valor recebido, com a data</span></div>
+    <div class="card kpi"><span class="rotulo">Materiais</span><span class="valor" id="k-materiais">0</span><span class="sub" id="k-lojas">em 0 lojas</span></div>
+    <div class="card kpi"><span class="rotulo">Com dois valores ou mais</span><span class="valor" id="k-dois">0</span><span class="sub">mesmo material, mesma loja</span></div>
+    <div class="card kpi escuro"><span class="rotulo">Prontos para reaproveitar</span><span class="valor" id="k-validos">0</span><span class="nota">preço com menos de 15 dias: não precisa cotar</span></div>
+  </section>
+
+  <section class="card pilha">
+    <h2>Registrar uma cotação</h2>
+    <p class="pequeno">É o que o robô faz sozinho quando uma loja responde. Aqui dá para lançar à mão um preço que chegou por telefone ou no balcão.</p>
+    <form id="form" class="form-grade">
+      <div class="campo"><label for="f-material">Material</label><input id="f-material" list="lista-materiais" required autocomplete="off" placeholder="Ex.: Cimento CP II-F 32"></div>
+      <div class="campo"><label for="f-un">Unidade</label><input id="f-un" required placeholder="saco, kg, m³"></div>
+      <div class="campo"><label for="f-loja">Loja</label><input id="f-loja" list="lista-lojas" required autocomplete="off" placeholder="Ex.: Materiais Ipê"></div>
+      <div class="campo"><label for="f-preco">Preço por unidade (R$)</label><input id="f-preco" required inputmode="decimal" placeholder="34,90"></div>
+      <div class="campo"><label for="f-data">Orçado em</label><input id="f-data" type="date" required></div>
+      <div class="campo"><label for="f-origem">Como chegou</label>
+        <select id="f-origem"><option>WhatsApp · texto</option><option>WhatsApp · áudio</option><option>Orçamento em PDF</option><option>Ligação da IA</option><option>Digitado</option></select>
+      </div>
+      <button class="btn primario" type="submit">Guardar na planilha</button>
+    </form>
+    <datalist id="lista-materiais"></datalist>
+    <datalist id="lista-lojas"></datalist>
+    <div class="dica" id="dica" role="status" aria-live="polite"></div>
+    <div class="dica ok" id="aviso" role="status" aria-live="polite"></div>
+  </section>
+
+  <section class="card pilha">
+    <div class="entre" style="flex-wrap:wrap;align-items:center">
+      <div>
+        <h2>Todas as cotações</h2>
+        <p class="pequeno" id="contagem"></p>
+      </div>
+      <div class="acoes" aria-label="Abas">
+        <button class="btn ativo" type="button" id="aba-todas" aria-pressed="true">Todas as cotações</button>
+        <button class="btn" type="button" id="aba-melhor" aria-pressed="false">Melhor cenário</button>
+      </div>
+    </div>
+    <div class="filtros">
+      <label for="busca" style="position:absolute;left:-9999px">Buscar material ou loja</label>
+      <input id="busca" type="search" placeholder="Buscar material ou loja">
+      <label for="situacao" style="position:absolute;left:-9999px">Situação</label>
+      <select id="situacao"><option value="todas">Todas as situações</option><option value="valida">Só as que dá para reaproveitar</option><option value="vencida">Só as que precisam cotar de novo</option></select>
+    </div>
+    <div class="rolagem">
+    <table>
+      <thead><tr><th>Material</th><th>Loja</th><th>1º valor</th><th>2º valor</th><th>Variação</th><th>Vale até</th><th>Situação</th><th>Histórico</th></tr></thead>
+      <tbody id="linhas"></tbody>
+    </table>
+    </div>
+    <p class="pequeno">Cada linha é um material numa loja. O 1º valor é o primeiro preço que a loja passou; o 2º é o mais recente. Com três ou mais, “ver todos” abre a lista completa. O menor preço válido de cada material aparece destacado.</p>
+    <div><button class="link-btn" type="button" id="restaurar">Restaurar os dados de exemplo</button></div>
+  </section>
+
+  <section class="card pilha">
+    <h2>Como a planilha evita trabalho repetido</h2>
+    <p><b>Antes de cotar.</b> Quando alguém pede um material, a IA procura aqui. Se já existem preços com menos de 15 dias, ela mostra o melhor e pergunta se usa esse, em vez de chamar as lojas de novo.</p>
+    <p><b>Depois de 15 dias.</b> O preço continua guardado, mas marcado como “Cotar de novo”. Quando a loja responde, o valor novo entra como 2º valor, com a data, ao lado do primeiro.</p>
+    <p><b>Nada se apaga.</b> Um preço novo nunca substitui o antigo: o histórico mostra se a loja subiu ou baixou e quando.</p>
+    <p class="pequeno divisor">Nesta tela de exemplo os dados ficam guardados no navegador deste computador. No sistema, ficam no banco de dados, com a obra, a etapa e quem registrou.</p>
+  </section>
+</main>
+</div>
+<script src="menu.js"></script>
+<script src="planilha-dados.js"></script>
+<script>
+(function () {
+  // Dados, datas e agrupamento vêm de planilha-dados.js (compartilhado com as outras telas).
+  var P = window.Planilha;
+  var HOJE = P.HOJE, dataBR = P.dataBR, reais = P.reais, lerPreco = P.lerPreco, exemplo = P.exemplo, chave = P.chave;
+  var cotacoes = P.carregar();
+  var aba = 'todas';
+  var abertos = {};
+  function salvar() { P.salvar(cotacoes); }
+  function grupos() { return P.grupos(cotacoes); }
+
+  // ---------- montagem da tela ----------
+  function el(tag, classe, texto) {
+    var e = document.createElement(tag);
+    if (classe) e.className = classe;
+    if (texto !== undefined) e.textContent = texto;
+    return e;
+  }
+  function celulaValor(c, destaque) {
+    var td = el('td', 'valor-celula');
+    var b = el('b');
+    if (destaque) { var s = el('span', 'melhor', reais(c.preco)); s.style.fontSize = '15px'; s.style.color = '#fff'; b.appendChild(s); }
+    else b.textContent = reais(c.preco);
+    td.appendChild(b);
+    td.appendChild(el('span', '', 'orçado em ' + dataBR(c.data)));
+    td.appendChild(document.createElement('br'));
+    td.appendChild(el('span', '', c.origem));
+    return td;
+  }
+
+  function desenhar() {
+    var lista = grupos();
+    var busca = document.getElementById('busca').value.trim().toLowerCase();
+    var situacao = document.getElementById('situacao').value;
+    var visiveis = lista.filter(function (g) {
+      if (aba === 'melhor' && !g.melhor) return false;
+      if (situacao === 'valida' && !g.valida) return false;
+      if (situacao === 'vencida' && g.valida) return false;
+      if (busca && (g.material + ' ' + g.loja).toLowerCase().indexOf(busca) < 0) return false;
+      return true;
+    });
+
+    var corpo = document.getElementById('linhas');
+    corpo.textContent = '';
+    visiveis.forEach(function (g) {
+      var tr = el('tr');
+      var tdM = el('td'); tdM.appendChild(el('b', '', g.material)); tdM.appendChild(document.createElement('br')); tdM.appendChild(el('span', 'pequeno', 'por ' + g.un));
+      tr.appendChild(tdM);
+      tr.appendChild(el('td', '', g.loja));
+
+      var temDois = g.valores.length > 1;
+      tr.appendChild(celulaValor(g.primeiro, !temDois && g.melhor));
+      if (temDois) tr.appendChild(celulaValor(g.ultimo, g.melhor));
+      else tr.appendChild(el('td', 'pequeno', 'só um valor até agora'));
+
+      var tdV = el('td');
+      if (temDois) {
+        var dif = g.ultimo.preco - g.primeiro.preco;
+        var pct = (dif / g.primeiro.preco) * 100;
+        var txt = (dif > 0 ? '+' : dif < 0 ? '−' : '') + Math.abs(pct).toFixed(1).replace('.', ',') + '%';
+        var selo = el('span', 'selo ' + (dif < 0 ? 'verde' : dif > 0 ? 'laranja' : ''), dif === 0 ? 'igual' : (dif < 0 ? 'baixou ' : 'subiu ') + txt);
+        tdV.appendChild(selo);
+        tdV.appendChild(document.createElement('br'));
+        tdV.appendChild(el('span', 'pequeno', (dif > 0 ? '+' : dif < 0 ? '−' : '') + reais(Math.abs(dif)) + ' por ' + g.un));
+      } else tdV.appendChild(el('span', 'pequeno', 'sem comparação'));
+      tr.appendChild(tdV);
+
+      tr.appendChild(el('td', '', dataBR(g.valeAte)));
+      var tdS = el('td');
+      tdS.appendChild(el('span', 'selo ' + (g.valida ? 'verde' : 'laranja'), g.valida ? 'Reaproveitar' : 'Cotar de novo'));
+      tr.appendChild(tdS);
+
+      var tdH = el('td');
+      if (g.valores.length > 2) {
+        var botao = el('button', 'link-btn', abertos[g.k] ? 'fechar' : 'ver todos (' + g.valores.length + ')');
+        botao.type = 'button';
+        botao.setAttribute('aria-expanded', abertos[g.k] ? 'true' : 'false');
+        botao.addEventListener('click', function () { abertos[g.k] = !abertos[g.k]; desenhar(); });
+        tdH.appendChild(botao);
+      } else tdH.appendChild(el('span', 'pequeno', g.valores.length + (g.valores.length === 1 ? ' valor' : ' valores')));
+      tr.appendChild(tdH);
+      corpo.appendChild(tr);
+
+      if (abertos[g.k] && g.valores.length > 2) {
+        var trH = el('tr', 'historico');
+        var td = el('td'); td.colSpan = 8;
+        g.valores.forEach(function (c, i) {
+          td.appendChild(el('div', '', (i + 1) + 'º valor: ' + reais(c.preco) + ' · orçado em ' + dataBR(c.data) + ' · ' + c.origem));
+        });
+        trH.appendChild(td);
+        corpo.appendChild(trH);
+      }
+    });
+    if (!visiveis.length) {
+      var vazio = el('tr'); var tdVz = el('td', 'pequeno', 'Nenhuma cotação com esse filtro.'); tdVz.colSpan = 8; vazio.appendChild(tdVz); corpo.appendChild(vazio);
+    }
+
+    // resumo
+    var materiais = {}, lojas = {};
+    lista.forEach(function (g) { materiais[g.material.toLowerCase()] = 1; lojas[g.loja.toLowerCase()] = 1; });
+    document.getElementById('k-registros').textContent = cotacoes.length;
+    document.getElementById('k-materiais').textContent = Object.keys(materiais).length;
+    document.getElementById('k-lojas').textContent = 'em ' + Object.keys(lojas).length + ' lojas';
+    document.getElementById('k-dois').textContent = lista.filter(function (g) { return g.valores.length > 1; }).length;
+    document.getElementById('k-validos').textContent = lista.filter(function (g) { return g.valida; }).length;
+    document.getElementById('contagem').textContent = visiveis.length + ' de ' + lista.length + ' linhas (material × loja) · ' + cotacoes.length + ' preços guardados';
+
+    // sugestões do formulário
+    preencherLista('lista-materiais', lista.map(function (g) { return g.material; }));
+    preencherLista('lista-lojas', lista.map(function (g) { return g.loja; }));
+  }
+  function preencherLista(id, nomes) {
+    var dl = document.getElementById(id); dl.textContent = '';
+    var vistos = {};
+    nomes.forEach(function (n) { if (vistos[n]) return; vistos[n] = 1; var o = el('option'); o.value = n; dl.appendChild(o); });
+  }
+
+  // ---------- "antes de cotar": avisa se já existe preço válido ----------
+  function dicaMaterial() {
+    var material = document.getElementById('f-material').value.trim().toLowerCase();
+    var dica = document.getElementById('dica');
+    dica.textContent = '';
+    if (!material) return;
+    var doMaterial = grupos().filter(function (g) { return g.material.trim().toLowerCase() === material; });
+    if (!doMaterial.length) return;
+    var un = document.getElementById('f-un'); if (!un.value) un.value = doMaterial[0].un;
+    var validos = doMaterial.filter(function (g) { return g.valida; });
+    if (validos.length) {
+      var m = validos.filter(function (g) { return g.melhor; })[0] || validos[0];
+      dica.textContent = 'Não precisa cotar de novo: já há ' + validos.length + (validos.length === 1 ? ' preço válido' : ' preços válidos') + ' para este material. O menor é ' + reais(m.ultimo.preco) + ' por ' + m.un + ', da loja ' + m.loja + ', orçado em ' + dataBR(m.ultimo.data) + ' (vale até ' + dataBR(m.valeAte) + ').';
+    } else {
+      var u = doMaterial[0];
+      dica.textContent = 'Os preços guardados deste material venceram. O último foi ' + reais(u.ultimo.preco) + ' da loja ' + u.loja + ', em ' + dataBR(u.ultimo.data) + '. Vale cotar de novo: o valor novo entra como 2º valor.';
+    }
+  }
+
+  // ---------- eventos ----------
+  document.getElementById('f-data').value = HOJE;
+  document.getElementById('f-data').max = HOJE;
+  document.getElementById('f-material').addEventListener('input', dicaMaterial);
+  document.getElementById('busca').addEventListener('input', desenhar);
+  document.getElementById('situacao').addEventListener('change', desenhar);
+
+  function trocarAba(nova) {
+    aba = nova;
+    var t = document.getElementById('aba-todas'), m = document.getElementById('aba-melhor');
+    t.classList.toggle('ativo', nova === 'todas'); t.setAttribute('aria-pressed', nova === 'todas');
+    m.classList.toggle('ativo', nova === 'melhor'); m.setAttribute('aria-pressed', nova === 'melhor');
+    desenhar();
+  }
+  document.getElementById('aba-todas').addEventListener('click', function () { trocarAba('todas'); });
+  document.getElementById('aba-melhor').addEventListener('click', function () { trocarAba('melhor'); });
+
+  document.getElementById('form').addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    var aviso = document.getElementById('aviso');
+    var material = document.getElementById('f-material').value.trim();
+    var loja = document.getElementById('f-loja').value.trim();
+    var un = document.getElementById('f-un').value.trim();
+    var data = document.getElementById('f-data').value;
+    var preco = lerPreco(document.getElementById('f-preco').value);
+    if (!material || !loja || !un || !data) return;
+    if (preco === null) { aviso.textContent = 'Preço inválido. Use o formato 34,90.'; return; }
+    if (data > HOJE) { aviso.textContent = 'A data não pode ser no futuro.'; return; }
+
+    var anteriores = cotacoes.filter(function (c) { return chave(c.material, c.loja) === chave(material, loja); });
+    // usa a grafia que já está na planilha, para não criar a mesma linha duas vezes
+    if (anteriores.length) { material = anteriores[0].material; loja = anteriores[0].loja; un = anteriores[0].un; }
+    var seq = cotacoes.reduce(function (m, c) { return Math.max(m, c.seq); }, 0) + 1;
+    cotacoes.push({ seq: seq, material: material, un: un, loja: loja, preco: preco, data: data, origem: document.getElementById('f-origem').value });
+    salvar();
+
+    if (anteriores.length) {
+      anteriores.sort(function (a, b) { return a.data === b.data ? a.seq - b.seq : (a.data < b.data ? -1 : 1); });
+      var p = anteriores[0];
+      aviso.textContent = 'Guardado como ' + (anteriores.length + 1) + 'º valor de ' + material + ' na loja ' + loja + ': o 1º foi ' + reais(p.preco) + ' em ' + dataBR(p.data) + '; este é ' + reais(preco) + ' em ' + dataBR(data) + '.';
+    } else {
+      aviso.textContent = 'Guardado: 1º valor de ' + material + ' na loja ' + loja + ', ' + reais(preco) + ' em ' + dataBR(data) + '.';
+    }
+    document.getElementById('f-preco').value = '';
+    document.getElementById('dica').textContent = '';
+    desenhar();
+  });
+
+  document.getElementById('restaurar').addEventListener('click', function () {
+    cotacoes = exemplo(); abertos = {}; salvar();
+    document.getElementById('aviso').textContent = 'Dados de exemplo restaurados.';
+    desenhar();
+  });
+
+  document.getElementById('exportar').addEventListener('click', function () {
+    var linhas = [['Material', 'Unidade', 'Loja', '1º valor', 'Orçado em', '2º valor', 'Orçado em', 'Vale até', 'Situação']];
+    grupos().forEach(function (g) {
+      var dois = g.valores.length > 1;
+      linhas.push([g.material, g.un, g.loja, g.primeiro.preco.toFixed(2).replace('.', ','), dataBR(g.primeiro.data),
+        dois ? g.ultimo.preco.toFixed(2).replace('.', ',') : '', dois ? dataBR(g.ultimo.data) : '', dataBR(g.valeAte), g.valida ? 'Reaproveitar' : 'Cotar de novo']);
+    });
+    var csv = '﻿' + linhas.map(function (l) {
+      return l.map(function (v) {
+        var t = String(v);
+        if (/^[=+\-@]/.test(t) && !/^-?\d/.test(t)) t = "'" + t; // não deixa o Excel ler como fórmula
+        return '"' + t.replace(/"/g, '""') + '"';
+      }).join(';');
+    }).join('\r\n');
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
+    a.download = 'planilha-de-cotacoes-' + HOJE + '.csv';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+  });
+
+  desenhar();
+})();
+</script>
+</body>
+</html>

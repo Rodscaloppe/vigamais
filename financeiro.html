@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Financeiro e contabilidade · Vigamais</title>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body data-pagina="financeiro">
+<div class="app">
+<nav id="menu" class="lado" aria-label="Menu principal"></nav>
+<main class="conteudo">
+  <header class="topo">
+    <div>
+      <div class="migalha">Gestão · novembro de 2026</div>
+      <h1>Financeiro e contabilidade</h1>
+      <p class="sub">Compras da obra e vendas das unidades já chegam aqui como contas e lançamentos, sem digitar de novo</p>
+    </div>
+    <span class="selo ambar pilula">Dados de exemplo</span>
+  </header>
+
+  <div class="acoes" aria-label="Abas">
+    <span class="btn primario">Contas a pagar e receber</span>
+    <span class="btn">Fluxo de caixa</span>
+    <span class="btn">Caixa e bancos</span>
+    <span class="btn">DRE</span>
+    <span class="btn">Balanço</span>
+    <span class="btn">Fechamento do mês</span>
+  </div>
+
+  <section class="grade-kpi" aria-label="Resumo">
+    <div class="card kpi"><span class="rotulo">Saldo em caixa e bancos</span><span class="valor">R$ 3,42 mi</span><span class="sub">em 4 contas, calculado pela contabilidade</span></div>
+    <div class="card kpi"><span class="rotulo">A receber em 30 dias</span><span class="valor">R$ 1,18 mi</span><span class="sub">sinais, parcelas e repasses de banco</span></div>
+    <div class="card kpi"><span class="rotulo">A pagar em 30 dias</span><span class="valor">R$ 1,46 mi</span><span class="alerta">R$ 86 mil vencem esta semana</span></div>
+    <div class="card kpi escuro"><span class="rotulo">Entradas − saídas do mês</span><span class="valor">+R$ 162 mil</span><span class="nota">somando os 3 empreendimentos</span></div>
+  </section>
+
+  <div class="grade-2">
+    <section class="card pilha">
+      <h2>A pagar</h2>
+      <div class="rolagem">
+      <table>
+        <thead><tr><th>Conta</th><th>De onde veio</th><th>Vence</th><th class="num">Valor</th></tr></thead>
+        <tbody>
+          <tr><td><b>Locação de grua</b><br><span class="pequeno">Acácias · Estrutura</span></td><td>Custo lançado na obra</td><td>05/12</td><td class="num">R$ 18.500,00</td></tr>
+          <tr><td><b>Depósito Aroeira · aço e brita</b><br><span class="pequeno">Acácias · Estrutura · 8º pav.</span></td><td><a href="suprimentos.html">Cotação 248</a></td><td>24/12</td><td class="num">R$ 35.364,00</td></tr>
+          <tr><td><b>Concreteira Aroeira · 42 m³</b><br><span class="pequeno">Acácias · Estrutura · 8º pav.</span></td><td><a href="obra.html#cotacoes">Cotação 251 · pedido 312</a></td><td>24/12</td><td class="num">R$ 20.916,00</td></tr>
+          <tr><td><b>Anúncios da Meta · novembro</b><br><span class="pequeno">Comercial · sem obra</span></td><td><a href="campanhas.html">Gasto lido da Meta</a></td><td>10/12</td><td class="num">R$ 27.600,00</td></tr>
+          <tr><td><b>Comissão · Marina · apto 508</b><br><span class="pequeno">Acácias · Comercial</span></td><td><a href="contratos.html">Contrato de 24/11</a></td><td>após o sinal</td><td class="num">R$ 11.960,00</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </section>
+
+    <section class="card pilha">
+      <h2>A receber</h2>
+      <div class="rolagem">
+      <table>
+        <thead><tr><th>Conta</th><th>De onde veio</th><th>Vence</th><th class="num">Valor</th></tr></thead>
+        <tbody>
+          <tr><td><b>Sinal · Bruno · apto 508</b><br><span class="pequeno">Acácias</span></td><td><a href="contratos.html">Contrato de 24/11</a></td><td>29/11</td><td class="num">R$ 59.800,00</td></tr>
+          <tr><td><b>Parcela 1 de 36 · Sérgio · apto 302</b><br><span class="pequeno">Acácias</span></td><td>Contrato de 10/11</td><td>10/12</td><td class="num">R$ 1.588,89</td></tr>
+          <tr><td><b>Repasse do banco · Aline · apto 1104</b><br><span class="pequeno">Acácias · espera o laudo</span></td><td>Contrato de 28/10</td><td>após o registro</td><td class="num">R$ 551.200,00</td></tr>
+          <tr><td><b>Parcela 2 de 24 · Marcos · lote 17</b><br><span class="pequeno">Vila Serena</span></td><td>Contrato de 05/11</td><td>05/12</td><td class="num">R$ 5.400,00</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="pequeno">A baixa escolhe a conta de banco e aceita juros, multa e desconto. Estornar a baixa devolve a conta para em aberto.</p>
+    </section>
+  </div>
+
+  <div class="colunas">
+    <section class="card col-2 pilha">
+      <h2>Entradas e saídas por empreendimento no mês</h2>
+      <div class="rolagem">
+      <table>
+        <thead><tr><th>Empreendimento</th><th class="num">Recebido</th><th class="num">Pago em obra</th><th class="num">Comercial</th><th class="num">Saldo</th></tr></thead>
+        <tbody>
+          <tr><td><b>Residencial Jardim das Acácias</b></td><td class="num">R$ 1.240.000,00</td><td class="num">R$ 980.000,00</td><td class="num">R$ 61.000,00</td><td class="num"><b>R$ 199.000,00</b></td></tr>
+          <tr><td><b>Edifício Mirante do Parque</b></td><td class="num">R$ 610.000,00</td><td class="num">R$ 720.000,00</td><td class="num">R$ 34.000,00</td><td class="num"><span class="selo laranja">−R$ 144.000,00</span></td></tr>
+          <tr><td><b>Loteamento Vila Serena</b></td><td class="num">R$ 215.000,00</td><td class="num">R$ 96.000,00</td><td class="num">R$ 12.000,00</td><td class="num"><b>R$ 107.000,00</b></td></tr>
+          <tr class="total"><td>Total</td><td class="num">R$ 2.065.000,00</td><td class="num">R$ 1.796.000,00</td><td class="num">R$ 107.000,00</td><td class="num">R$ 162.000,00</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="pequeno">Cada lançamento leva o empreendimento, a etapa e, quando existe, a unidade. O que não tem obra (aluguel do escritório, por exemplo) fica na linha “sem obra” da DRE.</p>
+    </section>
+
+    <section class="card col-1 pilha">
+      <h2>Contabilidade</h2>
+      <p class="pequeno">Partidas dobradas geradas pelas operações: todo lançamento tem débitos iguais aos créditos, conferido pelo banco de dados.</p>
+      <p class="pequeno">Lançamento não se altera nem se apaga: corrige-se com estorno.</p>
+      <p class="pequeno">Mês fechado não aceita lançamento. Fecha em ordem; só a diretoria reabre.</p>
+      <p class="pequeno">Relatórios: DRE, balanço, balancete, diário e razão, em CSV e PDF, e o pacote do mês para o contador.</p>
+      <div class="aviso">A confirmar com o contador: caixa e contabilidade separados por empreendimento (SPE ou patrimônio de afetação) e a forma de reconhecer a receita das unidades em obra.</div>
+    </section>
+  </div>
+</main>
+</div>
+<script src="menu.js"></script>
+</body>
+</html>
