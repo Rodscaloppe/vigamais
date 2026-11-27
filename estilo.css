@@ -274,3 +274,29 @@ tr.historico td { background: #F7F8F9; font-size: 13px; }
 .resposta-ia:empty { display: none; }
 .abc { display: flex; height: 28px; border-radius: 6px; overflow: hidden; }
 .abc span { display: flex; align-items: center; justify-content: center; color: #fff; font-size: 12px; font-weight: 600; white-space: nowrap; overflow: hidden; }
+
+/* Financeiro: abas e relatórios */
+button.btn { font: inherit; font-weight: 600; cursor: pointer; }
+tr.sub td { font-weight: 700; background: var(--linha-fraca); }
+tr.titulo td { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--suave); padding-top: 16px; }
+td.neg { color: var(--laranja-escuro); }
+.checagem { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.checagem li { display: grid; grid-template-columns: 28px 1fr auto; gap: 10px; align-items: start; padding: 12px 0; border-bottom: 1px solid var(--linha-fraca); }
+.checagem li:last-child { border-bottom: 0; }
+.checagem .marca { width: 24px; height: 24px; border-radius: 50%; display: block; text-align: center; line-height: 24px; font-size: 13px; font-weight: 800; color: #fff; background: var(--verde); }
+.checagem .marca.pend { background: var(--laranja); }
+.checagem .marca.falta { background: #fff; border: 2px solid var(--linha); color: var(--suave); }
+.btn[disabled] { opacity: .5; cursor: not-allowed; }
+
+/* Financeiro: formulário de lançamento */
+dialog.janela-form { border: 0; border-radius: 14px; padding: 0; width: min(520px, calc(100vw - 32px)); box-shadow: 0 24px 60px rgba(23, 33, 43, .35); color: var(--tinta); }
+dialog.janela-form::backdrop { background: rgba(23, 33, 43, .55); }
+dialog.janela-form form { display: flex; flex-direction: column; gap: 14px; padding: 22px; }
+dialog.janela-form h2 { margin: 0; }
+.erro-form { color: #B42318; font-weight: 600; font-size: 13px; min-height: 18px; }
+.btn.pequeno-btn { min-height: 32px; padding: 0 10px; font-size: 13px; white-space: nowrap; }
+tr.baixada td { color: var(--suave); }
+tr.nova td { background: var(--verde-claro); }
+.checagem .extra { grid-column: 2 / -1; display: flex; flex-direction: column; gap: 8px; }
+.checagem .extra .linha-etapa { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-size: 14px; }
+.checagem .extra select { min-height: 32px; border-radius: 8px; border: 1px solid var(--linha); padding: 0 8px; font: inherit; font-size: 13px; background: #fff; }

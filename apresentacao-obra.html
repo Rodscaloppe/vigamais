@@ -1,0 +1,531 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Como vai funcionar o módulo Obra · Vigamais</title>
+<style>
+:root{--tinta:#17212B;--laranja:#C2410C;--azul:#1D4E89;--chao:#EEF0F2;--cinza:#6B7785;--linha:#D9DEE4;--papel:#fff;--verde:#0F766E}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font:17px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,Ubuntu,sans-serif;color:var(--tinta);background:var(--chao)}
+a{color:var(--azul)}
+nav{position:sticky;top:0;z-index:5;background:var(--tinta);display:flex;gap:4px;align-items:center;padding:8px 20px;overflow-x:auto;white-space:nowrap}
+nav b{color:#fff;margin-right:14px;font-size:17px}
+nav b span{color:#FB923C}
+nav a{color:#C9D1DA;text-decoration:none;font-size:14px;padding:6px 10px;border-radius:6px}
+nav a:hover{background:#263442;color:#fff}
+section{max-width:1120px;margin:0 auto;padding:56px 24px 24px}
+h1{font-size:clamp(32px,5vw,50px);line-height:1.1;margin:0 0 12px;letter-spacing:-.02em}
+h2{font-size:30px;margin:0 0 6px;letter-spacing:-.01em}
+h3{font-size:18px;margin:0 0 6px}
+p{margin:0 0 10px}
+.num{color:var(--laranja);font-weight:700;font-size:14px;letter-spacing:.08em;text-transform:uppercase}
+.sub{color:var(--cinza);margin:0 0 22px;max-width:760px}
+.card{background:var(--papel);border:1px solid var(--linha);border-radius:12px;padding:20px}
+.grade{display:grid;gap:14px}
+.g4{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(290px,1fr))}
+.g2{grid-template-columns:repeat(auto-fit,minmax(340px,1fr))}
+.capa{background:var(--tinta);color:#fff;max-width:none;padding:76px 24px 60px}
+.capa>div{max-width:1072px;margin:0 auto}
+.capa .sub{color:#B8C2CC;font-size:20px}
+.capa .card{background:#1F2C39;border-color:#2E3E4E;color:#fff}
+.capa .card span{color:#B8C2CC;font-size:15px}
+.capa .card b{display:block;font-size:19px;margin-bottom:4px}
+.pequeno{font-size:14px;color:var(--cinza)}
+.rolagem{overflow-x:auto}
+ul{margin:6px 0 0;padding-left:20px}
+li{margin:4px 0}
+.antes{border-top:4px solid var(--cinza)}
+.depois{border-top:4px solid var(--laranja)}
+svg{display:block;width:100%;height:auto}
+svg text{font-family:inherit;fill:var(--tinta)}
+.cx{fill:#fff;stroke:var(--tinta);stroke-width:1.5}
+.cxa{fill:#EAF1F8;stroke:var(--azul);stroke-width:1.5}
+.cxl{fill:#FFF1E8;stroke:var(--laranja);stroke-width:1.5}
+.seta{fill:none;stroke:var(--tinta);stroke-width:1.8;marker-end:url(#s)}
+.tt{font-size:16px;font-weight:700;text-anchor:middle}
+.ts{font-size:13px;text-anchor:middle}
+.rot{font-size:13.5px;font-weight:600;text-anchor:middle;paint-order:stroke;stroke:#fff;stroke-width:7px;stroke-linejoin:round}
+.bola{fill:var(--laranja)}
+.bn{font-size:13px;font-weight:700;text-anchor:middle;fill:#fff!important}
+.passo{display:flex;flex-direction:column;gap:10px}
+.passo .n{display:inline-flex;width:30px;height:30px;border-radius:50%;background:var(--laranja);color:#fff;font-weight:700;align-items:center;justify-content:center;margin-right:8px;font-size:15px}
+.zap{background:#E9E4DC;border-radius:10px;padding:10px;display:flex;flex-direction:column;gap:6px;margin-top:auto}
+.fala,.resp{max-width:88%;padding:7px 10px;border-radius:10px;font-size:14.5px;line-height:1.4}
+.fala{background:#fff;align-self:flex-start;border-top-left-radius:2px}
+.resp{background:#D9FDD3;align-self:flex-end;border-top-right-radius:2px}
+.quem{font-size:11.5px;font-weight:700;color:var(--azul);display:block}
+.nota{background:#fff;border:1px solid var(--linha);border-radius:10px;padding:10px 12px;font-size:14.5px;margin-top:auto}
+.aviso{border-left:4px solid var(--laranja);background:#FFF7ED;padding:12px 16px;border-radius:0 8px 8px 0;font-size:15.5px}
+.sim li::marker{color:var(--verde)}
+.linha-tempo{display:grid;grid-template-columns:repeat(4,1fr);gap:0;min-width:760px;position:relative;padding-top:8px}
+.linha-tempo::before{content:"";position:absolute;left:12.5%;right:12.5%;top:27px;height:4px;background:var(--linha)}
+.ponto{text-align:center;padding:0 12px;position:relative}
+.ponto i{display:block;width:40px;height:40px;border-radius:50%;background:var(--laranja);color:#fff;font-style:normal;font-weight:700;line-height:40px;margin:0 auto 10px;position:relative}
+.ponto.fim i{background:var(--tinta)}
+.ponto b{display:block}
+.ponto span{font-size:14.5px;color:var(--cinza)}
+table{width:100%;border-collapse:collapse;font-size:15.5px}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--linha);vertical-align:top}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--cinza)}
+footer{max-width:1120px;margin:0 auto;padding:32px 24px 56px;color:var(--cinza);font-size:14px}
+.ic{width:64px;height:64px;flex:none}
+.viga{display:grid;grid-template-columns:repeat(7,1fr);min-width:940px;position:relative;padding:6px 0 2px}
+.viga::before{content:"";position:absolute;left:calc(100%/14);right:calc(100%/14);top:105px;height:14px;border-top:3px solid var(--tinta);border-bottom:3px solid var(--tinta);background:repeating-linear-gradient(90deg,#DCE1E7 0 2px,transparent 2px 18px)}
+.parada{display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 8px;position:relative}
+.parada .placa{width:76px;height:76px;border-radius:18px;display:grid;place-items:center;background:var(--chao)}
+.parada .placa svg{width:50px;height:50px}
+.parada.ia .placa{background:var(--tinta)}
+.parada.gente .placa{background:#FFE9DA}
+.parada.dado .placa{background:#E3EDF7}
+.parada .no{width:34px;height:34px;border-radius:50%;background:var(--laranja);color:#fff;font-weight:800;font-size:15px;display:grid;place-items:center;margin:16px 0 14px;border:3px solid #fff;box-sizing:content-box;position:relative}
+.parada:last-child .no{background:var(--tinta)}
+.parada .quem{font-size:11px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--cinza)}
+.parada.ia .quem{color:var(--tinta)}
+.parada.gente .quem{color:var(--laranja)}
+.parada.dado .quem{color:var(--azul)}
+.parada b{font-size:17px;line-height:1.2;margin:3px 0 4px;letter-spacing:-.01em}
+.parada span.s{font-size:13.5px;color:var(--cinza);line-height:1.35}
+.legenda{display:flex;flex-wrap:wrap;gap:8px 22px;font-size:14px;color:var(--cinza);margin-top:6px}
+.legenda i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:7px;vertical-align:-1px}
+.olho{font-size:10.5px;font-weight:800;letter-spacing:.1em}
+.pilula{font-size:12.5px;font-weight:700}
+.nt{font-size:16px;font-weight:700;letter-spacing:-.01em}
+.nsub{font-size:13px}
+.fila{display:flex;min-width:760px;gap:4px}
+.fila div{color:#fff;border-radius:8px;padding:10px 12px;font-size:14.5px;line-height:1.3;background:var(--azul)}
+.fila div b{display:block;font-size:13px;opacity:.85;font-weight:600}
+.fila .l{background:var(--laranja)}.fila .t{background:var(--tinta)}
+.regua{display:flex;min-width:760px;gap:4px;font-size:12px;color:var(--cinza);font-weight:700;margin-top:6px}
+.regua span{flex:1;text-align:center;border-top:2px solid var(--linha);padding-top:4px}
+td.n,th.n{text-align:right;white-space:nowrap}
+tr.total td{font-weight:700;border-top:2px solid var(--tinta);border-bottom:0;font-size:17px}
+.totais{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+.tot{border-radius:14px;padding:22px 24px;background:#fff;border:1px solid var(--linha)}
+.tot.p{background:var(--azul);color:#fff;border-color:var(--azul)}
+.tot.t{background:var(--tinta);color:#fff;border-color:var(--tinta)}
+.tot small{display:block;font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;opacity:.8}
+.tot b{display:block;font-size:44px;line-height:1.05;letter-spacing:-.02em;margin:6px 0 2px}
+.tot b em{font-style:normal;font-size:18px;font-weight:600;opacity:.8;letter-spacing:0}
+.tot span{font-size:15px;opacity:.85}
+.itens{min-width:820px}
+.item{display:grid;grid-template-columns:76px minmax(0,1fr) 330px;gap:18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--linha)}
+.item:last-child{border-bottom:0}
+.item .placa{width:76px;height:76px;border-radius:18px;display:grid;place-items:center;background:var(--chao)}
+.item .placa svg{width:50px;height:50px}
+.item h4{margin:0;font-size:18px;letter-spacing:-.01em}
+.item h4 small{font-size:12.5px;font-weight:600;color:var(--cinza);margin-left:6px}
+.item p{margin:2px 0 0;font-size:15px}
+.item p.como{color:var(--cinza);font-size:14px}
+.item p.como b{color:var(--laranja);font-weight:700}
+.barras{display:grid;grid-template-columns:86px 1fr;gap:6px 8px;align-items:center;font-size:13px;color:var(--cinza)}
+.barras .tr{height:22px;display:flex;align-items:center;gap:8px}
+.barras .tr i{display:block;height:100%;border-radius:5px;min-width:3px}
+.barras .tr i.p{background:var(--azul)}.barras .tr i.t{background:var(--tinta)}
+.barras .tr b{color:var(--tinta);font-size:14.5px;white-space:nowrap}
+.cresce{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.cresce>div{background:var(--chao);border-radius:14px;padding:14px 6px;text-align:center}
+.cresce .predios{display:flex;justify-content:center;gap:4px;height:54px;align-items:flex-end}
+.cresce .predios svg{width:32px;height:32px}
+.cresce b{display:block;font-size:21px;white-space:nowrap;letter-spacing:-.01em;margin-top:6px}
+.cresce span{font-size:14px;color:var(--cinza)}
+.divisao{display:flex;height:40px;border-radius:10px;overflow:hidden;font-size:13.5px;font-weight:700;color:#fff}
+.divisao div{display:flex;align-items:center;padding:0 12px;white-space:nowrap}
+.janela{border-radius:14px;overflow:hidden;border:1px solid #2E3E4E;background:var(--tinta);box-shadow:0 18px 44px rgba(23,33,43,.18)}
+.janela .barra{display:flex;align-items:center;gap:7px;padding:10px 14px;color:#B8C2CC;font-size:13px}
+.janela .barra i{width:11px;height:11px;border-radius:50%;background:#3A4A5A}
+.janela .barra span{margin-left:10px}
+.janela img,.janela video{display:block;width:100%;height:auto;background:#0E151C}
+.btn{display:inline-block;background:var(--laranja);color:#fff;font-weight:700;text-decoration:none;padding:11px 18px;border-radius:10px}
+.btn.claro{background:#fff;color:var(--tinta);border:1px solid var(--tinta)}
+.cg{min-width:820px}
+.cg-l{display:grid;grid-template-columns:230px 1fr;align-items:center;border-bottom:1px solid var(--linha)}
+.cg-l>div:first-child{padding:8px 10px 8px 0;font-size:14px;font-weight:600}
+.cg-t{display:grid;grid-template-columns:repeat(9,1fr);padding:6px 0;background:repeating-linear-gradient(90deg,transparent 0,transparent calc(100%/9 - 1px),var(--linha) calc(100%/9 - 1px),var(--linha) calc(100%/9))}
+.cg-t.cab{background:none;font-size:12px;color:var(--cinza);text-align:center;font-weight:700}
+.cg-b{height:26px;border-radius:6px;color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;padding:0 8px;white-space:nowrap;overflow:hidden;margin:0 2px;background:var(--cinza)}
+.cg-b.a{background:var(--azul)}.cg-b.b{background:var(--laranja)}.cg-b.c{background:var(--tinta)}.cg-b.p{background:#0F766E}.cg-b.v{background:#6D28D9}
+.cg-b.x{background:#fff;color:var(--cinza);border:1.5px dashed var(--cinza)}
+.cg-b.m{background:linear-gradient(90deg,var(--azul),var(--laranja))}
+.quem-faz{display:flex;flex-wrap:wrap;gap:8px 22px;font-size:14.5px;margin-top:12px}
+.quem-faz b{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:6px;color:#fff;font-size:13px;margin-right:7px}
+.quadro-pr{min-width:860px;display:grid;gap:8px}
+.pr{display:grid;grid-template-columns:34px minmax(0,1fr) 30px minmax(0,1.15fr);gap:0 12px;align-items:stretch}
+.pr .n{align-self:center;width:34px;height:34px;border-radius:50%;background:var(--tinta);color:#fff;font-weight:800;font-size:14px;display:grid;place-items:center}
+.pr .a,.pr .b{border-radius:12px;padding:13px 16px}
+.pr .a{background:#FFF1E8;border:1px solid #F5CBB0}
+.pr .b{background:#E3F7EA;border:1px solid #B7E4C7}
+.pr.cab .a,.pr.cab .b{background:none;border:0;padding:0 16px 2px;font-size:12px;font-weight:800;letter-spacing:.09em;text-transform:uppercase}
+.pr.cab .a{color:var(--laranja)}.pr.cab .b{color:var(--verde)}
+.pr b.t{display:block;font-size:16.5px;letter-spacing:-.01em;margin-bottom:2px}
+.pr p{margin:0;font-size:15px}
+.pr .onde{display:block;margin-top:6px;font-size:13px;color:var(--cinza)}
+.pr .seta-pr{align-self:center;justify-self:center;color:var(--cinza);font-size:22px;font-weight:700}
+@media print{nav{display:none}section{page-break-inside:avoid;padding-top:24px}body{background:#fff}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<marker id="s" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#17212B"/></marker>
+<marker id="s-l" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C2410C"/></marker>
+<marker id="s-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#1D4E89"/></marker>
+<symbol id="ic-dominio" viewBox="0 0 64 64"><circle cx="32" cy="32" r="24" fill="#E3EDF7" stroke="#17212B" stroke-width="2.5"/><path d="M8 32h48M32 8c-9 7-9 41 0 48M32 8c9 7 9 41 0 48M12 20h40M12 44h40" fill="none" stroke="#17212B" stroke-width="2"/><circle cx="46" cy="18" r="7" fill="#C2410C"/></symbol>
+<symbol id="ic-servidor" viewBox="0 0 64 64"><rect x="10" y="8" width="44" height="13" rx="3" fill="#fff" stroke="#17212B" stroke-width="2.5"/><rect x="10" y="26" width="44" height="13" rx="3" fill="#fff" stroke="#17212B" stroke-width="2.5"/><rect x="10" y="44" width="44" height="13" rx="3" fill="#fff" stroke="#17212B" stroke-width="2.5"/><circle cx="18" cy="14.5" r="2.5" fill="#25D366"/><circle cx="18" cy="32.5" r="2.5" fill="#25D366"/><circle cx="18" cy="50.5" r="2.5" fill="#C2410C"/><path d="M28 14.5h18M28 32.5h18M28 50.5h18" stroke="#1D4E89" stroke-width="3" stroke-linecap="round"/></symbol>
+<symbol id="ic-banco" viewBox="0 0 64 64"><path d="M12 16v32c0 5 9 9 20 9s20-4 20-9V16" fill="#1D4E89"/><path d="M12 27c0 5 9 9 20 9s20-4 20-9M12 38c0 5 9 9 20 9s20-4 20-9" fill="none" stroke="#fff" stroke-width="2.5"/><ellipse cx="32" cy="16" rx="20" ry="9" fill="#E3EDF7" stroke="#1D4E89" stroke-width="2.5"/></symbol>
+<symbol id="ic-arquivos" viewBox="0 0 64 64"><path d="M14 14h14l5 6h21v26H14z" fill="#F0B48F"/><path d="M8 22h16l5 6h25v28H8z" fill="#C2410C"/><path d="M22 42h18M22 49h12" stroke="#fff" stroke-width="3" stroke-linecap="round"/></symbol>
+<symbol id="ic-zap" viewBox="0 0 64 64"><path d="M32 8c14 0 24 9 24 21S46 50 32 50c-3 0-6-.5-9-1.500L10 56l4-12C10 40 8 35 8 29 8 17 18 8 32 8z" fill="#25D366"/><circle cx="22" cy="29" r="3.5" fill="#fff"/><circle cx="32" cy="29" r="3.5" fill="#fff"/><circle cx="42" cy="29" r="3.5" fill="#fff"/></symbol>
+<symbol id="ic-ia" viewBox="0 0 64 64"><path d="M28 8l5 15 15 5-15 5-5 15-5-15-15-5 15-5z" fill="#C2410C"/><path d="M48 36l3 8 8 3-8 3-3 8-3-8-8-3 8-3z" fill="#1D4E89"/></symbol>
+<symbol id="ic-tel" viewBox="0 0 64 64"><path d="M16 12c-2 20 10 36 30 40" fill="none" stroke="#17212B" stroke-width="10" stroke-linecap="round"/><path d="M36 14c7 1 12 6 14 13M38 4c12 2 20 10 22 22" fill="none" stroke="#C2410C" stroke-width="3.5" stroke-linecap="round"/></symbol>
+<symbol id="ic-obra" viewBox="0 0 64 64"><rect x="8" y="26" width="30" height="32" fill="#fff" stroke="#17212B" stroke-width="2.5"/><rect x="13" y="31" width="7" height="7" fill="#1D4E89"/><rect x="26" y="31" width="7" height="7" fill="#1D4E89"/><rect x="13" y="43" width="7" height="7" fill="#1D4E89"/><rect x="26" y="43" width="7" height="7" fill="#1D4E89"/><path d="M48 58V8M28 12h32M34 12v10M42 58h12" fill="none" stroke="#C2410C" stroke-width="3" stroke-linecap="round"/></symbol>
+<symbol id="ic-capacete" viewBox="0 0 64 64"><path d="M14 60c0-13 8-21 18-21s18 8 18 21z" fill="#1D4E89"/><circle cx="32" cy="26" r="10" fill="#F2C9A5" stroke="#17212B" stroke-width="2"/><path d="M20 23a12 12 0 0 1 24 0z" fill="#C2410C"/><path d="M16 23h32" stroke="#C2410C" stroke-width="4" stroke-linecap="round"/></symbol>
+<symbol id="ic-diretoria" viewBox="0 0 64 64"><path d="M14 60c0-13 8-21 18-21s18 8 18 21z" fill="#17212B"/><path d="M32 39l-4 12 4 6 4-6z" fill="#C2410C"/><circle cx="32" cy="24" r="10" fill="#F2C9A5" stroke="#17212B" stroke-width="2"/></symbol>
+<symbol id="ic-planilha" viewBox="0 0 64 64"><rect x="10" y="8" width="44" height="48" rx="4" fill="#fff" stroke="#17212B" stroke-width="2.5"/><rect x="30" y="32" width="24" height="12" fill="#D9FDD3"/><path d="M10 20h44M10 32h44M10 44h44M30 20v36" stroke="#17212B" stroke-width="1.8" fill="none"/><rect x="10" y="8" width="44" height="12" rx="4" fill="#1D4E89"/></symbol>
+<symbol id="ic-loja" viewBox="0 0 64 64"><rect x="10" y="24" width="44" height="34" fill="#fff" stroke="#17212B" stroke-width="2.5"/><path d="M6 26l6-14h40l6 14z" fill="#C2410C" stroke="#17212B" stroke-width="2.5" stroke-linejoin="round"/><rect x="36" y="36" width="12" height="22" fill="#1D4E89"/><rect x="15" y="34" width="15" height="13" fill="#EAF1F8" stroke="#17212B" stroke-width="2"/></symbol>
+<symbol id="ic-custo" viewBox="0 0 64 64"><rect x="15" y="36" width="10" height="20" fill="#1D4E89"/><rect x="29" y="26" width="10" height="30" fill="#1D4E89"/><rect x="43" y="14" width="10" height="42" fill="#C2410C"/><path d="M8 6v50h50" fill="none" stroke="#17212B" stroke-width="3" stroke-linecap="round"/></symbol>
+<symbol id="ic-fone" viewBox="0 0 64 64"><rect x="17" y="3" width="30" height="58" rx="7" fill="#fff" stroke="#17212B" stroke-width="2.5"/><rect x="21" y="13" width="15" height="9" rx="3" fill="#D9DEE4"/><rect x="28" y="26" width="15" height="9" rx="3" fill="#25D366"/><rect x="21" y="39" width="15" height="9" rx="3" fill="#D9DEE4"/></symbol>
+<symbol id="ic-caminhao" viewBox="0 0 64 64"><rect x="4" y="20" width="34" height="24" fill="#1D4E89"/><path d="M38 27h12l9 9v8H38z" fill="#C2410C"/><circle cx="16" cy="48" r="7" fill="#17212B"/><circle cx="48" cy="48" r="7" fill="#17212B"/></symbol>
+<symbol id="ic-check" viewBox="0 0 64 64"><circle cx="32" cy="32" r="25" fill="#0F766E"/><path d="M20 33l8 8 16-18" fill="none" stroke="#fff" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+<symbol id="ic-falta" viewBox="0 0 64 64"><path d="M32 8L59 55H5z" fill="#FFF1E8" stroke="#C2410C" stroke-width="3.5" stroke-linejoin="round"/><path d="M32 25v15" stroke="#C2410C" stroke-width="5" stroke-linecap="round"/><circle cx="32" cy="47" r="3" fill="#C2410C"/></symbol>
+</defs></svg>
+<nav aria-label="Seções">
+  <b>Viga<span>mais</span></b>
+  <a href="#ideia">A ideia</a><a href="#desenho">Como funciona</a><a href="#exemplo">Um exemplo</a><a href="#pessoas">Quem faz o quê</a><a href="#ia">O que a IA pode</a><a href="#telas">As telas</a><a href="#prazo">Quando fica pronto</a><a href="#custos">Quanto custa manter</a><a href="#dificuldades">Dificuldades</a><a href="#decisoes">O que falta decidir</a><a href="#na-pratica">Telas e vídeos</a><a href="index.html">Ver as telas →</a>
+</nav>
+
+<section class="capa">
+<div>
+  <p class="num" style="color:#FB923C">Módulo Obra · apresentação</p>
+  <h1>A obra avisa o que falta.<br>O assistente cuida da compra.</h1>
+  <p class="sub">Um assistente que conversa pelo WhatsApp com o mestre, o engenheiro e as lojas, guarda todos os preços e mostra quanto cada etapa da obra está custando de verdade.</p>
+  <div class="grade g3">
+    <div class="card"><b>Menos telefone</b><span>O assistente pede os preços, cobra quem não respondeu e monta a comparação.</span></div>
+    <div class="card"><b>Nenhum preço perdido</b><span>Tudo que uma loja já cotou fica guardado, com a data. Ninguém cota a mesma coisa duas vezes.</span></div>
+    <div class="card"><b>Custo real, todo dia</b><span>Cada compra fechada entra na etapa da obra. O gasto aparece na hora, não no fim do mês.</span></div>
+  </div>
+</div>
+</section>
+
+<section id="ideia">
+  <p class="num">1 · A ideia</p>
+  <h2>O que muda no dia a dia</h2>
+  <p class="sub">A compra de material continua sendo decidida por pessoas. O que muda é quem faz o trabalho repetitivo.</p>
+  <div class="grade g2">
+    <div class="card antes"><h3>Como costuma ser</h3>
+      <ul>
+        <li>O material acaba e alguém percebe em cima da hora.</li>
+        <li>O engenheiro liga ou manda mensagem para cada loja e espera.</li>
+        <li>Os preços ficam espalhados em conversas e papéis.</li>
+        <li>Na semana seguinte, cota-se o mesmo cimento de novo.</li>
+        <li>O custo real da etapa só aparece quando as notas são somadas.</li>
+      </ul></div>
+    <div class="card depois"><h3>Como passa a ser</h3>
+      <ul>
+        <li>O mestre responde quatro perguntas por dia e a falta aparece antes.</li>
+        <li>O assistente pergunta ao engenheiro e fala com as lojas.</li>
+        <li>Todo preço entra numa planilha única, com data e validade.</li>
+        <li>Se o preço ainda vale, o assistente reaproveita e não incomoda a loja.</li>
+        <li>A compra aprovada já aparece no custo da etapa.</li>
+      </ul></div>
+  </div>
+  <h3 style="margin:34px 0 4px;font-size:22px">Que problema isso resolve</h3>
+  <p class="sub" style="margin-bottom:14px">Nove problemas do dia a dia da obra, cada um com a resposta do sistema e a tela onde ela aparece.</p>
+  <div class="card rolagem"><div class="quadro-pr"><div class="pr cab"><span></span><div class="a">O problema hoje</div><span></span><div class="b">Como o sistema resolve</div></div><div class="pr"><span class="n">1</span><div class="a"><b class="t">O material acaba sem aviso</b><p>Alguém percebe em cima da hora, a frente de serviço para e a compra sai às pressas, pelo preço que tiver.</p></div><span class="seta-pr" aria-hidden="true">→</span><div class="b"><b class="t">A falta aparece dias antes</b><p>O diário do mestre e o estoque estimado mostram o que acaba nos próximos 10 dias.</p><span class="onde">Telas: <a href="diario.html">Diário de obra</a> e <a href="obra.html">Obras e custos</a></span></div></div><div class="pr"><span class="n">2</span><div class="a"><b class="t">Cotar toma o dia do engenheiro</b><p>Ligar ou escrever para cada loja, esperar, cobrar resposta e montar a comparação à mão.</p></div><span class="seta-pr" aria-hidden="true">→</span><div class="b"><b class="t">O assistente faz a cotação</b><p>Pede preço a pelo menos três lojas, cobra quem não respondeu e entrega a comparação pronta.</p><span class="onde">Telas: <a href="assistente.html">Assistente de compras</a> e <a href="suprimentos.html">Suprimentos e cotações</a></span></div></div><div class="pr"><span class="n">3</span><div class="a"><b class="t">O preço se perde</b><p>Fica numa conversa ou num papel. Na semana seguinte, cota-se o mesmo material de novo.</p></div><span class="seta-pr" aria-hidden="true">→</span><div class="b"><b class="t">Todo preço fica guardado</b><p>Com a loja, a data e a validade. Se ainda vale, é reaproveitado sem incomodar a loja.</p><span class="onde">Tela: <a href="planilha.html">Planilha de cotações</a></span></div></div><div class="pr"><span class="n">4</span><div class="a"><b class="t">A quantidade é pedida no olho</b><p>Sobra material parado no canteiro ou falta no meio do serviço.</p></div><span class="seta-pr" aria-hidden="true">→</span><div class="b"><b class="t">A quantidade vem da conta</b><p>A calculadora parte da área ou do volume e já inclui as perdas.</p><span class="onde">Tela: <a href="calculadora.html">Calculadora de materiais</a></span></div></div><div class="pr"><span class="n">5</span><div class="a"><b class="t">O mais barato por item sai mais caro</b><p>Dividir a compra em muitas lojas soma um frete para cada uma.</p></div><span class="seta-pr" aria-hidden="true">→</span><div class="b"><b class="t">A compra é dividida contando o frete</b><p>O sistema testa as divisões possíveis e mostra a de menor custo total.</p><span class="onde">Tela: <a href="cesta.html">Cesta de compras e curva ABC</a></span></div></div><div class="pr"><span class="n">6</span><div class="a"><b class="t">Não se sabe qual loja é melhor</b><p>A escolha vai pelo costume, não pelo histórico de preço, resposta e entrega.</p></div><span class="seta-pr" aria-hidden="true">→</span><div class="b"><b class="t">Cada loja tem uma nota</b><p>De 0 a 100, calculada do que ela já cotou e de como respondeu.</p><span class="onde">Tela: <a href="fornecedores.html">Ranking de fornecedores</a></span></div></div><div class="pr"><span class="n">7</span><div class="a"><b class="t">Compra feita sem cotação ou sem aprovação</b><p>No exemplo das telas, uma compra de aço sem cotação custou R$ 148.000 a mais na etapa.</p></div><span class="seta-pr" aria-hidden="true">→</span><div class="b"><b class="t">Toda compra passa por um “pode”</b><p>O engenheiro aprova até o limite dele; acima disso, a diretoria. Tudo fica registrado.</p><span class="onde">Telas: <a href="assistente.html">Assistente de compras</a> e <a href="suprimentos.html">Suprimentos e cotações</a></span></div></div><div class="pr"><span class="n">8</span><div class="a"><b class="t">O custo real só aparece no fim do mês</b><p>Quando as notas são somadas, o desvio já aconteceu e não dá mais para agir.</p></div><span class="seta-pr" aria-hidden="true">→</span><div class="b"><b class="t">O custo aparece na hora</b><p>Cada compra aprovada entra na etapa da obra e é comparada com o orçado.</p><span class="onde">Tela: <a href="obra.html">Obras e custos</a></span></div></div><div class="pr"><span class="n">9</span><div class="a"><b class="t">O diário de obra não é preenchido</b><p>Dá trabalho, fica para depois, e some o registro de chuva, equipe e avanço.</p></div><span class="seta-pr" aria-hidden="true">→</span><div class="b"><b class="t">Quatro perguntas no WhatsApp</b><p>O mestre responde por texto ou áudio e o diário se monta sozinho.</p><span class="onde">Tela: <a href="diario.html">Diário de obra</a></span></div></div></div></div>
+</section>
+
+<section id="desenho">
+  <p class="num">2 · Como funciona</p>
+  <h2>O assistente no meio, as pessoas em volta</h2>
+  <p class="sub">Primeiro, o caminho de uma compra, do aviso ao custo. Depois, quem conversa com quem.</p>
+  <div class="card rolagem"><h3>O caminho de uma compra</h3>
+    <p class="pequeno">Sete paradas. Em cima de cada uma, quem age naquele momento.</p>
+    <div class="viga"><div class="parada gente"><div class="placa"><svg viewBox="0 0 64 64"><use href="#ic-falta"/></svg></div><div class="no">1</div><span class="quem">Mestre</span><b>Falta material</b><span class="s">avisa no diário do dia</span></div><div class="parada ia"><div class="placa"><svg viewBox="0 0 64 64"><use href="#ic-fone"/></svg></div><div class="no">2</div><span class="quem">Assistente</span><b>Pergunta</b><span class="s">ao engenheiro se pode comprar</span></div><div class="parada ia"><div class="placa"><svg viewBox="0 0 64 64"><use href="#ic-planilha"/></svg></div><div class="no">3</div><span class="quem">Assistente</span><b>Procura o preço</b><span class="s">na planilha ou com as lojas</span></div><div class="parada gente"><div class="placa"><svg viewBox="0 0 64 64"><use href="#ic-check"/></svg></div><div class="no">4</div><span class="quem">Engenheiro</span><b>Aprova</b><span class="s">ou a diretoria, se a compra for grande</span></div><div class="parada ia"><div class="placa"><svg viewBox="0 0 64 64"><use href="#ic-loja"/></svg></div><div class="no">5</div><span class="quem">Assistente</span><b>Faz o pedido</b><span class="s">à loja, pelo WhatsApp</span></div><div class="parada gente"><div class="placa"><svg viewBox="0 0 64 64"><use href="#ic-caminhao"/></svg></div><div class="no">6</div><span class="quem">Loja</span><b>Entrega</b><span class="s">na obra; o mestre confere</span></div><div class="parada dado"><div class="placa"><svg viewBox="0 0 64 64"><use href="#ic-custo"/></svg></div><div class="no">7</div><span class="quem">Sistema</span><b>Lança o custo</b><span class="s">na etapa, na hora</span></div></div>
+  </div>
+  <div class="card rolagem" style="margin-top:14px"><h3>Quem conversa com quem</h3>
+  <p class="pequeno">Siga os números. O assistente nunca compra sozinho: ele pergunta, compara e só faz o pedido depois de um “pode”.</p>
+  <div style="min-width:880px;margin-top:6px">
+  <svg viewBox="0 20 1060 560" role="img" aria-label="Desenho: o assistente de compras no centro, ligado à obra, ao engenheiro, à planilha de preços, às lojas, à diretoria e ao custo da obra"><path d="M270 110L440 234" fill="none" stroke="#17212B" stroke-width="2" marker-end="url(#s)"/><path d="M620 234L790 110" fill="none" stroke="#C2410C" stroke-width="2" marker-end="url(#s-l)" marker-start="url(#s-l)"/><path d="M270 300H418" fill="none" stroke="#1D4E89" stroke-width="2" marker-end="url(#s-a)" marker-start="url(#s-a)"/><path d="M642 300H790" fill="none" stroke="#17212B" stroke-width="2" marker-end="url(#s)" marker-start="url(#s)"/><path d="M620 366L790 490" fill="none" stroke="#C2410C" stroke-width="2" marker-end="url(#s-l)" marker-start="url(#s-l)"/><path d="M440 366L270 490" fill="none" stroke="#1D4E89" stroke-width="2" marker-end="url(#s-a)"/><circle cx="530" cy="300" r="102" fill="none" stroke="#17212B" stroke-width="1.5" opacity=".22"/><circle cx="530" cy="300" r="92" fill="#17212B"/><use href="#ic-fone" x="505" y="222" width="50" height="50"/><text x="530" y="302" style="fill:#fff;font-size:18px;font-weight:800;text-anchor:middle;letter-spacing:-.01em">Assistente</text><text x="530" y="324" style="fill:#fff;font-size:18px;font-weight:800;text-anchor:middle;letter-spacing:-.01em">de compras</text><circle cx="484" cy="345" r="4.5" fill="#25D366"/><text x="538" y="349.5" style="fill:#B8C2CC;font-size:13px;text-anchor:middle">pelo WhatsApp</text><rect x="20" y="40" width="250" height="96" rx="16" fill="#fff" stroke="#17212B" stroke-width="1.5"/><circle cx="68" cy="88" r="33" fill="#EEF0F2"/><use href="#ic-obra" x="45" y="65" width="46" height="46"/><text class="olho" x="114" y="69" style="fill:#6B7785">NA OBRA</text><text class="nt" x="114" y="91">Obra</text><text class="nsub" x="114" y="111" style="fill:#6B7785">mestre e diário do dia</text><rect x="790" y="40" width="250" height="96" rx="16" fill="#fff" stroke="#C2410C" stroke-width="1.5"/><circle cx="838" cy="88" r="33" fill="#FFE9DA"/><use href="#ic-capacete" x="815" y="65" width="46" height="46"/><text class="olho" x="884" y="69" style="fill:#C2410C">APROVA</text><text class="nt" x="884" y="91">Engenheiro</text><text class="nsub" x="884" y="111" style="fill:#6B7785">compras do dia a dia</text><rect x="20" y="252" width="250" height="96" rx="16" fill="#fff" stroke="#1D4E89" stroke-width="1.5"/><circle cx="68" cy="300" r="33" fill="#E3EDF7"/><use href="#ic-planilha" x="45" y="277" width="46" height="46"/><text class="olho" x="114" y="281" style="fill:#1D4E89">REGISTRO</text><text class="nt" x="114" y="303">Planilha de preços</text><text class="nsub" x="114" y="323" style="fill:#6B7785">todo preço, com a data</text><rect x="790" y="252" width="250" height="96" rx="16" fill="#fff" stroke="#17212B" stroke-width="1.5"/><circle cx="838" cy="300" r="33" fill="#EEF0F2"/><use href="#ic-loja" x="815" y="277" width="46" height="46"/><text class="olho" x="884" y="281" style="fill:#6B7785">FORNECE</text><text class="nt" x="884" y="303">Lojas</text><text class="nsub" x="884" y="323" style="fill:#6B7785">preço, pedido e entrega</text><rect x="20" y="464" width="250" height="96" rx="16" fill="#fff" stroke="#1D4E89" stroke-width="1.5"/><circle cx="68" cy="512" r="33" fill="#E3EDF7"/><use href="#ic-custo" x="45" y="489" width="46" height="46"/><text class="olho" x="114" y="493" style="fill:#1D4E89">REGISTRO</text><text class="nt" x="114" y="515">Custo da obra</text><text class="nsub" x="114" y="535" style="fill:#6B7785">gasto de cada etapa</text><rect x="790" y="464" width="250" height="96" rx="16" fill="#fff" stroke="#C2410C" stroke-width="1.5"/><circle cx="838" cy="512" r="33" fill="#FFE9DA"/><use href="#ic-diretoria" x="815" y="489" width="46" height="46"/><text class="olho" x="884" y="493" style="fill:#C2410C">APROVA</text><text class="nt" x="884" y="515">Diretoria</text><text class="nsub" x="884" y="535" style="fill:#6B7785">compras grandes</text><rect x="273.5" y="157" width="163" height="30" rx="15" fill="#fff" stroke="#17212B" stroke-width="1.5"/><circle cx="289.5" cy="172" r="11" fill="#17212B"/><text x="289.5" y="176.5" style="fill:#fff;font-size:12.5px;font-weight:800;text-anchor:middle">1</text><text class="pilula" x="306.5" y="176.5">avisa o que falta</text><rect x="627.0" y="157" width="156" height="30" rx="15" fill="#fff" stroke="#C2410C" stroke-width="1.5"/><circle cx="643.0" cy="172" r="11" fill="#C2410C"/><text x="643.0" y="176.5" style="fill:#fff;font-size:12.5px;font-weight:800;text-anchor:middle">2</text><text class="pilula" x="660.0" y="176.5">“posso comprar?”</text><rect x="276.5" y="257" width="135" height="30" rx="15" fill="#fff" stroke="#1D4E89" stroke-width="1.5"/><circle cx="292.5" cy="272" r="11" fill="#1D4E89"/><text x="292.5" y="276.5" style="fill:#fff;font-size:12.5px;font-weight:800;text-anchor:middle">3</text><text class="pilula" x="309.5" y="276.5">já tem preço?</text><rect x="655.5" y="257" width="121" height="30" rx="15" fill="#fff" stroke="#17212B" stroke-width="1.5"/><circle cx="671.5" cy="272" r="11" fill="#17212B"/><text x="671.5" y="276.5" style="fill:#fff;font-size:12.5px;font-weight:800;text-anchor:middle">4</text><text class="pilula" x="688.5" y="276.5">cota e pede</text><rect x="634.0" y="413" width="142" height="30" rx="15" fill="#fff" stroke="#C2410C" stroke-width="1.5"/><circle cx="650.0" cy="428" r="11" fill="#C2410C"/><text x="650.0" y="432.5" style="fill:#fff;font-size:12.5px;font-weight:800;text-anchor:middle">5</text><text class="pilula" x="667.0" y="432.5">pede aprovação</text><rect x="287.5" y="413" width="135" height="30" rx="15" fill="#fff" stroke="#1D4E89" stroke-width="1.5"/><circle cx="303.5" cy="428" r="11" fill="#1D4E89"/><text x="303.5" y="432.5" style="fill:#fff;font-size:12.5px;font-weight:800;text-anchor:middle">6</text><text class="pilula" x="320.5" y="432.5">lança o gasto</text></svg></div>
+  <div class="legenda"><span><i style="background:var(--laranja)"></i>quem aprova a compra</span><span><i style="background:var(--azul)"></i>onde tudo fica registrado</span><span><i style="background:var(--tinta)"></i>quem avisa e quem fornece</span></div>
+  </div>
+  <div class="grade g3" style="margin-top:14px">
+    <div class="card"><h3>1 e 2 · Perceber e perguntar</h3><p>O diário do mestre mostra que um material vai acabar. O assistente pergunta ao engenheiro se deve comprar, já com a quantidade sugerida.</p></div>
+    <div class="card"><h3>3 e 4 · Preço e pedido</h3><p>Primeiro olha a planilha. Se o preço ainda vale, usa. Se não, pede preço a pelo menos três lojas e liga para quem não respondeu.</p></div>
+    <div class="card"><h3>5 e 6 · Aprovar e registrar</h3><p>O engenheiro aprova as compras do dia a dia; as grandes sobem para a diretoria. Aprovada, a compra entra no custo da etapa.</p></div>
+  </div>
+</section>
+
+<section id="exemplo">
+  <p class="num">3 · Um exemplo</p>
+  <h2>A argamassa vai acabar</h2>
+  <p class="sub">Uma compra do começo ao fim, na obra Jardim das Acácias. Nomes, lojas e valores são de exemplo.</p>
+  <div class="grade g3">
+    <div class="card passo"><h3><span class="n">1</span>O mestre responde o diário</h3>
+      <p>No fim do dia, o assistente faz as perguntas de sempre.</p>
+      <div class="zap"><div class="fala"><span class="quem">Assistente</span>Algum material acabando?</div><div class="resp">Argamassa AC-II dá só pra mais 2 dias.</div></div></div>
+    <div class="card passo"><h3><span class="n">2</span>O assistente pergunta ao engenheiro</h3>
+      <p>Ele já calcula quanto falta para terminar o serviço.</p>
+      <div class="zap"><div class="fala"><span class="quem">Assistente</span>Paulo, a argamassa AC-II acaba em 2 dias. Faltam 350 sacos para o revestimento. Posso pedir?</div><div class="resp">Pode.</div></div></div>
+    <div class="card passo"><h3><span class="n">3</span>Olha a planilha de preços</h3>
+      <p>Essa argamassa já foi cotada nesta semana em mais de uma loja. Os preços ainda valem.</p>
+      <div class="nota"><b>Não precisa cotar de novo.</b><br>Materiais Ipê: R$ 17,90 o saco, o menor preço guardado.</div></div>
+    <div class="card passo"><h3><span class="n">4</span>Mostra a melhor compra</h3>
+      <p>O valor está dentro do limite do engenheiro, então é ele quem aprova.</p>
+      <div class="zap"><div class="fala"><span class="quem">Assistente</span>350 sacos na Materiais Ipê, R$ 17,90 cada. Total R$ 6.265,00. Aprova?</div><div class="resp">Aprovado.</div></div></div>
+    <div class="card passo"><h3><span class="n">5</span>Faz o pedido à loja</h3>
+      <p>A loja recebe o pedido completo, com endereço e dia de entrega.</p>
+      <div class="zap"><div class="resp">Pedido: 350 sacos de argamassa AC-II, R$ 17,90 cada. Entrega quinta, obra Jardim das Acácias.</div><div class="fala"><span class="quem">Materiais Ipê</span>Confirmado para quinta de manhã.</div></div></div>
+    <div class="card passo"><h3><span class="n">6</span>A entrega chega e o custo aparece</h3>
+      <p>O mestre confirma no diário que chegou tudo.</p>
+      <div class="nota"><b>Revestimento: + R$ 6.265,00</b><br>O gasto da etapa é atualizado e comparado com o orçado.</div></div>
+  </div>
+  <div class="grade g2" style="margin-top:14px">
+    <div class="card"><h3>E se ninguém tivesse cotado ainda?</h3><p>O assistente pede preço a pelo menos três lojas pelo WhatsApp. Se uma loja não responde em 20 minutos, ele liga. Os preços que chegam entram na planilha e servem para as próximas compras.</p></div>
+    <div class="card"><h3>E se a compra fosse grande?</h3><p>Acima do limite do engenheiro, o assistente manda a comparação para a diretoria e espera a aprovação. O mesmo vale quando a quantidade pedida passa muito do que estava no orçamento.</p></div>
+  </div>
+</section>
+
+<section id="pessoas">
+  <p class="num">4 · Quem faz o quê</p>
+  <h2>O que muda para cada pessoa</h2>
+  <p class="sub">Ninguém precisa aprender um programa novo para o dia a dia: quase tudo acontece no WhatsApp.</p>
+  <div class="grade g4">
+    <div class="card"><h3>Mestre de obras</h3><p>Responde quatro perguntas por dia, por texto ou áudio: o que foi feito, quem veio, o que chegou e o que está acabando.</p></div>
+    <div class="card"><h3>Engenheiro</h3><p>Responde “pode” ou “não pode” às perguntas do assistente e aprova as compras dentro do seu limite. Vê o custo da obra numa tela.</p></div>
+    <div class="card"><h3>Diretoria</h3><p>Aprova as compras grandes, define os limites e acompanha o gasto de cada etapa contra o orçamento.</p></div>
+    <div class="card"><h3>Lojas</h3><p>Recebem o pedido de preço e respondem como já fazem hoje: texto, áudio, foto do orçamento ou por telefone.</p></div>
+  </div>
+</section>
+
+<section id="ia">
+  <p class="num">5 · O que a IA pode</p>
+  <h2>Ela trabalha; quem decide são as pessoas</h2>
+  <p class="sub">O assistente começa só sugerindo. Ganha liberdade aos poucos, ação por ação, por decisão da diretoria.</p>
+  <div class="grade g2">
+    <div class="card depois"><h3>O que o assistente faz</h3>
+      <ul class="sim">
+        <li>Pergunta, lembra e cobra resposta.</li>
+        <li>Pede preço às lojas e liga para quem não respondeu.</li>
+        <li>Compara os preços, contando o frete.</li>
+        <li>Guarda cada preço com a data.</li>
+        <li>Envia o pedido depois de aprovado.</li>
+      </ul></div>
+    <div class="card antes"><h3>O que ele não faz</h3>
+      <ul>
+        <li>Não fecha compra sem a aprovação de uma pessoa.</li>
+        <li>Não passa do limite em dinheiro definido pela diretoria.</li>
+        <li>Não escreve para lojas fora do horário combinado.</li>
+        <li>Não esconde o que fez: toda mensagem e toda decisão ficam registradas.</li>
+      </ul></div>
+  </div>
+  <p class="aviso" style="margin-top:14px"><b>Antes de valer, um período de ensaio.</b> Nas duas primeiras semanas na obra, o assistente só mostra o que faria, sem enviar nada a nenhuma loja. A equipe confere se ele acertaria, e só então ele começa a agir.</p>
+</section>
+
+<section id="telas">
+  <p class="num">6 · As telas</p>
+  <h2>O que dá para ver no computador</h2>
+  <p class="sub">São oito telas. O protótipo de todas já pode ser aberto; os dados são de exemplo.</p>
+  <div class="card rolagem">
+  <table>
+    <thead><tr><th>Tela</th><th>Responde à pergunta</th></tr></thead>
+    <tbody>
+      <tr><td><a href="obra.html"><b>Obras e custos</b></a></td><td>Quanto cada etapa custou até agora, comparado com o orçado? O que está faltando na obra?</td></tr>
+      <tr><td><a href="assistente.html"><b>Assistente de compras</b></a></td><td>O que o assistente está fazendo agora, e com quem está falando?</td></tr>
+      <tr><td><a href="suprimentos.html"><b>Suprimentos e cotações</b></a></td><td>Quais lojas responderam, quanto cada uma cobrou e o que falta aprovar?</td></tr>
+      <tr><td><a href="planilha.html"><b>Planilha de cotações</b></a></td><td>Quanto já pagamos por este material, em qual loja e quando?</td></tr>
+      <tr><td><a href="calculadora.html"><b>Calculadora de materiais</b></a></td><td>Quanto de material preciso para esta parede, laje, piso ou pintura?</td></tr>
+      <tr><td><a href="cesta.html"><b>Cesta de compras e curva ABC</b></a></td><td>Compensa dividir a compra entre lojas, contando o frete? Quais itens pesam mais no bolso?</td></tr>
+      <tr><td><a href="fornecedores.html"><b>Ranking de fornecedores</b></a></td><td>Quais lojas têm o melhor preço, respondem mais rápido e entregam no dia?</td></tr>
+      <tr><td><a href="diario.html"><b>Diário de obra</b></a></td><td>O que aconteceu na obra em cada dia?</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section id="prazo">
+  <p class="num">7 · Quando fica pronto</p>
+  <h2>Em três entregas, cada uma já utilizável</h2>
+  <p class="sub">A obra não espera tudo ficar pronto: começa a usar na semana 5 e recebe o resto em seguida.</p>
+  <div class="card rolagem"><div class="linha-tempo">
+    <div class="ponto"><i>4</i><b>Semana 4</b><span>Planilha de preços para toda a equipe, calculadora, custo por etapa e ranking de lojas.</span></div>
+    <div class="ponto"><i>6</i><b>Semana 6</b><span>Cotação, comparação, aprovação e pedido, ainda feitos pelas pessoas na tela.</span></div>
+    <div class="ponto"><i>7</i><b>Semana 7</b><span>O assistente no WhatsApp e o diário do mestre. Começa o ensaio na obra.</span></div>
+    <div class="ponto fim"><i>9</i><b>Semana 9</b><span>Fim do ensaio. A diretoria decide o que o assistente passa a fazer sozinho.</span></div>
+  </div></div>
+
+  <h3 style="margin:34px 0 4px;font-size:22px">O cronograma, semana a semana</h3>
+  <p class="sub" style="margin-bottom:14px">As letras nas barras indicam quem faz: A, B e C são os engenheiros.</p>
+  <div class="card rolagem"><div class="cg">
+    <div class="cg-l"><div></div><div class="cg-t cab"><span>S1</span><span>S2</span><span>S3</span><span>S4</span><span>S5</span><span>S6</span><span>S7</span><span>S8</span><span>S9</span></div></div>
+    <div class="cg-l"><div>Fundação</div><div class="cg-t"><div class="cg-b m" style="grid-column:1/2">A B C</div></div></div>
+    <div class="cg-l"><div>Planilha de cotações</div><div class="cg-t"><div class="cg-b a" style="grid-column:2/4">A + C</div></div></div>
+    <div class="cg-l"><div>Calculadora de materiais</div><div class="cg-t"><div class="cg-b c" style="grid-column:2/3">C</div></div></div>
+    <div class="cg-l"><div>Obras e custos</div><div class="cg-t"><div class="cg-b a" style="grid-column:3/5">A + C</div></div></div>
+    <div class="cg-l"><div>Ranking de fornecedores</div><div class="cg-t"><div class="cg-b a" style="grid-column:4/5">A</div></div></div>
+    <div class="cg-l"><div>Suprimentos e cotações</div><div class="cg-t"><div class="cg-b m" style="grid-column:5/7">A + C</div></div></div>
+    <div class="cg-l"><div>Cesta e curva ABC</div><div class="cg-t"><div class="cg-b a" style="grid-column:6/7">A</div></div></div>
+    <div class="cg-l"><div>Assistente de compras (IA)</div><div class="cg-t"><div class="cg-b b" style="grid-column:5/8">B · tela com C na semana 7</div></div></div>
+    <div class="cg-l"><div>Diário de obra</div><div class="cg-t"><div class="cg-b a" style="grid-column:6/8">A + C</div></div></div>
+    <div class="cg-l"><div>WhatsApp em modo simulado</div><div class="cg-t"><div class="cg-b b" style="grid-column:2/5">B · adaptadores</div></div></div>
+    <div class="cg-l"><div>Conta na Meta e modelos de mensagem</div><div class="cg-t"><div class="cg-b x" style="grid-column:1/6">depende da Meta · pedir já</div></div></div>
+    <div class="cg-l"><div>Obra piloto usando o sistema</div><div class="cg-t"><div class="cg-b c" style="grid-column:5/8">versões 1 e 2, com pessoas</div><div class="cg-b x" style="grid-column:8/10">IA em ensaio</div></div></div>
+    <div class="cg-l"><div>Backlog</div><div class="cg-t"><div class="cg-b p" style="grid-column:1/8">Agente de Produto · cartões toda segunda</div></div></div>
+    <div class="cg-l" style="border-bottom:0"><div>Validação</div><div class="cg-t"><div class="cg-b v" style="grid-column:1/8">Agente Validador · cada entrega</div></div></div>
+  </div></div>
+  <div class="quem-faz">
+    <span><b style="background:var(--azul)">A</b>Engenheiro de dados e contas</span>
+    <span><b style="background:var(--laranja)">B</b>Engenheiro de WhatsApp e IA</span>
+    <span><b style="background:var(--tinta)">C</b>Engenheiro de telas</span>
+    <span><b style="background:#0F766E">P</b>Agente de Produto, que escreve as tarefas</span>
+    <span><b style="background:#6D28D9">V</b>Agente Validador, que confere cada entrega</span>
+  </div>
+
+  <h3 style="margin:34px 0 4px;font-size:22px">Como chegamos nas 7 semanas</h3>
+  <p class="sub" style="margin-bottom:14px">Em três passos. Só o segundo é conta; o primeiro é avaliação nossa.</p>
+  <div class="grade g2">
+    <div class="card rolagem"><h3>Passo 1 · Um tamanho para cada parte</h3>
+      <p>Cada parte recebeu um tamanho conforme o que precisa para funcionar.</p>
+      <table>
+        <thead><tr><th>Tamanho</th><th>Partes</th><th class="n">Cada uma</th></tr></thead>
+        <tbody>
+          <tr><td><b>Pequena</b><br><span class="pequeno">só conta ou preparação</span></td><td>Preparação, calculadora, ranking de lojas, cesta</td><td class="n">1 semana</td></tr>
+          <tr><td><b>Média</b><br><span class="pequeno">guarda dados e tem tela</span></td><td>Planilha de preços, custo da obra, cotação e pedido, diário</td><td class="n">2 semanas</td></tr>
+          <tr><td><b>Grande</b><br><span class="pequeno">WhatsApp, ligação e IA juntos</span></td><td>Assistente de compras</td><td class="n">3 semanas</td></tr>
+        </tbody>
+      </table>
+      <p class="pequeno" style="margin-top:10px">Somando tudo: 4 pequenas + 4 médias + 1 grande = <b>15 semanas de trabalho</b>, se fosse uma frente só.</p></div>
+    <div class="card"><h3>Passo 2 · Três frentes ao mesmo tempo</h3>
+      <p>Com três frentes trabalhando juntas, as 15 semanas não viram 5, porque algumas partes precisam esperar outras:</p>
+      <ul>
+        <li>a <b>planilha de preços</b> vem antes de quase tudo, porque as outras partes usam os preços dela;</li>
+        <li>o <b>custo da obra</b> precisa da planilha;</li>
+        <li>a <b>cotação</b> precisa da planilha e do custo;</li>
+        <li>o <b>assistente</b> faz sozinho o que a cotação faz à mão, então vem por último.</li>
+      </ul>
+      <p>O prazo é o tamanho dessa fila, não a soma de tudo. As outras partes cabem ao lado dela.</p></div>
+  </div>
+  <div class="card rolagem" style="margin-top:14px"><h3>A fila que define o prazo</h3>
+    <div class="fila" style="margin-top:10px">
+      <div class="t" style="flex:1"><b>1 semana</b>Preparação</div>
+      <div style="flex:2"><b>2 semanas</b>Planilha de preços</div>
+      <div style="flex:1"><b>+1 semana</b>Custo da obra</div>
+      <div style="flex:2"><b>2 semanas</b>Cotação e pedido</div>
+      <div class="l" style="flex:1"><b>+1 semana</b>Assistente</div>
+    </div>
+    <div class="regua"><span>S1</span><span>S2</span><span>S3</span><span>S4</span><span>S5</span><span>S6</span><span>S7</span></div>
+    <p class="pequeno" style="margin-top:12px">“+1 semana” quer dizer que a parte começa enquanto a anterior ainda termina. O custo da obra leva 2 semanas, mas a primeira corre junto com a planilha. O assistente leva 3, e as duas primeiras correm junto com a cotação. 1 + 2 + 1 + 2 + 1 = <b>7 semanas</b>.</p>
+  </div>
+  <div class="grade g3" style="margin-top:14px">
+    <div class="card"><h3>Passo 3 · Duas semanas de ensaio</h3><p>Depois de pronto, o assistente passa duas semanas na obra só mostrando o que faria. Por isso a decisão de deixá-lo agir fica na semana 9. Escolhemos duas semanas por ser o mínimo para ver algumas compras do começo ao fim.</p></div>
+    <div class="card"><h3>O que é firme e o que é estimativa</h3>
+      <ul><li><b>Firme:</b> a ordem das partes.</li><li><b>Estimativa:</b> o tamanho de cada parte. Não foi medido; foi avaliado e arredondado para semanas inteiras.</li><li><b>Aposta:</b> as duas sobreposições de “+1 semana”. Se uma não der certo, o prazo cresce uma semana.</li></ul></div>
+    <div class="card"><h3>O que pode mudar o prazo</h3>
+      <ul><li><b>Para mais:</b> demora da Meta em liberar o WhatsApp, entregas paradas esperando aprovação, e o diário, que divide a equipe nas semanas 6 e 7.</li><li><b>Para menos:</b> aproveitar o que já existe em outros projetos da empresa.</li></ul></div>
+  </div>
+  <p class="aviso" style="margin-top:14px"><b>Como trocar estimativa por medição.</b> Ao fim da semana 3, a preparação e a planilha de preços devem estar prontas. Comparando o previsto com o que levou de verdade, o resto do prazo é recalculado com a velocidade real.</p>
+</section>
+
+<section id="custos">
+  <p class="num">8 · Quanto custa manter</p>
+  <h2>Cerca de R$ 105 por mês no piloto</h2>
+  <p class="sub">É o custo de manter o sistema no ar e conversando. Quase tudo é cobrado pelo uso: com pouco movimento, paga-se pouco. Não inclui o custo de construir o sistema.</p>
+  <div class="totais">
+    <div class="tot p"><small>No piloto</small><b>≈ R$ 105 <em>por mês</em></b><span>≈ R$ 1.250 por ano · uma obra, sem ligações por voz</span></div>
+    <div class="tot t"><small>Com tudo ligado</small><b>≈ R$ 195 <em>por mês</em></b><span>≈ R$ 2.300 por ano · uma obra, com ligações por voz</span></div>
+  </div>
+  <div class="card rolagem" style="margin-top:14px"><h3>Para onde vai o dinheiro</h3>
+    <p class="pequeno">Cada item, o que ele é e quanto pesa por mês. As barras estão na mesma escala.</p>
+    <div class="itens"><div class="item"><div class="placa" style="background:#E3EDF7"><svg viewBox="0 0 64 64"><use href="#ic-dominio"/></svg></div><div><h4>Domínio<small>.com.br</small></h4><p>O endereço do sistema na internet, como a placa na fachada.</p><p class="como"><b>Fixo.</b> R$ 40 por ano, pagos uma vez.</p></div><div class="barras"><span>No piloto</span><div class="tr"><i class="p" style="width:2.3%"></i><b>R$ 3</b></div><span>Tudo ligado</span><div class="tr"><i class="t" style="width:2.3%"></i><b>R$ 3</b></div></div></div><div class="item"><div class="placa" style="background:var(--chao)"><svg viewBox="0 0 64 64"><use href="#ic-servidor"/></svg></div><div><h4>Hospedagem<small>Google Cloud</small></h4><p>Os computadores alugados onde o sistema fica ligado.</p><p class="como"><b>Pelo uso.</b> Com pouco movimento cabe na faixa gratuita do Google; só passa a cobrar quando o acesso cresce.</p></div><div class="barras"><span>No piloto</span><div class="tr"><i class="p" style="width:0%"></i><b>R$ 0</b></div><span>Tudo ligado</span><div class="tr"><i class="t" style="width:7.8%"></i><b>R$ 10</b></div></div></div><div class="item"><div class="placa" style="background:#E3EDF7"><svg viewBox="0 0 64 64"><use href="#ic-banco"/></svg></div><div><h4>Banco de dados<small>Google, faixa gratuita</small></h4><p>O arquivo do sistema: preços, pedidos, custos e o diário.</p><p class="como"><b>Sem mensalidade.</b> Cabe na faixa gratuita do Google. Se o volume passar do limite e precisar de plano pago, a média é de R$ 40 a R$ 60 por mês.</p></div><div class="barras"><span>No piloto</span><div class="tr"><i class="p" style="width:0%"></i><b>R$ 0</b></div><span>Tudo ligado</span><div class="tr"><i class="t" style="width:0%"></i><b>R$ 0</b></div></div></div><div class="item"><div class="placa" style="background:#FFE9DA"><svg viewBox="0 0 64 64"><use href="#ic-arquivos"/></svg></div><div><h4>Arquivos e cópia de segurança<small></small></h4><p>Fotos do diário, orçamentos em PDF e uma cópia de tudo.</p><p class="como"><b>Pelo espaço.</b> Cresce devagar, conforme as fotos se acumulam.</p></div><div class="barras"><span>No piloto</span><div class="tr"><i class="p" style="width:7.8%"></i><b>R$ 10</b></div><span>Tudo ligado</span><div class="tr"><i class="t" style="width:7.8%"></i><b>R$ 10</b></div></div></div><div class="item"><div class="placa" style="background:#E3F7EA"><svg viewBox="0 0 64 64"><use href="#ic-zap"/></svg></div><div><h4>WhatsApp<small>Meta</small></h4><p>As mensagens que o sistema envia por conta própria.</p><p class="como"><b>Por mensagem.</b> Perto de R$ 0,04 cada; contamos 1.000 por mês. Responder a quem escreveu primeiro, em até 24 horas, não é cobrado.</p></div><div class="barras"><span>No piloto</span><div class="tr"><i class="p" style="width:31.0%"></i><b>R$ 40</b></div><span>Tudo ligado</span><div class="tr"><i class="t" style="width:31.0%"></i><b>R$ 40</b></div></div></div><div class="item"><div class="placa" style="background:#FFE9DA"><svg viewBox="0 0 64 64"><use href="#ic-ia"/></svg></div><div><h4>Uso do agente assistente<small>IA Gemini, do Google</small></h4><p>O assistente lendo as respostas das lojas e escrevendo as mensagens.</p><p class="como"><b>Por texto lido e escrito.</b> Em média, de R$ 40 a R$ 60 por mês. O preço anunciado do Gemini dobra em janeiro de 2027.</p></div><div class="barras"><span>No piloto</span><div class="tr"><i class="p" style="width:38.8%"></i><b>R$ 50</b></div><span>Tudo ligado</span><div class="tr"><i class="t" style="width:38.8%"></i><b>R$ 50</b></div></div></div><div class="item"><div class="placa" style="background:var(--chao)"><svg viewBox="0 0 64 64"><use href="#ic-tel"/></svg></div><div><h4>Ligações por voz<small>Bland AI</small></h4><p>Liga para a loja que não respondeu no WhatsApp.</p><p class="como"><b>Por minuto.</b> Desligadas no piloto; depois, contamos 100 minutos por mês.</p></div><div class="barras"><span>No piloto</span><div class="tr"><b style="color:var(--cinza);font-weight:600">desligadas</b></div><span>Tudo ligado</span><div class="tr"><i class="t" style="width:62.0%"></i><b>R$ 80</b></div></div></div></div>
+  </div>
+  <div class="grade g2" style="margin-top:14px">
+    <div class="card"><h3>Quase nada é fixo</h3>
+      <p>No piloto, só o domínio tem valor certo. O resto acompanha o movimento: mês parado, conta pequena.</p>
+      <div class="divisao" role="img" aria-label="R$ 3 fixos e R$ 100 pelo uso"><div style="background:var(--tinta);flex:0 0 74px">Fixo R$ 3</div><div style="background:var(--azul);flex:1">Pelo uso ≈ R$ 100</div></div>
+      <p class="pequeno" style="margin-top:10px">A parte fixa aparece ampliada para caber o texto; ela é cerca de 3% do total.</p></div>
+    <div class="card"><h3>Se entrarem mais obras</h3>
+      <p>Com tudo ligado, cada obra a mais soma perto de R$ 170: são as mensagens, o uso do assistente e as ligações dela.</p>
+      <div class="cresce">
+        <div><div class="predios"><svg viewBox="0 0 64 64"><use href="#ic-obra"/></svg></div><b>≈ R$ 195</b><span>1 obra</span></div>
+        <div><div class="predios"><svg viewBox="0 0 64 64"><use href="#ic-obra"/></svg><svg viewBox="0 0 64 64"><use href="#ic-obra"/></svg></div><b>≈ R$ 365</b><span>2 obras</span></div>
+        <div><div class="predios"><svg viewBox="0 0 64 64"><use href="#ic-obra"/></svg><svg viewBox="0 0 64 64"><use href="#ic-obra"/></svg><svg viewBox="0 0 64 64"><use href="#ic-obra"/></svg></div><b>≈ R$ 535</b><span>3 obras</span></div>
+      </div>
+      <p class="pequeno" style="margin-top:10px">Projeção nossa: supõe que só WhatsApp, IA e ligações crescem com o número de obras.</p></div>
+  </div>
+  <div class="grade g2" style="margin-top:14px">
+    <div class="card"><h3>O que supusemos</h3>
+      <ul>
+        <li>Uma obra, com cerca de 1.000 mensagens e 100 minutos de ligação por mês.</li>
+        <li>Dólar a R$ 5,50. IA e ligações são cobradas em dólar.</li>
+        <li>Banco de dados e hospedagem na faixa gratuita do Google.</li>
+        <li>No piloto: sem ligações por voz.</li>
+        <li>Com tudo ligado: ligações funcionando e hospedagem já um pouco fora da faixa gratuita.</li>
+      </ul></div>
+    <div class="card"><h3>Como ler estes números</h3>
+      <ul>
+        <li>São médias para planejar, não orçamento fechado. Parte dos preços veio de sites que resumem as tabelas oficiais.</li>
+        <li>Arquivos e a hospedagem com tudo ligado são estimativa nossa, sem tabela consultada.</li>
+        <li>A faixa gratuita do banco tem limite de volume. Se precisar de plano pago, some de R$ 40 a R$ 60 por mês ao total.</li>
+        <li>WhatsApp, IA e ligações crescem com o número de obras e de cotações; o domínio não muda.</li>
+        <li>O piloto mostra o volume real, e o número é refeito com ele.</li>
+      </ul></div>
+  </div>
+  <p class="pequeno" style="margin-top:10px">Preços consultados em novembro de 2026: <a href="https://www.homehost.com.br/blog/registro-de-dominios/quanto-custa-um-dominio">domínio .com.br</a>, <a href="https://www.messagecentral.com/blog/whatsapp-business-api-pricing-brazil">WhatsApp</a>, <a href="https://cloud.google.com/vertex-ai/generative-ai/pricing">IA</a> e <a href="https://www.eesel.ai/blog/bland-ai-review">ligações</a>.</p>
+</section>
+
+<section id="dificuldades">
+  <p class="num">9 · As dificuldades</p>
+  <h2>O que pode dar trabalho e como resolver</h2>
+  <p class="sub">Nenhuma delas é de tecnologia que não existe. Quase todas são de gente e de terceiros, e por isso cada uma já tem uma saída prevista.</p>
+  <div class="card rolagem"><div class="quadro-pr"><div class="pr cab"><span></span><div class="a">A dificuldade</div><span></span><div class="b">Como resolver</div></div><div class="pr"><span class="n">1</span><div class="a"><b class="t">As lojas podem não responder a um robô</b><p>O balconista não conhece o número e desconfia de mensagem automática.</p></div><span class="seta-pr" aria-hidden="true">→</span><div class="b"><b class="t">Começar com lojas avisadas</b><p>O piloto usa poucas lojas, combinadas antes. A mensagem diz quem é e por que escreve, e sempre há uma pessoa para assumir a conversa. Se não funcionar, o assistente passa a apoiar o engenheiro em vez de cotar sozinho.</p></div></div><div class="pr"><span class="n">2</span><div class="a"><b class="t">A liberação do WhatsApp pela Meta pode demorar</b><p>A conta da empresa e os modelos de mensagem precisam ser aprovados, e o prazo não depende de nós.</p></div><span class="seta-pr" aria-hidden="true">→</span><div class="b"><b class="t">Pedir já e construir em modo de teste</b><p>O pedido sai na primeira semana. Até a liberação, tudo é construído e testado com um WhatsApp simulado.</p></div></div><div class="pr"><span class="n">3</span><div class="a"><b class="t">A IA pode ler um preço errado</b><p>Áudio com ruído, foto torta de orçamento ou letra ruim confundem a leitura.</p></div><span class="seta-pr" aria-hidden="true">→</span><div class="b"><b class="t">Dúvida vira pergunta</b><p>Preço lido com incerteza fica marcado e pede confirmação antes de entrar na comparação. E há duas semanas de ensaio antes de valer.</p></div></div><div class="pr"><span class="n">4</span><div class="a"><b class="t">O mestre pode não responder o diário</b><p>Fim de dia corrido, celular sem sinal, ou ele não vê utilidade.</p></div><span class="seta-pr" aria-hidden="true">→</span><div class="b"><b class="t">Pouco esforço e alguém olhando</b><p>São só quatro perguntas, com áudio aceito. O engenheiro vê quem não respondeu, e dia sem resposta aparece como “não informado”.</p></div></div><div class="pr"><span class="n">5</span><div class="a"><b class="t">O orçamento da obra pode estar desorganizado</b><p>Planilhas diferentes, etapas com nomes que mudam, itens sem quantidade.</p></div><span class="seta-pr" aria-hidden="true">→</span><div class="b"><b class="t">Arrumar isso primeiro</b><p>A importação do orçamento é a primeira tarefa da tela de custos, feita com a planilha real da obra piloto em mãos.</p></div></div><div class="pr"><span class="n">6</span><div class="a"><b class="t">A equipe pode resistir à mudança</b><p>É mais uma ferramenta, e o jeito antigo funciona bem ou mal.</p></div><span class="seta-pr" aria-hidden="true">→</span><div class="b"><b class="t">Entrar aos poucos, pelo WhatsApp</b><p>O sistema chega em três versões, e quase tudo acontece no aplicativo que todos já usam. A primeira versão só tira trabalho: a planilha de preços.</p></div></div><div class="pr"><span class="n">7</span><div class="a"><b class="t">O medo de a IA comprar errado</b><p>Dinheiro saindo sem ninguém ver.</p></div><span class="seta-pr" aria-hidden="true">→</span><div class="b"><b class="t">A IA não fecha compra sozinha</b><p>Ela pergunta, compara e só pede depois de uma aprovação. Há limite em dinheiro, e cada mensagem e decisão fica registrada.</p></div></div><div class="pr"><span class="n">8</span><div class="a"><b class="t">O prazo é uma estimativa</b><p>As 7 semanas vieram de avaliação, não de medição.</p></div><span class="seta-pr" aria-hidden="true">→</span><div class="b"><b class="t">Medir cedo e recalcular</b><p>Ao fim da semana 3, compara-se o previsto com o que levou de verdade e o resto do prazo é refeito.</p></div></div><div class="pr"><span class="n">9</span><div class="a"><b class="t">O custo mensal pode crescer</b><p>Mensagens, IA e ligações são cobradas pelo uso.</p></div><span class="seta-pr" aria-hidden="true">→</span><div class="b"><b class="t">Acompanhar e ligar por partes</b><p>O piloto começa sem ligações por voz. O gasto é conferido todo mês, e cada obra a mais tem um custo previsível.</p></div></div><div class="pr"><span class="n">10</span><div class="a"><b class="t">Dados de pessoas circulando</b><p>Nomes e telefones de compradores, lojas e equipe passam pelo sistema.</p></div><span class="seta-pr" aria-hidden="true">→</span><div class="b"><b class="t">O que é pessoal fica de fora da IA</b><p>Nome e telefone são trocados por códigos antes de o texto ir para a IA.</p></div></div></div></div>
+  <p class="aviso" style="margin-top:14px"><b>As três que mais pesam.</b> A resposta das lojas, a liberação da Meta e a adesão do mestre não se resolvem com mais desenvolvimento: só o piloto numa obra de verdade mostra como ficam. Por isso o sistema chega em versões, e as duas primeiras já servem mesmo que o assistente precise de ajuste.</p>
+</section>
+
+<section id="decisoes">
+  <p class="num">10 · O que falta decidir</p>
+  <h2>Cinco decisões antes de começar</h2>
+  <div class="grade g3" style="margin-top:16px">
+    <div class="card"><h3>1 · A obra piloto</h3><p>Em qual obra começar e quem é o engenheiro responsável.</p></div>
+    <div class="card"><h3>2 · Os limites</h3><p>Até quanto o engenheiro aprova sozinho e a partir de quanto a compra sobe para a diretoria. No exemplo usamos R$ 50.000,00.</p></div>
+    <div class="card"><h3>3 · As lojas</h3><p>Quais lojas entram no piloto. Elas precisam ser avisadas de que serão atendidas por um assistente.</p></div>
+    <div class="card"><h3>4 · As ligações</h3><p>Se o assistente pode ligar para as lojas, e em que horário.</p></div>
+    <div class="card"><h3>5 · O número de WhatsApp</h3><p>Um número só para o sistema, registrado em nome da empresa.</p></div>
+    <div class="card" style="border-color:var(--laranja)"><h3>O que ainda não sabemos</h3><p>Quantas cotações e mensagens a obra faz por mês. O custo de manter foi estimado em cerca de R$ 105 por mês no piloto; o piloto mostra o volume real e o número é refeito.</p></div>
+  </div>
+</section>
+
+<section id="na-pratica">
+  <p class="num">11 · Na prática</p>
+  <h2>Como as telas vão ficar</h2>
+  <p class="sub">Uma tela de exemplo do assistente de compras, com a mesma compra de argamassa contada antes. À esquerda, o que o engenheiro vê no computador; à direita, a conversa que o assistente conduz no WhatsApp.</p>
+  <div class="janela">
+    <div class="barra"><i></i><i></i><i></i><span>Vigamais · Assistente de compras</span></div>
+    <a href="demo-obra.html"><img src="tela-exemplo.png" width="1280" height="720" alt="Tela do assistente de compras: planilha de cotações da argamassa com quatro lojas, a Materiais Ipê destacada como melhor preço, e ao lado a conversa do assistente com o engenheiro no WhatsApp"></a>
+  </div>
+  <p style="margin-top:14px"><a class="btn" href="demo-obra.html">Abrir a tela e ver a compra acontecer</a> <span class="pequeno" style="margin-left:8px">Dá para pausar e voltar a qualquer ponto.</span></p>
+
+  <h3 style="margin:38px 0 4px;font-size:22px">Vídeo: uma compra do começo ao fim</h3>
+  <p class="sub" style="margin-bottom:14px">Em 46 segundos: o aviso do mestre, a pergunta ao engenheiro, a consulta à planilha, a aprovação, o pedido à loja e o custo lançado na etapa.</p>
+  <div class="janela">
+    <video controls preload="metadata" poster="tela-exemplo.png" width="1280" height="720">
+      <source src="video-obra.mp4" type="video/mp4">
+      Seu navegador não toca este vídeo. <a href="video-obra.mp4">Baixe o arquivo</a>.
+    </video>
+  </div>
+  <p class="pequeno" style="margin-top:10px">O vídeo não tem som; as legendas contam cada passo. É uma demonstração com dados de exemplo: o sistema ainda não está construído, e a tela final pode mudar. <a href="video-obra.mp4">Baixar o vídeo</a></p>
+
+  <h3 style="margin:38px 0 4px;font-size:22px">Vídeo: o Diário de obra</h3>
+  <p class="sub" style="margin-bottom:14px">O assistente faz as perguntas do fim do dia ao mestre pelo WhatsApp, o diário se preenche sozinho, a contagem de material vira aviso de compra e o engenheiro confirma o avanço.</p>
+  <div class="janela">
+    <video controls preload="metadata" poster="tela-diario.png" width="1280" height="720">
+      <source src="video-diario.mp4" type="video/mp4">
+      Seu navegador não toca este vídeo. <a href="video-diario.mp4">Baixe o arquivo</a>.
+    </video>
+  </div>
+  <p style="margin-top:12px"><a class="btn claro" href="demo-diario.html">Abrir esta tela e controlar o passo</a> <span class="pequeno" style="margin-left:8px">46 segundos, sem som. <a href="video-diario.mp4">Baixar o vídeo</a></span></p>
+</section>
+
+<footer>
+  Apresentação do módulo Obra · Vigamais · novembro de 2026. Dados de exemplo; prazos e limites são propostas para discussão. <a href="index.html">Protótipo das telas</a>
+</footer>
+</body>
+</html>

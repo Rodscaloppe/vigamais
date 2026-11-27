@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Exemplo: Diário de obra · Vigamais</title>
+<link rel="stylesheet" href="demo-base.css">
+</head>
+<body>
+<div id="moldura">
+<div id="palco">
+  <div class="lado"><div class="marca">Viga<span>mais</span></div><div class="i">Painel</div><div class="g">OBRA</div><div class="i">Obras e custos</div><div class="i">Assistente de compras</div><div class="i">Suprimentos e cotações</div><div class="i">Planilha de cotações</div><div class="i">Calculadora de materiais</div><div class="i">Cesta e curva ABC</div><div class="i">Ranking de fornecedores</div><div class="i a">Diário de obra</div><div class="g">VENDAS</div><div class="i">Atendimento</div><div class="i">Funil de vendas</div><div class="g">GESTÃO</div><div class="i">Financeiro</div></div>
+  <div class="centro">
+    <div class="topo"><div><div class="migalha">Obra · Jardim das Acácias</div><h1>Diário de obra</h1></div><span class="selo">Dados de exemplo</span></div>
+    <div class="etapas" id="etapas"><span>1 O que foi feito</span><span>2 Equipe e clima</span><span>3 Fotos</span><span>4 Material</span><span>5 Avanço</span></div>
+
+    <div class="quadro" data-in="0" data-out="31">
+      <div class="card"><h2>Diário de terça-feira <span class="estado esp" style="font-size:12.5px;padding:3px 10px;margin-left:6px">sendo preenchido</span></h2>
+        <div class="lin" data-in="6.6"><b>Serviços</b><span>Armação da laje do 8º concluída · alvenaria do 5º em 50%</span></div>
+        <div class="lin" data-in="7.2"><b>Entregas</b><span>Aço CA-50, 3,8 t · pedido 305</span></div>
+        <div class="lin" data-in="10.6"><b>Efetivo</b><span>48 pessoas · 32 próprias, 16 de empreiteira</span></div>
+        <div class="lin" data-in="14.0"><b>Clima</b><span>Sol, chuva das 14h às 15h</span></div>
+        <div class="lin" data-in="14.6"><b>Parada</b><span>Alvenaria externa, 1 hora</span></div>
+        <div class="lin" data-in="20.2"><b>Fotos</b><span>3 anexadas: laje, alvenaria e aço</span></div>
+        <div class="lin alerta" data-in="27.0"><b style="color:#9A3412">Estoque</b><span>Argamassa AC-II: contagem do mestre, 110 sacos</span></div>
+      </div>
+      <div class="faixa l" data-in="28.8">A contagem do mestre vai para o assistente de compras, que já perguntou ao engenheiro.</div>
+    </div>
+
+    <div class="quadro" data-in="31" data-out="99">
+      <div class="card"><h2>O que o diário propõe de avanço <span class="estado esp" data-in="31.6" data-out="36.5" style="font-size:12.5px;padding:3px 10px;margin-left:6px">Espera o ok do Eng. Paulo</span><span class="estado ok" data-in="36.6" style="font-size:12.5px;padding:3px 10px;margin-left:6px">Confirmado pelo engenheiro</span></h2>
+        <table><thead><tr><th>Serviço</th><th>Etapa</th><th class="n">Ontem</th><th class="n">Hoje</th><th>Avanço</th></tr></thead><tbody>
+          <tr data-in="32.0"><td><b>Armação da laje</b></td><td>Estrutura · 8º pav.</td><td class="n">85%</td><td class="n"><b>100%</b></td><td><div class="trilho"><i data-larg="85,100,32.6,1.2" style="width:85%"></i></div></td></tr>
+          <tr data-in="32.8"><td><b>Alvenaria</b></td><td>Alvenaria · 5º pav.</td><td class="n">35%</td><td class="n"><b>50%</b></td><td><div class="trilho"><i data-larg="35,50,33.4,1.2" style="width:35%"></i></div></td></tr>
+        </tbody></table>
+        <div class="sub" style="margin-top:10px" data-in="34.2">O assistente só propõe. O número entra no custo da obra depois que o engenheiro confirma.</div>
+      </div>
+      <div class="faixa v" data-in="37.4">Avanço físico da obra na semana: de 56,6% para <span data-conta="56.6,58,37.6,1.4,pct1">56,6</span>%</div>
+      <div class="faixa e" data-in="39.6">Quatro perguntas por dia. O diário se monta sozinho.</div>
+    </div>
+  </div>
+<div class="fone"><div class="tela"><div class="conversa" data-in="0" data-out="8"><div class="cab"><i>MA</i><div><b>Mestre Antônio</b><span>mestre de obras</span></div></div><div class="msgs"><div class="m out" data-in="1.0" data-flui>Boa tarde, Antônio. Fechando o dia: o que foi feito hoje?<small>16:45</small></div><div class="m in" data-in="3.4" data-flui><div class="audio">▶ <u></u> 0:38</div>“Terminamos a armação da laje do oitavo. Alvenaria do quinto tá na metade. Chegou o aço.”<small>16:52</small></div><div class="m out" data-in="6.0" data-flui>Anotei: laje do 8º armada, alvenaria do 5º em 50%, entrega de aço.<small>16:52</small></div></div></div><div class="conversa" data-in="8" data-out="16"><div class="cab"><i>MA</i><div><b>Mestre Antônio</b><span>mestre de obras</span></div></div><div class="msgs"><div class="m out" data-in="8.6" data-flui>Quantas pessoas hoje?<small>16:52</small></div><div class="m in" data-in="10.0" data-flui>48. 32 nossos e 16 da empreiteira<small>16:53</small></div><div class="m out" data-in="11.6" data-flui>Teve chuva ou alguma parada?<small>16:53</small></div><div class="m in" data-in="13.4" data-flui>Chuva das 14 às 15, parou a alvenaria externa<small>16:54</small></div></div></div><div class="conversa" data-in="16" data-out="23"><div class="cab"><i>MA</i><div><b>Mestre Antônio</b><span>mestre de obras</span></div></div><div class="msgs"><div class="m out" data-in="16.8" data-flui>Me manda 3 fotos: a laje armada, a alvenaria do 5º e o aço que chegou.<small>16:54</small></div><div class="m in" data-in="19.4" data-flui><div class="fotos"><i>laje</i><i>alvenaria</i><i>aço</i></div><small>17:01</small></div></div></div><div class="conversa" data-in="23" data-out="31"><div class="cab"><i>MA</i><div><b>Mestre Antônio</b><span>mestre de obras</span></div></div><div class="msgs"><div class="m out" data-in="23.8" data-flui>Diário de terça fechado. Falta de material para amanhã?<small>17:01</small></div><div class="m in" data-in="26.2" data-flui>Argamassa tá acabando, tem uns 110 sacos<small>17:02</small></div><div class="m out" data-in="28.4" data-flui>Registrei: 110 sacos de AC-II. Já avisei o Eng. Paulo e perguntei se cota.<small>17:02</small></div></div></div><div class="conversa" data-in="31" data-out="99"><div class="cab"><i>EP</i><div><b>Eng. Paulo</b><span>engenheiro da obra</span></div></div><div class="msgs"><div class="m out" data-in="32.2" data-flui>Paulo, diário de terça pronto. Laje do 8º em 100% e alvenaria do 5º em 50%. Confirma o avanço?<small>17:03</small></div><div class="m in" data-in="36.2" data-flui>Confirmado.<small>17:20</small></div></div></div></div></div><div class="rotulo-fone">A conversa que o assistente conduz</div>
+  <div class="barra-tempo"><i id="progresso" style="width:0"></i></div>
+  <div class="legenda" id="legenda"></div>
+</div>
+<div id="controles"><button id="bt-play" type="button">Pausar</button><button id="bt-ini" type="button">Do início</button><input id="tempo" type="range" min="0" max="44" step="0.1" value="0" aria-label="Posição no exemplo"><span id="relogio">0 s</span></div>
+</div>
+<script>window.DEMO = {"dur": 43, "cenas": [0, 8, 16, 23, 31], "legendas": [[0, "<b>1</b> · No fim do dia, o assistente pergunta o que foi feito. O mestre responde por áudio"], [8, "<b>2</b> · Quantas pessoas vieram e se a obra parou por algum motivo"], [16, "<b>3</b> · Três fotos do dia, anexadas ao diário"], [23, "<b>4</b> · O que está acabando: a contagem do mestre vira aviso de compra"], [31, "<b>5</b> · O diário propõe o avanço. O engenheiro confirma e o número vale"]]};</script>
+<script src="demo-base.js"></script>
+</body>
+</html>

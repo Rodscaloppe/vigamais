@@ -19,29 +19,38 @@
     <span class="selo ambar pilula">Dados de exemplo</span>
   </header>
 
-  <div class="acoes" aria-label="Abas">
-    <span class="btn primario">Contas a pagar e receber</span>
-    <span class="btn">Fluxo de caixa</span>
-    <span class="btn">Caixa e bancos</span>
-    <span class="btn">DRE</span>
-    <span class="btn">Balanço</span>
-    <span class="btn">Fechamento do mês</span>
-  </div>
-
   <section class="grade-kpi" aria-label="Resumo">
-    <div class="card kpi"><span class="rotulo">Saldo em caixa e bancos</span><span class="valor">R$ 3,42 mi</span><span class="sub">em 4 contas, calculado pela contabilidade</span></div>
-    <div class="card kpi"><span class="rotulo">A receber em 30 dias</span><span class="valor">R$ 1,18 mi</span><span class="sub">sinais, parcelas e repasses de banco</span></div>
-    <div class="card kpi"><span class="rotulo">A pagar em 30 dias</span><span class="valor">R$ 1,46 mi</span><span class="alerta">R$ 86 mil vencem esta semana</span></div>
+    <div class="card kpi"><span class="rotulo">Saldo em caixa e bancos</span><span class="valor" id="k-saldo">R$ 3,42 mi</span><span class="sub">em 4 contas, calculado pela contabilidade</span></div>
+    <div class="card kpi"><span class="rotulo">A receber em 30 dias</span><span class="valor" id="k-receber">R$ 1,18 mi</span><span class="sub">sinais, parcelas e repasses de banco</span></div>
+    <div class="card kpi"><span class="rotulo">A pagar em 30 dias</span><span class="valor" id="k-pagar">R$ 1,46 mi</span><span class="alerta">R$ 86 mil vencem esta semana</span></div>
     <div class="card kpi escuro"><span class="rotulo">Entradas − saídas do mês</span><span class="valor">+R$ 162 mil</span><span class="nota">somando os 3 empreendimentos</span></div>
   </section>
 
-  <div class="grade-2">
+
+  <div class="acoes" role="tablist" aria-label="Relatórios do financeiro">
+    <button class="btn" type="button" role="tab" id="aba-contas" aria-controls="painel-contas" data-aba="contas">Contas a pagar e receber</button>
+    <button class="btn" type="button" role="tab" id="aba-fluxo" aria-controls="painel-fluxo" data-aba="fluxo">Fluxo de caixa</button>
+    <button class="btn" type="button" role="tab" id="aba-bancos" aria-controls="painel-bancos" data-aba="bancos">Caixa e bancos</button>
+    <button class="btn" type="button" role="tab" id="aba-dre" aria-controls="painel-dre" data-aba="dre">DRE</button>
+    <button class="btn" type="button" role="tab" id="aba-balanco" aria-controls="painel-balanco" data-aba="balanco">Balanço</button>
+    <button class="btn" type="button" role="tab" id="aba-fechamento" aria-controls="painel-fechamento" data-aba="fechamento">Fechamento do mês</button>
+  </div>
+
+  <div class="dica ok" id="msg" role="status" aria-live="polite"></div>
+
+  <div class="pilha-g" role="tabpanel" id="painel-contas" aria-labelledby="aba-contas" data-painel="contas">
+    <div class="acoes">
+      <button class="btn ativo" type="button" data-novo="pagar">+ Nova conta a pagar</button>
+      <button class="btn ativo" type="button" data-novo="receber">+ Nova conta a receber</button>
+      <span class="pequeno">Use “Dar baixa” numa linha para registrar o pagamento ou o recebimento.</span>
+    </div>
+  <div class="pilha-g">
     <section class="card pilha">
       <h2>A pagar</h2>
       <div class="rolagem">
       <table>
-        <thead><tr><th>Conta</th><th>De onde veio</th><th>Vence</th><th class="num">Valor</th></tr></thead>
-        <tbody>
+        <thead><tr><th>Conta</th><th>De onde veio</th><th>Vence</th><th class="num">Valor</th><th>Baixa</th></tr></thead>
+        <tbody id="tb-pagar">
           <tr><td><b>Locação de grua</b><br><span class="pequeno">Acácias · Estrutura</span></td><td>Custo lançado na obra</td><td>05/12</td><td class="num">R$ 18.500,00</td></tr>
           <tr><td><b>Depósito Aroeira · aço e brita</b><br><span class="pequeno">Acácias · Estrutura · 8º pav.</span></td><td><a href="suprimentos.html">Cotação 248</a></td><td>24/12</td><td class="num">R$ 35.364,00</td></tr>
           <tr><td><b>Concreteira Aroeira · 42 m³</b><br><span class="pequeno">Acácias · Estrutura · 8º pav.</span></td><td><a href="obra.html#cotacoes">Cotação 251 · pedido 312</a></td><td>24/12</td><td class="num">R$ 20.916,00</td></tr>
@@ -56,8 +65,8 @@
       <h2>A receber</h2>
       <div class="rolagem">
       <table>
-        <thead><tr><th>Conta</th><th>De onde veio</th><th>Vence</th><th class="num">Valor</th></tr></thead>
-        <tbody>
+        <thead><tr><th>Conta</th><th>De onde veio</th><th>Vence</th><th class="num">Valor</th><th>Baixa</th></tr></thead>
+        <tbody id="tb-receber">
           <tr><td><b>Sinal · Bruno · apto 508</b><br><span class="pequeno">Acácias</span></td><td><a href="contratos.html">Contrato de 24/11</a></td><td>29/11</td><td class="num">R$ 59.800,00</td></tr>
           <tr><td><b>Parcela 1 de 36 · Sérgio · apto 302</b><br><span class="pequeno">Acácias</span></td><td>Contrato de 10/11</td><td>10/12</td><td class="num">R$ 1.588,89</td></tr>
           <tr><td><b>Repasse do banco · Aline · apto 1104</b><br><span class="pequeno">Acácias · espera o laudo</span></td><td>Contrato de 28/10</td><td>após o registro</td><td class="num">R$ 551.200,00</td></tr>
@@ -68,9 +77,24 @@
       <p class="pequeno">A baixa escolhe a conta de banco e aceita juros, multa e desconto. Estornar a baixa devolve a conta para em aberto.</p>
     </section>
   </div>
-
-  <div class="colunas">
-    <section class="card col-2 pilha">
+  </div>
+  <div class="pilha-g" role="tabpanel" id="painel-fluxo" aria-labelledby="aba-fluxo" data-painel="fluxo">
+    <section class="card pilha">
+      <h2>Projeção das próximas quatro semanas</h2>
+      <p class="pequeno">Parte do saldo de hoje e soma o que já está lançado em contas a receber e a pagar. Nada é digitado aqui.</p>
+      <div class="rolagem">
+      <table>
+        <thead><tr><th>Semana</th><th class="num">Entradas</th><th class="num">Saídas</th><th class="num">Saldo ao fim</th><th>Saldo</th></tr></thead>
+        <tbody>
+          <tr><td><b>Hoje</b></td><td class="num">—</td><td class="num">—</td><td class="num">R$ 3.420.000,00</td><td><div class="barra"><div class="trilho"><i style="width:95%"></i></div></div></td></tr>
+          <tr><td><b>27/11 a 03/12</b><br><span class="pequeno">Sinal do apto 508 e parcelas</span></td><td class="num">R$ 212.000,00</td><td class="num neg">−R$ 86.000,00</td><td class="num">R$ 3.546.000,00</td><td><div class="barra"><div class="trilho"><i style="width:98%"></i></div></div></td></tr><tr><td><b>04/12 a 10/12</b><br><span class="pequeno">Anúncios da Meta e folha das empreiteiras</span></td><td class="num">R$ 148.000,00</td><td class="num neg">−R$ 402.000,00</td><td class="num">R$ 3.292.000,00</td><td><div class="barra"><div class="trilho"><i style="width:91%"></i></div></div></td></tr><tr><td><b>11/12 a 17/12</b><br><span class="pequeno">Medições de empreiteiras</span></td><td class="num">R$ 96.000,00</td><td class="num neg">−R$ 318.000,00</td><td class="num">R$ 3.070.000,00</td><td><div class="barra"><div class="trilho"><i style="width:85%"></i></div></div></td></tr><tr><td><b>18/12 a 26/12</b><br><span class="pequeno">Repasse do banco do apto 1104; aço, brita e concreto</span></td><td class="num">R$ 724.000,00</td><td class="num neg">−R$ 654.000,00</td><td class="num">R$ 3.140.000,00</td><td><div class="barra"><div class="trilho"><i style="width:87%"></i></div></div></td></tr>
+          <tr class="total"><td>Total em 30 dias</td><td class="num">R$ 1.180.000,00</td><td class="num neg">−R$ 1.460.000,00</td><td class="num">R$ 3.140.000,00</td><td></td></tr>
+        </tbody>
+      </table>
+      </div>
+      <div class="aviso">O ponto mais baixo é a semana de 11/12, com R$ 3.070.000,00. A última semana depende do repasse de R$ 551.200,00 do banco: se ele atrasar, o mês fecha em R$ 2.588.800,00.</div>
+    </section>
+    <section class="card pilha">
       <h2>Entradas e saídas por empreendimento no mês</h2>
       <div class="rolagem">
       <table>
@@ -85,8 +109,103 @@
       </div>
       <p class="pequeno">Cada lançamento leva o empreendimento, a etapa e, quando existe, a unidade. O que não tem obra (aluguel do escritório, por exemplo) fica na linha “sem obra” da DRE.</p>
     </section>
+  </div>
+  <div class="pilha-g" role="tabpanel" id="painel-bancos" aria-labelledby="aba-bancos" data-painel="bancos">
+    <div class="acoes">
+      <button class="btn ativo" type="button" data-novo="mov">+ Lançar movimentação</button>
+      <span class="pequeno">Entrada ou saída direto numa conta, como uma tarifa ou um rendimento.</span>
+    </div>
+    <section class="card pilha">
+      <h2>Saldo de cada conta</h2>
+      <div class="rolagem">
+      <table>
+        <thead><tr><th>Conta</th><th>Empreendimento</th><th class="num">Saldo no sistema</th><th class="num">Saldo no extrato</th><th class="num">Diferença</th><th>Conciliação</th></tr></thead>
+        <tbody id="tb-bancos"></tbody>
+      </table>
+      </div>
+      <p class="pequeno">O saldo do sistema vem dos lançamentos contábeis. O do extrato é importado do banco. A diferença mostra o que ainda não foi lançado.</p>
+    </section>
+    <div class="grade-2">
+      <section class="card pilha">
+        <h2>O que falta conciliar na conta Acácias</h2>
+        <div class="rolagem">
+        <table>
+          <thead><tr><th>Data</th><th>No extrato</th><th class="num">Valor</th><th>Sugestão do sistema</th><th>Ação</th></tr></thead>
+          <tbody id="tb-concil"></tbody>
+        </table>
+        </div>
+      </section>
+      <section class="card pilha">
+        <h2>Últimas movimentações</h2>
+        <div class="rolagem">
+        <table>
+          <thead><tr><th>Data</th><th>Movimento</th><th class="num">Valor</th></tr></thead>
+          <tbody id="tb-mov"></tbody>
+        </table>
+        </div>
+      </section>
+    </div>
+  </div>
 
-    <section class="card col-1 pilha">
+  <div class="pilha-g" role="tabpanel" id="painel-dre" aria-labelledby="aba-dre" data-painel="dre">
+    <section class="card pilha">
+      <h2>Resultado de novembro, por empreendimento</h2>
+      <div class="rolagem">
+      <table>
+        <thead><tr><th>Linha</th><th class="num">Acácias</th><th class="num">Mirante</th><th class="num">Vila Serena</th><th class="num">Sem obra</th><th class="num">Total</th></tr></thead>
+        <tbody>
+          <tr class=""><td>Receita de vendas</td><td class="num">R$ 1.310.000,00</td><td class="num">R$ 640.000,00</td><td class="num">R$ 228.000,00</td><td class="num">—</td><td class="num">R$ 2.178.000,00</td></tr>
+          <tr class=""><td>(−) Impostos sobre a receita, 4%</td><td class="num neg">−R$ 52.400,00</td><td class="num neg">−R$ 25.600,00</td><td class="num neg">−R$ 9.120,00</td><td class="num">—</td><td class="num neg">−R$ 87.120,00</td></tr>
+          <tr class="sub"><td>Receita líquida</td><td class="num">R$ 1.257.600,00</td><td class="num">R$ 614.400,00</td><td class="num">R$ 218.880,00</td><td class="num">—</td><td class="num">R$ 2.090.880,00</td></tr>
+          <tr class=""><td>(−) Custo de obra</td><td class="num neg">−R$ 946.000,00</td><td class="num neg">−R$ 498.000,00</td><td class="num neg">−R$ 131.000,00</td><td class="num">—</td><td class="num neg">−R$ 1.575.000,00</td></tr>
+          <tr class="sub"><td>Lucro bruto</td><td class="num">R$ 311.600,00</td><td class="num">R$ 116.400,00</td><td class="num">R$ 87.880,00</td><td class="num">—</td><td class="num">R$ 515.880,00</td></tr>
+          <tr><td>Margem bruta</td><td class="num">24,8%</td><td class="num">18,9%</td><td class="num">40,1%</td><td class="num">—</td><td class="num">24,7%</td></tr>
+          <tr class=""><td>(−) Comercial: anúncios e comissões</td><td class="num neg">−R$ 61.000,00</td><td class="num neg">−R$ 34.000,00</td><td class="num neg">−R$ 12.000,00</td><td class="num">—</td><td class="num neg">−R$ 107.000,00</td></tr>
+          <tr class=""><td>(−) Administrativas</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num neg">−R$ 142.000,00</td><td class="num neg">−R$ 142.000,00</td></tr>
+          <tr class="total"><td>Resultado do mês</td><td class="num">R$ 250.600,00</td><td class="num">R$ 82.400,00</td><td class="num">R$ 75.880,00</td><td class="num neg">−R$ 142.000,00</td><td class="num">R$ 266.880,00</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="pequeno">O custo de obra vem dos pedidos e medições lançados em cada etapa. A coluna “Sem obra” reúne o que não pertence a nenhum empreendimento, como o aluguel do escritório.</p>
+      <div class="dica">Resultado não é caixa. O mês deu R$ 266.880,00 de resultado e R$ 162.000,00 de entradas menos saídas: a diferença está no que foi vendido e ainda não recebido, e no que foi comprado e ainda não pago.</div>
+      <div class="aviso">A alíquota de 4% e a forma de reconhecer a receita das unidades em obra são exemplo: quem define é o contador.</div>
+    </section>
+  </div>
+  <div class="pilha-g" role="tabpanel" id="painel-balanco" aria-labelledby="aba-balanco" data-painel="balanco">
+    <div class="grade-2">
+      <section class="card pilha">
+        <h2>Ativo · o que a empresa tem</h2>
+        <div class="rolagem"><table><tbody><tr class="titulo"><td colspan="2">Em 30/11/2026</td></tr><tr><td>Caixa e bancos</td><td class="num">R$ 3.420.000,00</td></tr><tr><td>Contas a receber de clientes</td><td class="num">R$ 6.840.000,00</td></tr><tr><td>Imóveis a comercializar: terrenos e obras em andamento</td><td class="num">R$ 21.300.000,00</td></tr><tr><td>Outros créditos</td><td class="num">R$ 240.000,00</td></tr><tr class="sub"><td>Total do ativo</td><td class="num">R$ 31.800.000,00</td></tr></tbody></table></div>
+      </section>
+      <section class="card pilha">
+        <h2>Passivo e patrimônio · de onde veio</h2>
+        <div class="rolagem"><table><tbody><tr class="titulo"><td colspan="2">O que a empresa deve</td></tr><tr><td>Fornecedores e contas a pagar</td><td class="num">R$ 1.460.000,00</td></tr><tr><td>Adiantamentos de clientes</td><td class="num">R$ 4.100.000,00</td></tr><tr><td>Financiamento à produção</td><td class="num">R$ 9.800.000,00</td></tr><tr><td>Impostos a pagar</td><td class="num">R$ 187.000,00</td></tr><tr class="sub"><td>Total do passivo</td><td class="num">R$ 15.547.000,00</td></tr><tr class="titulo"><td colspan="2">O que é dos sócios</td></tr><tr><td>Capital social</td><td class="num">R$ 12.000.000,00</td></tr><tr><td>Lucros acumulados</td><td class="num">R$ 4.253.000,00</td></tr><tr class="sub"><td>Patrimônio líquido</td><td class="num">R$ 16.253.000,00</td></tr><tr class="total"><td>Passivo + patrimônio</td><td class="num">R$ 31.800.000,00</td></tr></tbody></table></div>
+      </section>
+    </div>
+    <div class="dica ok">Ativo e passivo + patrimônio fecham em R$ 31.800.000,00. O sistema confere isso a cada lançamento.</div>
+    <section class="card pilha">
+      <h2>Como ler</h2>
+      <p class="pequeno"><b>Imóveis a comercializar</b> é o maior número de uma incorporadora: o terreno e tudo que já foi gasto nas obras, até a unidade ser entregue. <b>Adiantamentos de clientes</b> é o que os compradores já pagaram por unidades ainda em obra. <b>Financiamento à produção</b> é o crédito do banco para construir.</p>
+    </section>
+  </div>
+  <div class="pilha-g" role="tabpanel" id="painel-fechamento" aria-labelledby="aba-fechamento" data-painel="fechamento">
+    <div class="colunas">
+      <section class="card col-2 pilha">
+        <div class="entre"><h2>Novembro de 2026</h2><span class="selo ambar" id="st-mes">em aberto · 2 pendências</span></div>
+        <ul class="checagem" id="chk"></ul>
+        <div class="acoes"><button class="btn primario" type="button" id="bt-fechar" disabled>Fechar novembro</button><span class="pequeno" id="nota-fechar">Libera quando as duas pendências forem resolvidas.</span></div>
+      </section>
+      <section class="card col-1 pilha">
+        <h2>Meses anteriores</h2>
+        <div class="entre"><span>Outubro de 2026</span><span class="selo verde">fechado em 05/11</span></div>
+        <div class="entre divisor"><span>Setembro de 2026</span><span class="selo verde">fechado em 06/10</span></div>
+        <div class="entre divisor"><span>Agosto de 2026</span><span class="selo verde">fechado em 04/09</span></div>
+        <p class="pequeno divisor">Mês fechado não aceita lançamento. Os meses fecham em ordem, e só a diretoria reabre um mês fechado. Uma correção depois do fechamento entra como estorno no mês aberto.</p>
+      </section>
+    </div>
+  </div>
+
+    <section class="card pilha">
       <h2>Contabilidade</h2>
       <p class="pequeno">Partidas dobradas geradas pelas operações: todo lançamento tem débitos iguais aos créditos, conferido pelo banco de dados.</p>
       <p class="pequeno">Lançamento não se altera nem se apaga: corrige-se com estorno.</p>
@@ -94,9 +213,33 @@
       <p class="pequeno">Relatórios: DRE, balanço, balancete, diário e razão, em CSV e PDF, e o pacote do mês para o contador.</p>
       <div class="aviso">A confirmar com o contador: caixa e contabilidade separados por empreendimento (SPE ou patrimônio de afetação) e a forma de reconhecer a receita das unidades em obra.</div>
     </section>
-  </div>
 </main>
 </div>
+<dialog class="janela-form" id="janela" aria-labelledby="j-titulo">
+  <form method="dialog" id="j-form" novalidate>
+    <h2 id="j-titulo">Novo lançamento</h2>
+    <div class="form-grade" id="j-campos"></div>
+    <div class="erro-form" id="j-erro" role="alert"></div>
+    <div class="acoes"><button class="btn primario" type="submit" id="j-ok">Guardar</button><button class="btn" type="button" id="j-cancela">Cancelar</button></div>
+  </form>
+</dialog>
 <script src="menu.js"></script>
+<script src="financeiro.js"></script>
+<script>
+(function () {
+  var botoes = document.querySelectorAll('[data-aba]'), paineis = document.querySelectorAll('[data-painel]');
+  function abrir(nome, mudarEndereco) {
+    var achou = false;
+    paineis.forEach(function (p) { var eh = p.getAttribute('data-painel') === nome; if (eh) achou = true; });
+    if (!achou) nome = 'contas';
+    paineis.forEach(function (p) { p.classList.toggle('oculto', p.getAttribute('data-painel') !== nome); });
+    botoes.forEach(function (b) { var eh = b.getAttribute('data-aba') === nome; b.classList.toggle('primario', eh); b.setAttribute('aria-selected', eh ? 'true' : 'false'); });
+    if (mudarEndereco) history.replaceState(null, '', '#' + nome);
+  }
+  botoes.forEach(function (b) { b.addEventListener('click', function () { abrir(b.getAttribute('data-aba'), true); }); });
+  window.addEventListener('hashchange', function () { abrir(location.hash.slice(1), false); });
+  abrir(location.hash.slice(1), false);
+})();
+</script>
 </body>
 </html>

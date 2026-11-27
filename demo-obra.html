@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Exemplo: uma compra do começo ao fim · Vigamais</title>
+<style>
+:root{--tinta:#17212B;--laranja:#C2410C;--azul:#1D4E89;--chao:#EEF0F2;--cinza:#6B7785;--linha:#D9DEE4;--verde:#0F766E}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,Ubuntu,sans-serif;color:var(--tinta);background:#0E151C;overflow:hidden}
+#moldura{position:absolute;left:50%;top:0;transform-origin:top center}
+#palco{width:1280px;height:720px;background:var(--chao);position:relative;overflow:hidden}
+#controles{display:flex;gap:10px;align-items:center;padding:10px 4px;color:#C9D1DA;font-size:14px}
+#controles button{font:inherit;font-weight:700;padding:7px 14px;border-radius:8px;border:1px solid #3A4A5A;background:#1F2C39;color:#fff;cursor:pointer}
+#controles button:hover{background:#2A3A4A}
+#controles input{flex:1;accent-color:#FB923C}
+body.gravar #controles{display:none}
+
+/* menu */
+.lado{position:absolute;left:0;top:0;bottom:0;width:190px;background:var(--tinta);color:#C9D1DA;padding:20px 12px;font-size:13.5px}
+.lado .marca{color:#fff;font-weight:800;font-size:21px;margin:0 8px 18px}
+.lado .marca span{color:#FB923C}
+.lado .g{font-size:10.5px;letter-spacing:.1em;color:#7C8A99;margin:14px 8px 4px}
+.lado div.i{padding:7px 8px;border-radius:7px}
+.lado div.i.a{background:#2A3948;color:#fff;font-weight:700}
+
+/* centro */
+.centro{position:absolute;left:190px;top:0;width:730px;height:650px;padding:20px 22px}
+.migalha{font-size:12.5px;color:var(--cinza)}
+h1{font-size:24px;margin:0;letter-spacing:-.01em}
+.topo{display:flex;justify-content:space-between;align-items:flex-start}
+.selo{font-size:11.5px;font-weight:700;padding:3px 10px;border-radius:99px;background:#FEF3C7;color:#92400E}
+.etapas{display:flex;gap:6px;margin:14px 0 16px}
+.etapas span{flex:1;text-align:center;font-size:12px;font-weight:700;padding:7px 2px;border-radius:8px;background:#fff;border:1px solid var(--linha);color:var(--cinza)}
+.etapas span.feito{background:#E3F7EA;border-color:#B7E4C7;color:var(--verde)}
+.etapas span.agora{background:var(--laranja);border-color:var(--laranja);color:#fff}
+.quadro{position:absolute;left:22px;right:22px;top:150px}
+.card{background:#fff;border:1px solid var(--linha);border-radius:12px;padding:18px 20px}
+.card h2{margin:0 0 10px;font-size:17px}
+.lin{display:flex;gap:12px;padding:9px 0;border-bottom:1px solid var(--linha);font-size:15px}
+.lin:last-child{border-bottom:0}
+.lin b:first-child{width:150px;flex:none;color:var(--cinza);font-weight:600;font-size:13.5px}
+.lin.alerta{background:#FFF1E8;margin:0 -20px;padding:9px 20px;border-bottom:0;color:#9A3412;font-weight:700}
+.faixa{margin-top:12px;border-radius:12px;padding:14px 18px;font-weight:700;font-size:16px}
+.faixa.l{background:var(--laranja);color:#fff}
+.faixa.v{background:#E3F7EA;color:var(--verde);border:1px solid #B7E4C7}
+.faixa.e{background:var(--tinta);color:#fff}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th{font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--cinza);text-align:left;padding:6px 8px;border-bottom:1px solid var(--linha)}
+td{padding:10px 8px;border-bottom:1px solid var(--linha)}
+td.n,th.n{text-align:right}
+tr.melhor td{background:#E3F7EA;font-weight:700}
+.pil{font-size:12px;font-weight:700;padding:2px 9px;border-radius:99px;background:#E3F7EA;color:var(--verde)}
+.grande{font-size:38px;font-weight:800;letter-spacing:-.02em;line-height:1.1}
+.sub{color:var(--cinza);font-size:14px}
+.trilho{height:16px;border-radius:8px;background:var(--chao);overflow:hidden;margin:8px 0 4px}
+.trilho i{display:block;height:100%;background:var(--azul);border-radius:8px}
+.trilho i.l{background:var(--laranja)}
+.estado{display:inline-block;font-weight:700;font-size:14px;padding:5px 12px;border-radius:99px}
+.estado.esp{background:#FEF3C7;color:#92400E}
+.estado.ok{background:#E3F7EA;color:var(--verde)}
+.duas{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+/* celular */
+.fone{position:absolute;right:26px;top:22px;width:308px;height:594px;background:#111;border-radius:34px;padding:10px;box-shadow:0 14px 40px rgba(0,0,0,.25)}
+.tela{position:relative;width:100%;height:100%;border-radius:26px;overflow:hidden;background:#E9E4DC}
+.conversa{position:absolute;inset:0;display:flex;flex-direction:column}
+.cab{background:#075E54;color:#fff;padding:14px 14px 10px;display:flex;gap:10px;align-items:center}
+.cab i{width:36px;height:36px;border-radius:50%;background:#DDE6E3;color:#075E54;display:grid;place-items:center;font-style:normal;font-weight:800;font-size:14px}
+.cab b{display:block;font-size:15px;line-height:1.2}
+.cab span{font-size:11.5px;opacity:.85}
+.msgs{flex:1;padding:12px 10px;display:flex;flex-direction:column;gap:8px}
+.m{max-width:86%;padding:8px 10px;border-radius:10px;font-size:14px;line-height:1.38;box-shadow:0 1px 1px rgba(0,0,0,.12)}
+.m.in{background:#fff;align-self:flex-start;border-top-left-radius:2px}
+.m.out{background:#D9FDD3;align-self:flex-end;border-top-right-radius:2px}
+.m small{display:block;text-align:right;font-size:10.5px;color:#667781;margin-top:2px}
+.rotulo-fone{position:absolute;right:26px;top:621px;width:308px;text-align:center;font-size:12px;color:var(--cinza)}
+
+/* legenda */
+.legenda{position:absolute;left:190px;right:0;bottom:0;height:70px;background:var(--tinta);color:#fff;display:flex;align-items:center;padding:0 26px;font-size:22px;font-weight:700;letter-spacing:-.01em}
+.legenda span{position:absolute;left:26px;right:26px}
+.legenda span b{color:#FB923C}
+.barra-tempo{position:absolute;left:190px;right:0;bottom:70px;height:4px;background:#C9D1DA}
+.barra-tempo i{display:block;height:100%;background:var(--laranja)}
+[data-in]{will-change:opacity,transform}
+</style>
+</head>
+<body>
+<div id="moldura">
+<div id="palco">
+  <div class="lado">
+    <div class="marca">Viga<span>mais</span></div>
+    <div class="i">Painel</div>
+    <div class="g">OBRA</div>
+    <div class="i">Obras e custos</div>
+    <div class="i a">Assistente de compras</div>
+    <div class="i">Suprimentos e cotações</div>
+    <div class="i">Planilha de cotações</div>
+    <div class="i">Calculadora de materiais</div>
+    <div class="i">Cesta e curva ABC</div>
+    <div class="i">Ranking de fornecedores</div>
+    <div class="i">Diário de obra</div>
+    <div class="g">VENDAS</div>
+    <div class="i">Atendimento</div>
+    <div class="i">Funil de vendas</div>
+    <div class="g">GESTÃO</div>
+    <div class="i">Financeiro</div>
+  </div>
+
+  <div class="centro">
+    <div class="topo">
+      <div><div class="migalha">Obra · Jardim das Acácias · etapa Revestimento</div><h1>Assistente de compras</h1></div>
+      <span class="selo">Dados de exemplo</span>
+    </div>
+    <div class="etapas" id="etapas"><span>1 Falta</span><span>2 Pergunta</span><span>3 Preço</span><span>4 Aprovação</span><span>5 Pedido</span><span>6 Custo</span></div>
+
+    <!-- 1 diário -->
+    <div class="quadro" data-in="0" data-out="6">
+      <div class="card"><h2>Diário de obra · hoje</h2>
+        <div class="lin" data-in="0.6"><b>O que foi feito</b><span>Reboco interno do 7º pavimento</span></div>
+        <div class="lin" data-in="1.2"><b>Equipe</b><span>14 pessoas</span></div>
+        <div class="lin" data-in="1.8"><b>Chegou</b><span>2.000 blocos cerâmicos</span></div>
+        <div class="lin alerta" data-in="3.6"><b style="color:#9A3412">Acabando</b><span>Argamassa AC-II: dá só para mais 2 dias</span></div>
+      </div>
+      <div class="faixa l" data-in="4.5">Falta detectada · Argamassa AC-II · estoque para 2 dias</div>
+    </div>
+
+    <!-- 2 solicitação -->
+    <div class="quadro" data-in="6" data-out="13">
+      <div class="card"><h2>Nova solicitação de compra</h2>
+        <div class="lin" data-in="6.5"><b>Material</b><span>Argamassa AC-II, saco de 20 kg</span></div>
+        <div class="lin" data-in="7.0"><b>Quantidade sugerida</b><span><b>350 sacos</b> · o que falta para terminar o revestimento</span></div>
+        <div class="lin" data-in="7.5"><b>Destino</b><span>Jardim das Acácias · etapa Revestimento</span></div>
+        <div class="lin" data-in="8.0"><b>Situação</b><span><span class="estado esp" data-in="8.0" data-out="10.9">Aguardando o engenheiro</span><span class="estado ok" data-in="11.0">Engenheiro autorizou a compra</span></span></div>
+      </div>
+    </div>
+
+    <!-- 3 planilha -->
+    <div class="quadro" data-in="13" data-out="21">
+      <div class="card"><h2>Planilha de cotações · Argamassa AC-II</h2>
+        <table>
+          <thead><tr><th>Loja</th><th class="n">Preço por saco</th><th>Orçado em</th><th>Situação</th></tr></thead>
+          <tbody>
+            <tr data-in="13.6" data-on="17.2" data-classe="melhor"><td>Materiais Ipê</td><td class="n">R$ 17,90</td><td>nesta semana</td><td><span class="pil">vale</span></td></tr>
+            <tr data-in="14.1"><td>Constrular Cedro</td><td class="n">R$ 18,20</td><td>nesta semana</td><td><span class="pil">vale</span></td></tr>
+            <tr data-in="14.6"><td>Depósito Aroeira</td><td class="n">R$ 18,40</td><td>nesta semana</td><td><span class="pil">vale</span></td></tr>
+            <tr data-in="15.1"><td>Ferragens Jatobá</td><td class="n">R$ 18,90</td><td>nesta semana</td><td><span class="pil">vale</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="faixa v" data-in="18.2">Preço válido na planilha: não precisa cotar de novo. Melhor preço: Materiais Ipê.</div>
+    </div>
+
+    <!-- 4 aprovação -->
+    <div class="quadro" data-in="21" data-out="28">
+      <div class="card"><h2>Aprovação da compra</h2>
+        <div class="sub" data-in="21.5">350 sacos × R$ 17,90 · Materiais Ipê</div>
+        <div class="grande" data-in="21.9">R$ 6.265,00</div>
+        <div style="margin-top:14px" data-in="22.6">
+          <div class="sub">Limite de aprovação do engenheiro: R$ 50.000,00</div>
+          <div class="trilho"><i id="lim" style="width:0"></i></div>
+          <div class="sub">A compra usa 12,5% do limite. Quem aprova é o engenheiro.</div>
+        </div>
+        <div style="margin-top:14px"><span class="estado esp" data-in="23.2" data-out="25.9">Aguardando aprovação</span><span class="estado ok" data-in="26.0">Aprovado por Eng. Paulo, pelo WhatsApp</span></div>
+      </div>
+    </div>
+
+    <!-- 5 pedido -->
+    <div class="quadro" data-in="28" data-out="35">
+      <div class="card"><h2>Pedido 316 · Materiais Ipê</h2>
+        <div class="lin" data-in="28.5"><b>Item</b><span>350 sacos de argamassa AC-II · R$ 17,90 cada</span></div>
+        <div class="lin" data-in="29.0"><b>Total</b><span><b>R$ 6.265,00</b></span></div>
+        <div class="lin" data-in="29.5"><b>Entrega</b><span>Quinta de manhã · obra Jardim das Acácias</span></div>
+        <div class="lin" data-in="30.0"><b>Situação</b><span><span class="estado esp" data-in="30.0" data-out="32.7">Enviado à loja</span><span class="estado ok" data-in="32.8">Confirmado pela loja</span></span></div>
+      </div>
+    </div>
+
+    <!-- 6 custo -->
+    <div class="quadro" data-in="35" data-out="99">
+      <div class="faixa v" style="margin:0 0 12px" data-in="37.6">Entrega conferida pelo mestre: chegaram os 350 sacos.</div>
+      <div class="card" data-in="35.4"><h2>Custo da etapa · Revestimento</h2>
+        <div class="duas">
+          <div><div class="sub">Orçado</div><div style="font-size:22px;font-weight:800">R$ 412.000,00</div></div>
+          <div><div class="sub">Gasto até agora</div><div style="font-size:22px;font-weight:800"><span id="gasto">R$ 268.400,00</span> <span class="pil" data-in="38.6">+ R$ 6.265,00</span></div></div>
+        </div>
+        <div class="trilho" style="margin-top:12px"><i class="l" id="barra-gasto" style="width:65.1%"></i></div>
+        <div class="sub"><span id="pct">65,1</span>% do orçado da etapa</div>
+      </div>
+      <div class="faixa e" data-in="41">Do aviso ao custo, sem telefonema e sem planilha solta.</div>
+    </div>
+  </div>
+
+  <!-- celular -->
+  <div class="fone"><div class="tela">
+    <div class="conversa" data-in="0" data-out="6">
+      <div class="cab"><i>SA</i><div><b>Seu Antônio</b><span>mestre de obras</span></div></div>
+      <div class="msgs">
+        <div class="m out" data-in="1.0" data-flui>Boa tarde, seu Antônio! Algum material acabando?<small>17:02</small></div>
+        <div class="m in" data-in="3.0" data-flui>Argamassa AC-II dá só pra mais 2 dias.<small>17:04</small></div>
+      </div>
+    </div>
+    <div class="conversa" data-in="6" data-out="28">
+      <div class="cab"><i>EP</i><div><b>Eng. Paulo</b><span>engenheiro da obra</span></div></div>
+      <div class="msgs">
+        <div class="m out" data-in="7.2" data-flui>Paulo, a argamassa AC-II acaba em 2 dias. Faltam 350 sacos para o revestimento. Posso pedir?<small>17:05</small></div>
+        <div class="m in" data-in="10.6" data-flui>Pode.<small>17:09</small></div>
+        <div class="m out" data-in="13.4" data-flui>Vou ver os preços que já temos guardados.<small>17:09</small></div>
+        <div class="m out" data-in="22.6" data-flui>350 sacos na Materiais Ipê, R$ 17,90 cada. Total R$ 6.265,00. Aprova?<small>17:10</small></div>
+        <div class="m in" data-in="25.6" data-flui>Aprovado.<small>17:12</small></div>
+      </div>
+    </div>
+    <div class="conversa" data-in="28" data-out="35">
+      <div class="cab"><i>MI</i><div><b>Materiais Ipê</b><span>loja</span></div></div>
+      <div class="msgs">
+        <div class="m out" data-in="29.2" data-flui>Pedido 316: 350 sacos de argamassa AC-II, R$ 17,90 cada. Entrega quinta, obra Jardim das Acácias.<small>17:13</small></div>
+        <div class="m in" data-in="32.4" data-flui>Confirmado para quinta de manhã.<small>17:20</small></div>
+      </div>
+    </div>
+    <div class="conversa" data-in="35" data-out="99">
+      <div class="cab"><i>SA</i><div><b>Seu Antônio</b><span>mestre de obras</span></div></div>
+      <div class="msgs">
+        <div class="m out" data-in="35.8" data-flui>Bom dia! Chegaram os 350 sacos de argamassa?<small>quinta, 09:40</small></div>
+        <div class="m in" data-in="37.2" data-flui>Chegou tudo, conferido.<small>quinta, 09:44</small></div>
+      </div>
+    </div>
+  </div></div>
+  <div class="rotulo-fone">A conversa que o assistente conduz</div>
+
+  <div class="barra-tempo"><i id="progresso" style="width:0"></i></div>
+  <div class="legenda" id="legenda"></div>
+</div>
+<div id="controles"><button id="bt-play" type="button">Pausar</button><button id="bt-ini" type="button">Do início</button><input id="tempo" type="range" min="0" max="44" step="0.1" value="0" aria-label="Posição no exemplo"><span id="relogio">0 s</span></div>
+</div>
+
+<script>
+(function () {
+  var DUR = 44;
+  var CENAS = [0, 6, 13, 21, 28, 35];
+  var LEGENDAS = [
+    [0, '<b>1</b> · O mestre responde o diário e avisa: a argamassa está acabando'],
+    [6, '<b>2</b> · O assistente pergunta ao engenheiro se pode comprar'],
+    [13, '<b>3</b> · Antes de cotar, ele olha a planilha: o preço desta semana ainda vale'],
+    [21, '<b>4</b> · A compra cabe no limite: o engenheiro aprova pelo WhatsApp'],
+    [28, '<b>5</b> · O assistente envia o pedido e a loja confirma'],
+    [35, '<b>6</b> · O material chega e o custo aparece na etapa, na hora']
+  ];
+  function lim(x) { return x < 0 ? 0 : x > 1 ? 1 : x; }
+  function suave(x) { x = lim(x); return x * x * (3 - 2 * x); }
+  function reais(v) { return 'R$ ' + v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+
+  var animados = Array.prototype.slice.call(document.querySelectorAll('[data-in]')).map(function (e) {
+    return { e: e, a: parseFloat(e.getAttribute('data-in')), b: e.hasAttribute('data-out') ? parseFloat(e.getAttribute('data-out')) : Infinity,
+      flui: e.hasAttribute('data-flui'), troca: e.classList.contains('estado') || e.classList.contains('conversa') || e.classList.contains('quadro'),
+      on: e.hasAttribute('data-on') ? parseFloat(e.getAttribute('data-on')) : null, classe: e.getAttribute('data-classe') };
+  });
+  var legenda = document.getElementById('legenda');
+  var spans = LEGENDAS.map(function (l) { var s = document.createElement('span'); s.innerHTML = l[1]; legenda.appendChild(s); return s; });
+  var chips = document.querySelectorAll('#etapas span');
+
+  function desenhar(t) {
+    animados.forEach(function (x) {
+      var p = suave((t - x.a) / 0.45), q = isFinite(x.b) ? 1 - suave((t - x.b + 0.3) / 0.3) : 1;
+      var visivel = t >= x.a && t < x.b;
+      // o que entra numa lista (mensagens) ou troca de lugar (estados) não ocupa espaço antes da hora
+      if (x.flui || x.e.classList.contains('estado')) x.e.style.display = visivel ? '' : 'none';
+      else x.e.style.visibility = (t >= x.a - 0.01 && t < x.b) ? 'visible' : 'hidden';
+      x.e.style.opacity = (p * q).toFixed(3);
+      x.e.style.transform = x.troca && !x.e.classList.contains('estado') ? '' : 'translateY(' + ((1 - p) * 10).toFixed(1) + 'px)';
+      if (x.on !== null) x.e.classList.toggle(x.classe, t >= x.on);
+    });
+    spans.forEach(function (s, i) {
+      var a = LEGENDAS[i][0], b = i + 1 < LEGENDAS.length ? LEGENDAS[i + 1][0] : Infinity;
+      s.style.opacity = (suave((t - a) / 0.4) * (isFinite(b) ? 1 - suave((t - b + 0.3) / 0.3) : 1)).toFixed(3);
+    });
+    chips.forEach(function (c, i) {
+      var fim = i + 1 < CENAS.length ? CENAS[i + 1] : Infinity;
+      c.className = t >= fim ? 'feito' : t >= CENAS[i] ? 'agora' : '';
+    });
+    document.getElementById('lim').style.width = (suave((t - 22.8) / 0.9) * 12.5) + '%';
+    var k = suave((t - 38.6) / 1.4), gasto = 268400 + 6265 * k;
+    document.getElementById('gasto').textContent = reais(Math.round(gasto));
+    document.getElementById('barra-gasto').style.width = (gasto / 412000 * 100) + '%';
+    document.getElementById('pct').textContent = (gasto / 412000 * 100).toLocaleString('pt-BR', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+    document.getElementById('progresso').style.width = (lim(t / DUR) * 100) + '%';
+  }
+  window.desenhar = desenhar;   // usado para gravar o vídeo quadro a quadro
+  window.DURACAO = DUR;
+
+  var gravar = /[?&]gravar=1/.test(location.search);
+  var moldura = document.getElementById('moldura');
+  function ajustar() {
+    var e = gravar ? 1 : Math.min(window.innerWidth / 1280, (window.innerHeight - 56) / 720);
+    moldura.style.transform = 'translateX(-50%) scale(' + e + ')';
+  }
+  if (gravar) document.body.className = 'gravar';
+  window.addEventListener('resize', ajustar); ajustar();
+
+  var t = 0, tocando = !gravar, ultimo = null;
+  var cursor = document.getElementById('tempo'), relogio = document.getElementById('relogio'), btPlay = document.getElementById('bt-play');
+  function mostrar() { desenhar(t); cursor.value = t; relogio.textContent = Math.floor(t) + ' s de ' + DUR + ' s'; btPlay.textContent = tocando ? 'Pausar' : (t >= DUR ? 'Ver de novo' : 'Continuar'); }
+  function passo(agora) {
+    if (tocando) { if (ultimo !== null) t += (agora - ultimo) / 1000; if (t >= DUR) { t = DUR; tocando = false; } mostrar(); }
+    ultimo = agora; requestAnimationFrame(passo);
+  }
+  btPlay.addEventListener('click', function () { if (t >= DUR) t = 0; tocando = !tocando; mostrar(); });
+  document.getElementById('bt-ini').addEventListener('click', function () { t = 0; tocando = true; mostrar(); });
+  cursor.addEventListener('input', function () { t = parseFloat(cursor.value); tocando = false; mostrar(); });
+  mostrar();
+  if (!gravar) requestAnimationFrame(passo);
+})();
+</script>
+</body>
+</html>

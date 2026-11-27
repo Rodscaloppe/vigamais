@@ -67,9 +67,20 @@ Ou seja: o preço que a obra paga no cimento chega até a mesa de venda, e o cor
 | [Autonomia e travas da IA](autonomia.html) | Níveis de 0 a 3 por ação, as travas, os limites em dinheiro e o modo ensaio. |
 | [Ideias e próximos passos](ideias.html) | 26 ideias com exemplo, origem e tamanho, uma ordem sugerida e as decisões que cabem à diretoria. |
 
+## Apresentação do módulo Obra
+
+| Página | O que mostra |
+|---|---|
+| [Apresentação](apresentacao-obra.html) | O módulo Obra explicado sem a parte técnica: que problema resolve, como funciona, um exemplo, prazo, custo de manter, dificuldades e vídeos. |
+| [Exemplo: uma compra do começo ao fim](demo-obra.html) | Tela animada do assistente de compras, com a conversa no WhatsApp ao lado. |
+| [Exemplo: Obras e custos](demo-custos.html) | Tela animada do custo por etapa. |
+| [Exemplo: Diário de obra](demo-diario.html) | Tela animada do diário respondido pelo mestre. |
+
+As telas de exemplo são animações com dados fictícios; dá para pausar e voltar. Os vídeos (`video-*.mp4`) foram gravados a partir delas e não têm som.
+
 ## O que funciona de verdade
 
-Quatro telas fazem conta no navegador: **planilha**, **calculadora**, **cesta** e **ranking**, além do campo de pergunta do **assistente**. Elas leem a mesma memória de preços (`planilha-dados.js`), então um preço lançado na planilha aparece nas outras.
+Quatro telas fazem conta no navegador: **planilha**, **calculadora**, **cesta** e **ranking**, além do campo de pergunta do **assistente**. No **financeiro**, os botões lançam contas, baixas e movimentações, mas nada fica salvo: recarregar volta ao exemplo. Elas leem a mesma memória de preços (`planilha-dados.js`), então um preço lançado na planilha aparece nas outras.
 
 Os dados ficam salvos só no navegador de quem está usando (`localStorage`). Nada é enviado para lugar nenhum, e cada pessoa vê a sua própria cópia. O botão de restaurar o exemplo, na planilha, volta tudo ao início.
 

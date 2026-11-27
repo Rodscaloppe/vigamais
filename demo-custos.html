@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Exemplo: Obras e custos · Vigamais</title>
+<link rel="stylesheet" href="demo-base.css">
+</head>
+<body class="semfone">
+<div id="moldura">
+<div id="palco">
+  <div class="lado"><div class="marca">Viga<span>mais</span></div><div class="i">Painel</div><div class="g">OBRA</div><div class="i a">Obras e custos</div><div class="i">Assistente de compras</div><div class="i">Suprimentos e cotações</div><div class="i">Planilha de cotações</div><div class="i">Calculadora de materiais</div><div class="i">Cesta e curva ABC</div><div class="i">Ranking de fornecedores</div><div class="i">Diário de obra</div><div class="g">VENDAS</div><div class="i">Atendimento</div><div class="i">Funil de vendas</div><div class="g">GESTÃO</div><div class="i">Financeiro</div></div>
+  <div class="centro">
+    <div class="topo"><div><div class="migalha">Obra · Residencial Jardim das Acácias</div><h1>Obras e custos</h1></div><span class="selo">Dados de exemplo</span></div>
+    <div class="etapas" id="etapas"><span>1 Visão geral</span><span>2 Por etapa</span><span>3 O desvio</span><span>4 Custo novo</span><span>5 O que falta</span></div>
+
+    <div class="quadro" data-in="0" data-out="7">
+      <div class="kpis">
+        <div class="kpi" data-in="0.6"><small>Avanço físico</small><b><span data-conta="0,58,0.8,1.2,int" style="font-size:inherit;color:inherit">0</span>%</b><span>Estrutura no 7º pavimento</span></div>
+        <div class="kpi" data-in="1.6"><small>Orçado até o avanço</small><b>R$ 15,77 mi</b><span>de R$ 28,40 mi no total</span></div>
+        <div class="kpi" data-in="2.6"><small>Realizado</small><b>R$ 16,10 mi</b><span class="mais">+2,1% acima do orçado</span></div>
+        <div class="kpi forte" data-in="3.8"><small>Margem prevista</small><b>24,8%</b><span>era 25,6% no orçamento</span></div>
+      </div>
+      <div class="faixa e" data-in="5">Residencial Jardim das Acácias · 96 apartamentos · 12 pavimentos · entrega em março de 2028</div>
+    </div>
+
+    <div class="quadro" data-in="7" data-out="16">
+      <div class="card"><h2>Custo por etapa <span class="sub" style="font-weight:400">· <span style="color:var(--azul)">■</span> orçado até o avanço <span style="color:var(--laranja)">■</span> realizado</span></h2>
+        <table><thead><tr><th>Etapa</th><th class="n">Avanço</th><th class="n">Orçado</th><th class="n">Realizado</th><th>Comparação</th><th class="n">Desvio</th></tr></thead><tbody><tr data-in="7.6"><td><b>Terreno e projetos</b></td><td class="n">100%</td><td class="n">R$ 3.200.000</td><td class="n">R$ 3.180.000</td><td><div class="trilho"><i data-larg="0,55.9,7.8,0.8"></i></div><div class="trilho" style="margin-top:3px"><i class="l" data-larg="0,55.6,8.0,0.8"></i></div></td><td class="n"><span class="menos">−0,6%</span></td></tr><tr data-in="8.2"><td><b>Fundação</b></td><td class="n">100%</td><td class="n">R$ 2.900.000</td><td class="n">R$ 2.840.000</td><td><div class="trilho"><i data-larg="0,50.7,8.399999999999999,0.8"></i></div><div class="trilho" style="margin-top:3px"><i class="l" data-larg="0,49.7,8.6,0.8"></i></div></td><td class="n"><span class="menos">−2,1%</span></td></tr><tr data-in="8.8" data-on="13.2" data-classe="atencao"><td><b>Estrutura</b></td><td class="n">62%</td><td class="n">R$ 5.330.000</td><td class="n">R$ 5.720.000</td><td><div class="trilho"><i data-larg="0,93.2,9.0,0.8"></i></div><div class="trilho" style="margin-top:3px"><i class="l" data-larg="0,100.0,9.200000000000001,0.8"></i></div></td><td class="n"><span class="mais">+7,3%</span></td></tr><tr data-in="9.4"><td><b>Alvenaria e vedação</b></td><td class="n">35%</td><td class="n">R$ 1.540.000</td><td class="n">R$ 1.510.000</td><td><div class="trilho"><i data-larg="0,26.9,9.6,0.8"></i></div><div class="trilho" style="margin-top:3px"><i class="l" data-larg="0,26.4,9.8,0.8"></i></div></td><td class="n"><span class="menos">−1,9%</span></td></tr><tr data-in="10.0"><td><b>Instalações</b></td><td class="n">18%</td><td class="n">R$ 1.150.000</td><td class="n">R$ 1.170.000</td><td><div class="trilho"><i data-larg="0,20.1,10.2,0.8"></i></div><div class="trilho" style="margin-top:3px"><i class="l" data-larg="0,20.5,10.4,0.8"></i></div></td><td class="n"><span class="mais">+1,7%</span></td></tr><tr data-in="10.6"><td><b>Acabamento</b></td><td class="n">4%</td><td class="n">R$ 380.000</td><td class="n">R$ 372.000</td><td><div class="trilho"><i data-larg="0,6.6,10.799999999999999,0.8"></i></div><div class="trilho" style="margin-top:3px"><i class="l" data-larg="0,6.5,11.0,0.8"></i></div></td><td class="n"><span class="menos">−2,1%</span></td></tr><tr data-in="11.2"><td><b>Administração da obra</b></td><td class="n">58%</td><td class="n">R$ 1.270.000</td><td class="n">R$ 1.308.000</td><td><div class="trilho"><i data-larg="0,22.2,11.399999999999999,0.8"></i></div><div class="trilho" style="margin-top:3px"><i class="l" data-larg="0,22.9,11.6,0.8"></i></div></td><td class="n"><span class="mais">+3,0%</span></td></tr></tbody></table>
+      </div>
+    </div>
+
+    <div class="quadro" data-in="16" data-out="24">
+      <div class="card"><h2>Por que a Estrutura passou do orçado</h2>
+        <div class="causa" data-in="16.8"><div><b>Concreto usinado fck 30</b><span>preço 9% acima do orçamento</span></div><div class="trilho" style="margin:0"><i class="l" data-larg="0,100,17.0,0.9"></i></div><div class="v">+ R$ 212.000</div></div>
+        <div class="causa" data-in="17.8"><div><b>Aço CA-50</b><span>compra sem cotação em setembro</span></div><div class="trilho" style="margin:0"><i class="l" data-larg="0,69.8,18.0,0.9"></i></div><div class="v">+ R$ 148.000</div></div>
+        <div class="causa" data-in="18.8"><div><b>Fôrmas e escoramento</b><span>locação estendida em 12 dias</span></div><div class="trilho" style="margin:0"><i class="l" data-larg="0,14.2,19.0,0.9"></i></div><div class="v">+ R$ 30.000</div></div>
+      </div>
+      <div class="faixa l" data-in="20.4">Desvio da etapa: + R$ 390.000. Dá para ver onde foi, não só quanto foi.</div>
+    </div>
+
+    <div class="quadro" data-in="24" data-out="32">
+      <div class="duas">
+        <div class="card"><h2>Últimos custos lançados</h2>
+          <div class="lin" data-in="26.2" data-flui style="background:#E3F7EA;margin:0 -20px;padding:9px 20px"><b style="width:auto;color:var(--verde)">agora</b><span><b>Concreto usinado, 42 m³</b><br><span class="sub">Pedido 312 · veio da cotação 251 · R$ 20.916</span></span></div>
+          <div class="lin"><b style="width:auto">23/11</b><span><b>Locação de grua</b><br><span class="sub">Nota anexada · lançado pelo financeiro · R$ 18.500</span></span></div>
+          <div class="lin"><b style="width:auto">21/11</b><span><b>Aço CA-50, 3,8 t</b><br><span class="sub">Pedido 305 · veio da cotação 241 · R$ 28.310</span></span></div>
+        </div>
+        <div class="card"><h2>Etapa Estrutura</h2>
+          <div class="sub">Realizado</div>
+          <div class="grande" data-conta="5699084,5720000,26.6,1.6,reais">R$ 5.699.084</div>
+          <div class="trilho" style="margin-top:12px"><i class="l" data-larg="99.63,100,26.6,1.6" style="width:99.63%"></i></div>
+          <div class="sub">Orçado até o avanço: R$ 5.330.000</div>
+          <div style="margin-top:12px"><span class="estado esp" style="background:#FFF1E8;color:#9A3412">Desvio: +<span data-conta="6.9,7.3,26.6,1.6,pct1">6,9</span>%</span></div>
+        </div>
+      </div>
+      <div class="faixa v" data-in="29.2">O pedido fechado virou custo da etapa sozinho. Ninguém digitou de novo.</div>
+    </div>
+
+    <div class="quadro" data-in="32" data-out="99">
+      <div class="card"><h2>O que vai faltar nos próximos 10 dias</h2>
+        <table><thead><tr><th>Material</th><th>Usado em</th><th class="n">Falta</th><th>Acaba em</th><th>O que o assistente fez</th></tr></thead><tbody>
+          <tr data-in="32.8"><td><b>Argamassa AC-II</b></td><td>Alvenaria · 9º pav.</td><td class="n">310 sacos</td><td><span class="estado esp" style="font-size:12.5px;padding:3px 10px">3 dias</span></td><td>Perguntou ao Eng. Paulo</td></tr>
+          <tr data-in="33.6"><td><b>Vergalhão CA-50 8 mm</b></td><td>Estrutura · 8º pav.</td><td class="n">900 kg</td><td><span class="estado esp" style="font-size:12.5px;padding:3px 10px">5 dias</span></td><td>Perguntou ao Eng. Paulo</td></tr>
+          <tr data-in="34.4"><td><b>Blocos cerâmicos</b></td><td>Alvenaria · 9º pav.</td><td class="n">15.600 un.</td><td><span class="estado esp" style="font-size:12.5px;padding:3px 10px">6 dias</span></td><td>Já em cotação, negociando frete</td></tr>
+          <tr data-in="35.2"><td><b>Concreto usinado fck 30</b></td><td>Estrutura · 8º pav.</td><td class="n">0</td><td><span class="estado ok" style="font-size:12.5px;padding:3px 10px">coberto</span></td><td>Pedido 312 chega quinta, 7h</td></tr>
+        </tbody></table>
+      </div>
+      <div class="faixa e" data-in="37.4">Custo de hoje e falta de amanhã, na mesma tela.</div>
+    </div>
+  </div>
+
+  <div class="barra-tempo"><i id="progresso" style="width:0"></i></div>
+  <div class="legenda" id="legenda"></div>
+</div>
+<div id="controles"><button id="bt-play" type="button">Pausar</button><button id="bt-ini" type="button">Do início</button><input id="tempo" type="range" min="0" max="44" step="0.1" value="0" aria-label="Posição no exemplo"><span id="relogio">0 s</span></div>
+</div>
+<script>window.DEMO = {"dur": 41, "cenas": [0, 7, 16, 24, 32], "legendas": [[0, "<b>1</b> · A obra em quatro números: avanço, orçado, realizado e margem"], [7, "<b>2</b> · Etapa por etapa, o orçado ao lado do realizado. A Estrutura passou 7,3%"], [16, "<b>3</b> · A tela mostra por que passou: três causas, com o valor de cada uma"], [24, "<b>4</b> · Um pedido fechado entra no custo da etapa na hora, sem digitar"], [32, "<b>5</b> · E a mesma tela avisa o que vai faltar antes de faltar"]]};</script>
+<script src="demo-base.js"></script>
+</body>
+</html>
